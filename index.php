@@ -72,7 +72,6 @@ session_start();
         }
     </style>
     <body>
-
         <div class="mainDiv" id="_mainDiv">
             <div class="headerDiv">
                 <div class="divLogo" id="_logoContainer">

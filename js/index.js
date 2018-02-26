@@ -52,6 +52,8 @@ var Main = {
     {
         console.log(e);
 
+        Main.agregarMenuBtn("pagina_principal", "menuBtnPaginaPrincipal", "Página principal");
+
         switch (e["privilegio"]) {
 
             case "Administrador":
@@ -94,8 +96,14 @@ var Main = {
         cambiarPagina("pagina_principal");
         window.location.hash = "pagina_principal";
     },
-    agregarMenuBtn: function () {
+    agregarMenuBtn: function (href, id, texto) {
 
+        var menuBtn = '<div class="menuItemContainer divPadding10 clickableElement" id="' + id + '">' +
+                '                        <a href="#' + href + '" data-href=\'' + href + ' \' id="menuBtnRegistro" class=" clickableElement">' + texto + '</a>' +
+                '                    </div>';
+
+        $("#_mainMenu").find("#" + id).remove();
+        $("#_mainMenu").prepend(menuBtn);
     },
     obtenerUserDataPath: function (userName) {
 
