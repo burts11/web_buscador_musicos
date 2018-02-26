@@ -1,0 +1,8 @@
+.conciertoContainer{
+    
+    width: 90%;
+    height: 90%;
+    background-color: orange;
+    border-radius: 6px;
+    box-shadow: 4px 4px black;
+}

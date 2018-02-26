@@ -1,0 +1,164 @@
+.headerDiv{
+
+    position: relative;
+    background-color: white;
+    display: inline-block;
+}
+
+.divLogo {
+
+    position: relative;
+    width: 80px;
+    height: 100%;
+    display: inline-block;
+    overflow: hidden;    
+    float: left;
+    margin-left: 4%;
+}
+
+.divMenu {
+    display: inline-block;
+    overflow: hidden;    
+    text-align: center;
+    left: 30%;
+    position: absolute;
+    top: 50%; 
+    transform: translate(-50%,-50%);
+}
+
+#logoImg{
+
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.menuItem, a{
+
+    background: transparent;
+    border-color: orange;
+    border-radius: 6px;
+    border-width: 1px;
+    text-decoration: none !important;
+    color: gray;
+}
+
+a:hover, a:visited, a:link, a:active
+{
+    text-decoration: none;
+}
+
+.menuItemContainer{
+    border: 1px;
+    border-radius: 20px;
+    border-width: 5px;
+    display: inline-block;
+    margin-right: 4px;
+}
+
+.menuItemContainer:hover{
+    border: 1px solid #c0c0c0;
+    /*background-color: #ffffff;*/
+}
+
+.menuItemContainer-Selected {
+    /*transition:all 0.3s ease;*/
+    border: 0px;
+    border-radius: 20px;
+    border-width: 5px;
+    display: inline-block;
+    margin-right: 4px;
+    background: #c0c0c0 !important;
+    box-shadow: 0 6px 6px rgba(36,37,38,0.08);
+}
+
+.menuItemContainer-Selected:hover {
+    border: 0px;
+}
+
+.centeredElement{
+
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.centeredElementVertical{
+
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+}
+
+.centeredElementHorizontal{
+
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.userMenuUserName{
+
+    position: relative;
+    display: inline-block;
+    font-size: 16px;
+    width: 100%;
+    height: auto;
+}
+
+/*#_userMenu{
+    background-color: #e5e5e5;
+    display: inline-block;
+    position: relative;
+    width: 300px;
+    height: 100%;
+    overflow: hidden;    
+    float: right;
+    border-radius: 6px;
+}*/
+
+.userMenuChild {
+    /*background-color: red;*/
+    display: inline-block;
+    width: 20%;
+    text-align: center;
+}
+
+.userMenuContainer{
+    /*background-color: orange;*/
+    width: 40%;
+    left: 2%;
+    height: 90%;
+    position: relative;
+}
+
+#_userMenuLogo{
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+}
+
+#_loginDiv{
+
+    display: inline-block;
+    position: relative;
+    width: auto;
+    height: 100%;
+    overflow: hidden;    
+    text-align: center;
+    float: right;
+}
+
+.registerDiv{
+    display: inline-block;
+    position: relative;
+    width: 50%;
+    float: right;
+}
+
+.loginDiv{
+    width: 30%;
+    position: relative;
+    display: inline-block;
+    float: left;
+}

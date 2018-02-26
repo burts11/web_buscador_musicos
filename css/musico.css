@@ -1,0 +1,70 @@
+.musicoContainer{
+
+    display: inline-block;
+    transition: box-shadow .3s;
+    background-color: white;
+    position: relative;
+    border-radius: 5px;
+    box-shadow: 0 0px 10px rgba(36,37,38,0.2);
+    margin-bottom: 15px;
+    padding: 10px;
+    margin: 10px;
+}
+
+.musicoHeader h3 {
+
+    text-align: center;
+}
+
+.musicoSeparator{
+
+    opacity: 0.3 !important;
+    margin: 10px 4px 10px 4px;
+}
+
+.musicoContainer:hover{
+    background-color: white;
+    box-shadow: 0 0px 18px rgba(36,37,38,0.7);
+}
+
+.musicoFooter{
+
+    height: auto;
+}
+
+.musicoVoteContainer{
+
+    position: relative;
+    /*background-color: orange;*/
+    width: 20px;
+    height: 20px;
+    float: right;
+}
+
+.musicoVoteBtn{
+
+    position: relative;
+    /*background-color: red;*/
+    width:100%;
+    height: 100%;
+}
+
+.musicoAlbumArtContainer{
+
+    position: relative;
+    width: 100%;
+    height: 200px;
+}
+
+.musicoAlbumArtImg{
+
+    position: relative;
+    width: 100%;
+    height:100%;
+}
+
+.musicoInfo{
+
+    position: relative;
+    padding: 10px;            
+}

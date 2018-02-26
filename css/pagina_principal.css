@@ -1,0 +1,57 @@
+* {
+    font-family: Lato;
+}
+
+.footerDiv{
+    width: 100%;
+    height: 10%;
+    display: inline-block;
+}
+
+.left {
+    width:80.5%!important;
+    height: 100% !important;
+    display:inline-block;
+    vertical-align: top;
+    position: relative;
+}
+
+.right{
+    display: inline-block;
+    position: relative;
+    width: 19.2%;
+    height: 100%;
+    vertical-align: top;
+}
+
+#divBuscador{
+
+    width: 100%;
+    display: inline-block;
+    position: relative;
+}
+
+#divAnuncios{
+
+    border-radius: 20px;
+    border-width: 1px;
+    width: 96%;
+    height: auto; 
+    display: inline-block;
+}
+
+#divMusicos{
+    width: 100%;
+    height: 70%;
+    display: inline-block;
+    position: relative;
+    /*background-color: rgba(255,255,255,0.5);*/
+    overflow: auto;
+}
+
+#divProximosConciertos{
+
+    width: 100%;
+    height: 30%;
+    /*background-color: rgba(255,255,255,0.5);*/
+}
