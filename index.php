@@ -25,7 +25,7 @@ session_start();
             
             display: inline-block;
             width: auto;
-            height: 99%;
+            height: 100%;
             float: right; 
             margin-right: 10px;
         }
