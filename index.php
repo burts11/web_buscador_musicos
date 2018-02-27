@@ -21,10 +21,11 @@ session_start();
     <style>
         #_rightMenu{
 
-            position: relative;
+            position: relative; 
+            
             display: inline-block;
             width: auto;
-            height: 100%;
+            height: 99%;
             float: right; 
             margin-right: 10px;
         }
