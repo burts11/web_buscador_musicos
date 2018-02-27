@@ -19,21 +19,22 @@ var VModal = {
         loadPage(contentHREF, {
 
             success: function (data) {
+                agregarArchivosNesesarios();
 
                 var k = modalTriggerDom;
                 var modalId = $(k).attr("data-modal");
 
                 $("#_mainDiv").find("#_main_overlay").hide().remove();
                 $("#_mainDiv").find("#" + modalId).hide().remove();
-                var modalMainDiv = '<div class="md-modal md-effect-13 md-show" id="' + modalId + '">' +
+                var modalMainDiv = '<div class="md-modal md-effect-5" style="display:none;" id="' + modalId + '">' +
                         '           <div class="md-modal-closeDiv md-close" id="__modal_close_btn">' +
                         '           <img class="md-closeBtn fade-in centeredElement clickableElement" src="img/btn-close.png">' +
                         '            </div>' +
-                        '            <div class="md-content md-content_v2"> ' +
+                        '            <div class="md-content md-content_v2">' +
                         '            </div>' +
-                        '        </div>'
-                        + ' <div class="md-overlay" id="_main_overlay"></div>-->';
-                var modalDialogLayoutCSS = "#__modal_close_btn { display: none;}  #_main_overlay{background:transparent;background-color:rgba(0,0,0,0.1)}.md-closeBtn{display:block;width:100%;height:100%;position:relative}.md-content_v2{margin-top:4px;display:block;position:relative;z-index:1000;margin-top:20px !important}.md-modal-closeDiv{position:relative;display:block;width:32px;height:32px;float:right;right:0;top:0;z-index:2000}";
+                        '           </div>'
+                        + ' <div class="md-overlay" id="_main_overlay"></div>';
+                var modalDialogLayoutCSS = "#__modal_close_btn { display: none;}  #_main_overlay{background:transparent;background-color:rgba(0,0,0,0.1)}.md-closeBtn{display:block;width:100%;height:100%;position:relative}.md-content_v2{margin-top:4px;display:block;position:relative;z-index:1000;margin-top:20px !important}.md-modal-closeDiv{position:relative;display:block;width:32px;height:32px;float:right;right:-0.5em;top:0.5em;z-index:2000}";
                 appendCSSInline("modal_dialog_inline", modalDialogLayoutCSS, "head");
                 $("#_mainDiv").append(modalMainDiv);
 
@@ -45,8 +46,12 @@ var VModal = {
                     }
 
                     $("#" + modalId).removeClass("md-show");
-                    $("#" + modalId).remove();
-                    $("#" + "_main_overlay").remove();
+                    setTimeout(
+                            function ()
+                            {
+                                $("#" + modalId).remove();
+                                $("#" + "_main_overlay").remove();
+                            }, 500);
                 });
 
                 $("#" + modalId + " #__modal_close_btn").hide();
@@ -78,23 +83,24 @@ var VModal = {
                 });
                 $("#" + modalId + " > .md-content").append(temp);
 
-                agregarArchivosNesesarios();
+//                ModalEffect.init();
 
-                ModalEffect.init();
+                setTimeout(
+                        function ()
+                        {
+                            $("#" + modalId).show();
+                            $("#" + modalId).addClass("md-show");
 
-                $("#" + modalId + " .md-content")
-                        .on("animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd",
-                                function (e) {
+                            $("#" + modalId + " .md-content").one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function () {
+                                $("#" + modalId + " #__modal_close_btn").show("slow");
 
-                                    $("#" + modalId + " #__modal_close_btn").show("slow");
-                                    callJqueryWindowEvent(VModalMessage.READY, {modalId: modalId});
+                                callJqueryWindowEvent(VModalMessage.READY, {modalId: modalId});
 
-                                    if (typeof func.onDialogShow === "function") {
-                                        func.onDialogShow(e);
-                                    }
-//                                    $(this).off(e);
-                                });
-
+                                if (typeof func.onDialogShow === "function") {
+                                    func.onDialogShow({modalId: modalId});
+                                }
+                            });
+                        }, 10);
             },
             error: function (err) {
                 alert("VMODAL " + err);
@@ -105,7 +111,7 @@ var VModal = {
 
 function agregarArchivosNesesarios() {
 
-    appendScript("js/modalEffects.js");
+//    appendScript("js/modalEffects.js");
     appendScript("js/modernizr.custom.js");
     appendScript("js/classie.js");
     appendCSS("css/component.css");

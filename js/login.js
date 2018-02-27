@@ -22,7 +22,6 @@ onJqueryReady(function () {
                     success: function (json) {
                         VModal.closeWithId(e.json.modalId);
                         Main.comprobarUsuarioLogueado();
-                        Main.onUsuarioLogueado(json);
                     },
                     error: function (json) {
                         VModal.closeWithId(e.json.modalId);

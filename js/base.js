@@ -17,7 +17,13 @@ var BBDD = {
 var VModalMessage = {
 
     READY: "vmodal.READY",
-    CLOSING : "vmodal.CLOSING"
+    CLOSING: "vmodal.CLOSING"
+};
+
+var VMessage = {
+
+    PAGINA_SESION_INICIADA: "page.logchecked",
+    PAGINA_DROP_DOWN_ITEM_CLICKED: "page.dropdown.item.clicked"
 };
 
 function onJqueryReady(func) {
@@ -30,7 +36,7 @@ function onJqueryCallbackEvent(event, func) {
     $(document).on(event, function (e)
     {
         func.callback(e);
-        unbindJqueryEvent(event);
+//        unbindJqueryEvent(event);
     });
 }
 
@@ -39,7 +45,7 @@ function onJqueryWindowCallbackEvent(event, func) {
     $(window).on(event, function (e)
     {
         func.callback(e);
-        $(window).off(event);
+//        $(window).off(event);
     });
 }
 

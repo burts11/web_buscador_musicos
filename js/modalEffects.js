@@ -18,11 +18,12 @@ var ModalEffect = {
 
         [].slice.call(document.querySelectorAll('.md-trigger')).forEach(function (el, i) {
 
+            alert("test");
             var modal = document.querySelector('#' + el.getAttribute('data-modal'));
 //            var close = modal.querySelector('#__modal_close_btn');
 
 //            $(close).unbind("click").bind("click", function (ev) {
-//
+//       
 ////                ev.stopPropagation();
 ////                removeModalHandler();
 ////                
@@ -41,7 +42,6 @@ var ModalEffect = {
                 removeModal(classie.has(el, 'md-setperspective'));
             }
             el.addEventListener('click', function (ev) {
-
 //                callJqueryCustomEvent("showModalDialog", "");
 
                 classie.add(modal, 'md-show');

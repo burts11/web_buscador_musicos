@@ -50,10 +50,11 @@ a:hover, a:visited, a:link, a:active
 
 .menuItemContainer{
     border: 1px;
-    border-radius: 20px;
-    border-width: 5px;
+    border-radius: 0.9em;
+    border-width: 0.5em;
     display: inline-block;
-    margin-right: 4px;
+    margin-right: 0.6em;
+    padding: 0.9em;
 }
 
 .menuItemContainer:hover{
@@ -64,10 +65,10 @@ a:hover, a:visited, a:link, a:active
 .menuItemContainer-Selected {
     /*transition:all 0.3s ease;*/
     border: 0px;
-    border-radius: 20px;
+    padding: 0.9em;
+    border-radius: 0.9em;
     border-width: 5px;
     display: inline-block;
-    margin-right: 4px;
     background: #c0c0c0 !important;
     box-shadow: 0 6px 6px rgba(36,37,38,0.08);
 }

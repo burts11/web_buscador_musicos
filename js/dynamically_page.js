@@ -9,7 +9,7 @@ $(document).ready(function () {
 
 function asignarBotonesMenu() {
 
-    $('#_mainMenu div a').click(function (e) {
+    $('#_mainMenu div a').off().click(function (e) {
 
         setActive(e.currentTarget);
 
@@ -37,6 +37,11 @@ function cambiarPagina(hash)
             loadHashPage(hash);
         }
     }
+}
+
+function cambiarHash(hash)
+{
+     window.location.hash = hash;
 }
 
 function loadHashPage(url) {

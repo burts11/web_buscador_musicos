@@ -23,12 +23,13 @@ var Main = {
                     // Usuario logueado
                     currentUser = e.user;
                     $("#_loginDiv").hide();
+                    $("#_userMenuLogo").hide().fadeIn();
                     $("#_userMenu").show();
                     $("#menuRegistroDiv").hide();
                     $("#_userMenuLogoContainer").show("slow");
-                    $("#_userMenuUserNameContainer").show("slow");
-                    $("#_userMenuUserNameContainer a").hide().text(e.user.toUpperCase()).fadeIn();
-                    $("#_userMenuCerrarSesionContainer").hide().fadeIn();
+//                    $("#_userMenuUserNameContainer").show("slow");
+//                    $("#_userMenuUserNameContainer a").hide().text(e.user.toUpperCase()).fadeIn();
+//                    $("#_userMenuCerrarSesionContainer").hide().fadeIn();
                     $("#_userMenuLogo").click(function (e) {
 
                     });
@@ -36,6 +37,7 @@ var Main = {
                 } else {
 
 // El usuario no ha iniciado sesion
+                    $("#_loginContainer").show();
                     $("#_userMenu").hide();
                     $("#_loginDiv").hide().show("slow");
                     $("#menuRegistroDiv").show("slow");
@@ -44,7 +46,8 @@ var Main = {
                 }
             }
 
-            callJqueryWindowEvent("page.logchecked", e);
+            callJqueryWindowEvent(VMessage.PAGINA_SESION_INICIADA, e);
+
         }))
             ;
     },
@@ -52,42 +55,39 @@ var Main = {
     {
         console.log(e);
 
-        Main.agregarMenuBtn("pagina_principal", "menuBtnPaginaPrincipal", "Página principal");
-
         switch (e["privilegio"]) {
 
             case "Administrador":
-                $("#menuBtnHome").attr("data-href", "pagina_principal");
-                $("#menuBtnHome").attr("href", "#pagina_principal");
+                Main.agregarMenuBtn("pagina_principal", "menuBtnUserHome", "Home");
                 cambiarPagina("pagina_principal");
-                window.location.hash = "pagina_principal";
+//                cambiarHash("pagina_principal");
                 break;
             case "Fan":
-                $("#menuBtnHome").attr("data-href", "pagina_fan");
-                $("#menuBtnHome").attr("href", "#pagina_fan");
+                Main.agregarMenuBtn("pagina_fan", "menuBtnUserHome", "Home");
                 cambiarPagina("pagina_fan");
-                window.location.hash = "pagina_fan";
+                cambiarHash("pagina_fan");
                 break;
             case "Musico":
-                $("#menuBtnHome").attr("data-href", "pagina_musico");
-                $("#menuBtnHome").attr("href", "#pagina_musico");
+                Main.agregarMenuBtn("pagina_musico", "menuBtnUserHome", "Home");
+
                 cambiarPagina("pagina_musico");
-                window.location.hash = "pagina_musico";
+//                cambiarHash("pagina_musico");
                 break;
             case "Local":
-                $("#menuBtnHome").attr("data-href", "pagina_local");
-                $("#menuBtnHome").attr("href", "#pagina_local");
+                Main.agregarMenuBtn("pagina_local", "menuBtnUserHome", "Home");
+
                 cambiarPagina("pagina_local");
-                window.location.hash = "pagina_local";
+                cambiarHash("pagina_local");
                 break;
             default:
-                $("#menuBtnHome").attr("data-href", "pagina_principal");
-                $("#menuBtnHome").attr("href", "#pagina_principal");
                 cambiarPagina("pagina_principal");
-                window.location.hash = "pagina_principal";
+                cambiarHash("pagina_principal");
                 break;
         }
 
+        var menuHome = $("#menuBtnUserHome");
+        setActive(menuHome);
+        asignarBotonesMenu();
         Main.cambiarLogo(e);
     },
     onSesionFinalizada: function (e) {
@@ -95,15 +95,19 @@ var Main = {
         $("#menuBtnHome").attr("href", "#pagina_principal");
         cambiarPagina("pagina_principal");
         window.location.hash = "pagina_principal";
+
+        $("#menuBtnUserHome").remove();
     },
     agregarMenuBtn: function (href, id, texto) {
+//        alert("called");
+        $("#_mainMenu").find("#" + id).parent(".menuItemContainer").remove();
+        $("#_mainMenu").find("#" + id).remove();
 
-        var menuBtn = '<div class="menuItemContainer divPadding10 clickableElement" id="' + id + '">' +
-                '                        <a href="#' + href + '" data-href=\'' + href + ' \' id="menuBtnRegistro" class=" clickableElement">' + texto + '</a>' +
+        var menuBtn = '<div class="menuItemContainer divPadding10 clickableElement">' +
+                '                        <a href="#' + href + '" data-href=\'' + href + '\' id="' + id + '" class="clickableElement">' + texto + '</a>' +
                 '                    </div>';
 
-        $("#_mainMenu").find("#" + id).remove();
-        $("#_mainMenu").prepend(menuBtn);
+        $("#_mainMenu").append(menuBtn);
     },
     obtenerUserDataPath: function (userName) {
 
@@ -113,13 +117,8 @@ var Main = {
 
         var fullPath = Main.obtenerUserDataPath(e.user) + "img/user_logo.png";
         $("#_userMenuLogo").prop("src", fullPath);
-    }
-};
-
-onJqueryWindowCallbackEvent("page.logchecked", {
-
-    callback: function (e) {
-
+    },
+    seleccionarBotonMenu: function (e) {
         var url = window.location.href;
         if (url.indexOf('#') > -1)
         {
@@ -130,15 +129,61 @@ onJqueryWindowCallbackEvent("page.logchecked", {
         } else {
 
             if (!success(e.json)) {
+                cambiarPagina("pagina_principal");
                 var menuHome = $("#menuBtnHome");
                 setActive(menuHome);
-                cambiarPagina("pagina_principal");
+                console.log("PRUEBA");
                 return;
             }
 
             var menuHome = $("#menuBtnHome");
             setActive(menuHome);
         }
+    }
+};
+
+onJqueryWindowCallbackEvent(VMessage.PAGINA_DROP_DOWN_ITEM_CLICKED, {
+
+    callback: function (e) {
+
+        switch (e.json.id) {
+
+            case "drop_editar_perfil":
+
+                console.log("tes");
+                var item = $("#" + "drop_editar_perfil");
+                VModal.show("perfil", item, {
+                    onDialogShow: function (ev) {
+                    },
+                    onDialogClose: function (ev) {
+                    }
+                });
+
+                break;
+            case "drop_cerrar_sesion":
+
+                cerrarSesion({
+
+                    success: function (json) {
+
+                        Main.comprobarUsuarioLogueado();
+                        Main.onSesionFinalizada(json);
+                    },
+                    error: function (json) {
+
+                    }
+                });
+
+                break;
+        }
+    }
+});
+
+
+onJqueryWindowCallbackEvent(VMessage.PAGINA_SESION_INICIADA, {
+
+    callback: function (e) {
+        Main.seleccionarBotonMenu(e);
     }
 });
 
@@ -158,21 +203,6 @@ onJqueryReady(function () {
             onDialogShow: function (ev) {
             },
             onDialogClose: function (ev) {
-            }
-        });
-    });
-
-    $("#_userMenuCerrarSesionContainer").click(function () {
-
-        cerrarSesion({
-
-            success: function (json) {
-
-                Main.comprobarUsuarioLogueado();
-                Main.onSesionFinalizada(json);
-            },
-            error: function (json) {
-
             }
         });
     });

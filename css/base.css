@@ -10,6 +10,7 @@
 :root {
     /* generic */
     --colorBackgroundGrey: #f6f6f6;
+    --textColorPrimary: gray;
 }
 
 * {
@@ -48,7 +49,7 @@ html, body {
 .tituloH1-Grey {
 
     font-family: Lato;
-    color: darkgrey;
+    color: gray;
     padding: 10px;
 }
 
@@ -70,8 +71,8 @@ html, body {
 ._contentDiv{
 
     width: 100%;
-    height: 100%;   
-    overflow: hidden;
+    height: 78%;   
+    overflow: auto;
     background-color: white;
 }
 
@@ -81,22 +82,128 @@ html, body {
     display: block;
     width: auto;
     height: auto;   
-    background-color: white;
+    background-color: transparent;
 }
 
 .fade-in {
-	opacity: 1;
-	animation-name: fadeInOpacity;
-	animation-iteration-count: 1;
-	animation-timing-function: ease-in;
-	animation-duration: 0.5s;
+    opacity: 1;
+    animation-name: fadeInOpacity;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in;
+    animation-duration: 0.5s;
 }
 
+.form-container{
+
+    width: auto;
+    height: 100%;
+    position:  relative;
+    display: block;
+    /*background-color: red;*/
+    padding: 10px;
+}
+
+.form-control-margin {
+
+    margin-bottom: 4px;
+}
+
+.form-control  {
+
+    position: relative;
+    display: block;
+    margin-bottom: 0.5em;
+}
+
+input{
+
+    margin-left: 1.2em;
+}
+
+select{
+    padding: 4px;
+    margin-left: 1em;
+}
+
+.form-control-label{
+
+    color: var(--textColorPrimary);
+    text-shadow:0 0px 1px rgba(36,37,38,0.09);
+}
+
+.form-control-btn{
+
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: transparent;
+    border: 2px solid gray;
+    border-radius: 0.6em;
+    color: var(--textColorPrimary);
+    cursor: pointer;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-item-align: center;
+    align-self: center;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1;
+    padding: 1.2em 2.8em;
+    text-decoration: none;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.form-control-btn:hover{
+
+    box-shadow: 0 0px 10px rgba(36,37,38,0.09);
+}
+
+.form-control-btn:focus{
+    outline-style:none;
+    box-shadow: 0 0px 10px rgba(36,37,38,0.09);
+}
+
+.form-control-textfield{
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: transparent;
+    border: 2px solid gray;
+    border-radius: 0.4em;
+    padding: 0.5em;
+}
+
+.form-control-textfield:hover{
+    box-shadow: 0 0px 10px rgba(36,37,38,0.09);
+}
+
+.form-control-textfield:focus{
+    outline-style:none;
+    border-color:transparent;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: transparent;
+    border: 2px solid gray;
+    border-radius: 0.4em;
+    padding: 0.5em;
+    box-shadow: 0 0px 2em rgba(36,37,38,0.09);
+}
+
+
 @keyframes fadeInOpacity {
-	0% {
-		opacity: 0;
-	}
-	100% {
-		opacity: 1;
-	}
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
