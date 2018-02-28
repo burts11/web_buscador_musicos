@@ -7,19 +7,23 @@
     border-radius: 5px;
     box-shadow: 0 0px 10px rgba(36,37,38,0.2);
     margin-bottom: 15px;
-    padding: 10px;
+    padding: 12px;
     margin: 10px;
+    height: 220px;
 }
 
-.musicoHeader h3 {
+.musicoHeader{
 
+    position: relative;
+    width:100%;
+    height: 10%;
     text-align: center;
 }
 
 .musicoSeparator{
 
-    opacity: 0.3 !important;
-    margin: 10px 4px 10px 4px;
+    opacity: 0.1 !important;
+    margin: 8px 4px 8px 4px;
 }
 
 .musicoContainer:hover{
@@ -29,7 +33,13 @@
 
 .musicoFooter{
 
-    height: auto;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 20%;
+    overflow: hidden;
+    padding: 10px;
+    text-align: left;
 }
 
 .musicoVoteContainer{
@@ -49,11 +59,22 @@
     height: 100%;
 }
 
+.musicoBody{
+
+    width: 100%;
+    height: 60%;
+    background-color: red;
+    display: block;
+    position: relative;
+    overflow: hidden;
+}
+
 .musicoAlbumArtContainer{
 
     position: relative;
     width: 100%;
-    height: 200px;
+    height: 100%;
+    background-color: orange;
 }
 
 .musicoAlbumArtImg{
@@ -65,6 +86,18 @@
 
 .musicoInfo{
 
+    display: block;
     position: relative;
-    padding: 10px;            
+}
+
+.musicoHeaderTitulo{
+    color: var(--textColorPrimary);
+    font-size: 0.9em;
+    text-align: center;
+}
+
+.musicoInfoTexto 
+{
+    color: var(--textColorPrimary);
+    font-size: 0.9em;
 }

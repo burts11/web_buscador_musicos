@@ -6,14 +6,13 @@
 }
 
 .divLogo {
-
     position: relative;
     width: 80px;
     height: 100%;
     display: inline-block;
     overflow: hidden;    
-    float: left;
-    margin-left: 4%;
+    margin-right: 4%;
+    /*background-color: red;*/
 }
 
 .divMenu {

@@ -11,15 +11,17 @@
 
         .loginCon .form-control .form-control-label{
 
-            float: left;
-            width:20%;
+            position: relative;
+            display: inline-block;
+            width:auto;
             text-align:left;
+            min-width: 3em;
         }
 
         .loginCon .form-control .form-control-textfield{
-
-            margin-right: 1em;
+            display: inline-block;
             width:60%;
+            overflow: hidden;
         }
     </style>
     <body>
@@ -28,10 +30,10 @@
             <hr class="hrSeparator_dialog"> 
             <div class="form-container">
                 <div class="form-control">
-                    <label class="form-control-label" for="input_username">Usuario</label> <input class="form-control-textfield" type="text" id="input_username" value="">
+                    <label class="form-control-label" for="input_username">Usuario</label> <input class="form-control-textfield" type="text" id="input_username" value="" required>
                 </div>
                 <div class="form-control">
-                    <label class="form-control-label" for="input_userpass">Contraseña</label> <input class="form-control-textfield" type="text" id="input_userpass" value="">
+                    <label class="form-control-label" for="input_userpass">Contraseña</label> <input class="form-control-textfield" type="text" id="input_userpass" value="" required>
                 </div>
             </div>
             <div class="centeredElementHorizontal" id="l_loginDiv">

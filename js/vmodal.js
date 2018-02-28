@@ -14,11 +14,18 @@ var VModal = {
         $("#" + id + " #__modal_close_btn").click();
         $("#" + id).remove();
     },
-    show: function (contentHREF, modalTriggerDom, func) {
+    show: function (contentHREF, modalTriggerDom, params, func) {
 
         loadPage(contentHREF, {
 
             success: function (data) {
+
+                var modalEffect = "md-effect-5";
+
+                if (params.modalEffect !== null) {
+                    modalEffect = params.modalEffect;
+                }
+
                 agregarArchivosNesesarios();
 
                 var k = modalTriggerDom;
@@ -26,7 +33,7 @@ var VModal = {
 
                 $("#_mainDiv").find("#_main_overlay").hide().remove();
                 $("#_mainDiv").find("#" + modalId).hide().remove();
-                var modalMainDiv = '<div class="md-modal md-effect-5" style="display:none;" id="' + modalId + '">' +
+                var modalMainDiv = '<div class="md-modal ' + modalEffect + '" style="display:none;" id="' + modalId + '">' +
                         '           <div class="md-modal-closeDiv md-close" id="__modal_close_btn">' +
                         '           <img class="md-closeBtn fade-in centeredElement clickableElement" src="img/btn-close.png">' +
                         '            </div>' +
@@ -41,7 +48,7 @@ var VModal = {
                 var modalCloseBtn = $("#" + modalId).find("#__modal_close_btn");
                 $(modalCloseBtn).unbind("click").bind("click", function (e) {
 
-                    if (typeof func.onDialogClose === "function") {
+                    if (isFunctionDefined(func.onDialogClose)) {
                         func.onDialogClose(e.currentTarget);
                     }
 
@@ -51,7 +58,7 @@ var VModal = {
                             {
                                 $("#" + modalId).remove();
                                 $("#" + "_main_overlay").remove();
-                            }, 500);
+                            }, 50);
                 });
 
                 $("#" + modalId + " #__modal_close_btn").hide();
@@ -83,22 +90,24 @@ var VModal = {
                 });
                 $("#" + modalId + " > .md-content").append(temp);
 
-//                ModalEffect.init();
-
                 setTimeout(
                         function ()
                         {
                             $("#" + modalId).show();
                             $("#" + modalId).addClass("md-show");
 
-                            $("#" + modalId + " .md-content").one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function () {
-                                $("#" + modalId + " #__modal_close_btn").show("slow");
+                            $("#" + modalId + " .md-content").off().one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function () {
 
+                                console.log("modal transition finished");
+
+                                $("#" + modalId + " #__modal_close_btn").show("slow");
                                 callJqueryWindowEvent(VModalMessage.READY, {modalId: modalId});
 
-                                if (typeof func.onDialogShow === "function") {
+                                if (isFunctionDefined(func.onDialogShow)) {
                                     func.onDialogShow({modalId: modalId});
                                 }
+                                
+                                $(this).off();
                             });
                         }, 10);
             },

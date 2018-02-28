@@ -7,10 +7,11 @@ var Main = {
 
         $("#_userMenu").hide();
         $("#menuRegistroDiv").hide();
-        $("#_userMenuLogoContainer").hide();
-        $("#_userMenuUserNameContainer").hide();
-        $("#_userMenuCerrarSesionContainer").hide();
-        $("#_mainMenu").hide().fadeIn("slow");
+
+        $("#menuPrincipalDiv").hide();
+        $("#menuRegistroDiv").hide();
+
+        $("#_mainMenu").hide();
         $("#_logoContainer").hide().show("slow");
     },
     comprobarUsuarioLogueado: function () {
@@ -23,31 +24,38 @@ var Main = {
                     // Usuario logueado
                     currentUser = e.user;
                     $("#_loginDiv").hide();
+
                     $("#_userMenuLogo").hide().fadeIn();
                     $("#_userMenu").show();
+                    $("#_mainMenu").hide().fadeIn("slow");
+
                     $("#menuRegistroDiv").hide();
+                    $("#menuPrincipalDiv").hide();
                     $("#_userMenuLogoContainer").show("slow");
-//                    $("#_userMenuUserNameContainer").show("slow");
-//                    $("#_userMenuUserNameContainer a").hide().text(e.user.toUpperCase()).fadeIn();
-//                    $("#_userMenuCerrarSesionContainer").hide().fadeIn();
+
                     $("#_userMenuLogo").click(function (e) {
 
                     });
+
                     Main.onUsuarioLogueado(e);
                 } else {
 
 // El usuario no ha iniciado sesion
-                    $("#_loginContainer").show();
                     $("#_userMenu").hide();
-                    $("#_loginDiv").hide().show("slow");
-                    $("#menuRegistroDiv").show("slow");
+
+                    $("#_mainMenu").hide().fadeIn();
+                    $("#menuPrincipalDiv").hide().fadeIn();
+                    $("#menuRegistroDiv").hide().fadeIn();
+
+                    $("#_loginContainer").fadeIn();
+                    $("#_loginDiv").fadeIn();
+
                     var menuHome = $("#menuBtnHome");
                     setActive(menuHome);
                 }
             }
 
-            callJqueryWindowEvent(VMessage.PAGINA_SESION_INICIADA, e);
-
+            Main.seleccionarBotonMenu(e);
         }))
             ;
     },
@@ -58,7 +66,7 @@ var Main = {
         switch (e["privilegio"]) {
 
             case "Administrador":
-                Main.agregarMenuBtn("pagina_principal", "menuBtnUserHome", "Home");
+//                Main.agregarMenuBtn("pagina_principal", "menuBtnUserHome", "Home");
                 cambiarPagina("pagina_principal");
 //                cambiarHash("pagina_principal");
                 break;
@@ -128,7 +136,8 @@ var Main = {
             setActive(menuBtn);
         } else {
 
-            if (!success(e.json)) {
+            if (!success(e)) {
+
                 cambiarPagina("pagina_principal");
                 var menuHome = $("#menuBtnHome");
                 setActive(menuHome);
@@ -152,7 +161,7 @@ onJqueryWindowCallbackEvent(VMessage.PAGINA_DROP_DOWN_ITEM_CLICKED, {
 
                 console.log("tes");
                 var item = $("#" + "drop_editar_perfil");
-                VModal.show("perfil", item, {
+                VModal.show("perfil", item, { modalEffect: "md-effect-2" }, {
                     onDialogShow: function (ev) {
                     },
                     onDialogClose: function (ev) {
@@ -179,14 +188,6 @@ onJqueryWindowCallbackEvent(VMessage.PAGINA_DROP_DOWN_ITEM_CLICKED, {
     }
 });
 
-
-onJqueryWindowCallbackEvent(VMessage.PAGINA_SESION_INICIADA, {
-
-    callback: function (e) {
-        Main.seleccionarBotonMenu(e);
-    }
-});
-
 onJqueryReady(function () {
 
     Main.inicio();
@@ -199,8 +200,9 @@ onJqueryReady(function () {
 
     $("#_loginContainer").click(function (e) {
 
-        VModal.show("login", this, {
+        VModal.show("login", this, { modalEffect: "md-effect-2" }, {
             onDialogShow: function (ev) {
+
             },
             onDialogClose: function (ev) {
             }

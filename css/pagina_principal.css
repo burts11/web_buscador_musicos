@@ -45,10 +45,10 @@
     /*display: inline-block;*/
     position: relative;
     overflow: auto;
-    max-height: 100vh;
     /*overflow: visible;*/
     /*background-color: red;*/
     display: block;
+    height: auto;
 }
 
 #divProximosConciertos{

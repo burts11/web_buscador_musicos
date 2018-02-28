@@ -125,12 +125,21 @@ function obtenerMusicos() {
     });
 }
 
-function success(json) {
+function success(e) {
 
-    if (json["resultado"] === "Success") {
+    if (e["resultado"] === "Success") {
         return true;
     }
 
+    return false;
+}
+
+function successJSON(e) {
+
+    if (e.json["resultado"] === "Success") {
+        return true;
+    }
+    
     return false;
 }
 
@@ -150,7 +159,33 @@ function callAjaxPost(url, dataJSON, func) {
         error: function (err) {
 
             var dataJSON = {
-                resultado: "error"
+                resultado: "error",
+                errorResponse: err
+            };
+            func(dataJSON);
+        }
+    }
+    );
+}
+
+function callAjaxBBDD(dataJSON, func) {
+
+    $.ajax({
+        type: METHOD.POST,
+        url: "bbdd/mybbdd.php",
+        dataType: "json",
+        data: dataJSON,
+        cache: false,
+        success: function (rawJson) {
+
+            var json = $.parseJSON(rawJson);
+            func(json);
+        },
+        error: function (err) {
+
+            var dataJSON = {
+                resultado: "ERROR",
+                errorResponse: err
             };
             func(dataJSON);
         }
@@ -174,7 +209,8 @@ function callAjax(type, url, dataJSON, func) {
         error: function (err) {
 
             var dataJSON = {
-                information: "ERROR"
+                resultado: "ERROR",
+                errorResponse: err
             };
             func(dataJSON);
         }

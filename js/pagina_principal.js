@@ -1,22 +1,20 @@
 onJqueryReady(function () {
 
+    $("#divMusicos").empty();
+
     var select = "SELECT * FROM usuario INNER JOIN musico ON usuario.idusuario = musico.idmusico;";
-    callAjax(METHOD.POST, "bbdd/mybbdd.php",
+//    var select = "SELECT * FROM usuario where idusuario = 1";
+
+    callAjaxBBDD(
             {
                 action: "RawQuery",
                 query: select
             }, function (result) {
 
-        console.log(result);
-    });
-
-    callAjax(METHOD.POST, "bbdd/mybbdd.php", {
-        action: "ObtenerMusicos"}, function (result) {
-
-        $("#divMusicosFan").empty();
+        $("#divMusicos").empty();
 
         $.each(result, function (i, item) {
-            console.log(item);
+//            console.log(item);
 
             var usuario = item;
             var nombre = usuario ["nombre"];
@@ -24,6 +22,16 @@ onJqueryReady(function () {
             var genero = usuario ["genero"];
 
             var div = $("<div>").addClass("musicoContainer clickableElement").css({width: "220px"});
+
+            $(div).unbind("click").bind("click", function () {
+
+                VModal.show("musico_info", item, {modalEffect: "md-effect-3"}, {
+                    onDialogShow: function (ev) {
+                    },
+                    onDialogClose: function (ev) {
+                    }
+                });
+            });
 
             var musicoHeader = $("<div>").addClass("musicoHeader");
             var musicoBody = $("<div>").addClass("musicoBody");
@@ -44,16 +52,41 @@ onJqueryReady(function () {
             $(musicoFooter).find(".musicoInfo").append($("<label>").addClass("blockLabel musicoInfoTexto clickableElement").text("Nombre artístico: " + nombreartistico));
             $(musicoFooter).find(".musicoInfo").append($("<label>").addClass("blockLabel musicoInfoTexto clickableElement").text("Género: " + genero));
 
-            $(musicoFooter).append($("<div>").addClass("musicoVoteContainer"));
-
-            $(musicoFooter).find(".musicoVoteContainer").append("<img>");
-            $(musicoFooter).find("img").addClass("musicoVoteBtn").prop("src", "img/btn_vote.png");
-
             $(div).append(musicoBody);
             $(div).append(musicoFooter);
+            $("#divMusicos").append(div);
+        });
+    });
 
-            $("#divMusicosFan").append(div);
-            console.log(nombre);
+    $(function () {
+        $('#slides').slidesjs({
+            width: 200,
+            height: 120,
+            navigation: false,
+            pagination: {
+                active: false,
+                // [boolean] Create pagination items.
+                // You cannot use your own pagination. Sorry.
+                effect: "fade"
+                        // [string] Can be either "slide" or "fade".
+            },
+            play: {
+                active: false,
+                // [boolean] Generate the play and stop buttons.
+                // You cannot use your own buttons. Sorry.
+                effect: "fade",
+                // [string] Can be either "slide" or "fade".
+                interval: 2000,
+                // [number] Time spent on each slide in milliseconds.
+                auto: true,
+                // [boolean] Start playing the slideshow on load.
+                swap: true,
+                // [boolean] show/hide stop and play buttons
+                pauseOnHover: false,
+                // [boolean] pause a playing slideshow on hover
+                restartDelay: 2500
+                        // [number] restart delay on inactive slideshow
+            }
         });
     });
 });

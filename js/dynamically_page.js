@@ -12,7 +12,6 @@ function asignarBotonesMenu() {
     $('#_mainMenu div a').off().click(function (e) {
 
         setActive(e.currentTarget);
-
         var page = $(e.currentTarget).attr("data-href");
         cambiarPagina(page);
     });
@@ -28,9 +27,6 @@ function cambiarPagina(hash)
     {
         lasturl = hash;
 
-        // FIX - if we've used the history buttons to return to the homepage,
-        // fill the pageContent with the default_content
-
         if (hash === "") {
             $('#_divMainContent').html(default_content);
         } else {
@@ -41,29 +37,34 @@ function cambiarPagina(hash)
 
 function cambiarHash(hash)
 {
-     window.location.hash = hash;
+    window.location.hash = hash;
 }
 
 function loadHashPage(url) {
 
     loadPage(url, {
         success: function (data) {
-            $('#_divMainContent').stop().empty().hide().html(data).fadeIn();
-            $("#_divMainContent link").each(function () {
 
+            var parsedHTML = $.parseHTML(data);
+            var tempDOM = $('<output>').append(parsedHTML);
+
+            $(tempDOM).find("link").each(function () {
                 try {
                     var cssLink = $(this).attr('href');
                     cssLink = cssLink.replace('../', '');
                     appendCSS(cssLink);
                     $(this).remove();
+                    //                    console.log(cssLink);
                 } catch (err) {
                     console.log("Load Page CSS -> " + err.message);
                 }
             });
-            $("#_divMainContent script").each(function () {
+
+            $(data).filter("script").each(function () {
 
                 var jsLink = $(this).attr('src');
-                if (jsLink !== null) {
+
+                if (jsLink !== null || jsLink !== "") {
 
                     try {
                         jsLink = jsLink.replace('../', '');
@@ -75,6 +76,9 @@ function loadHashPage(url) {
                     $(this).remove();
                 }
             });
+
+            var onlyHTML = $(tempDOM).html();
+            $('#_divMainContent').stop().hide().html(onlyHTML).fadeIn();
         },
         error: function (err) {
 
@@ -85,7 +89,6 @@ function loadHashPage(url) {
 function loadPage(url, func)
 {
 //    url = url.replace('#', '');
-
 //    $('#loading').css('visibility', 'visible');
 
     $.ajax({
@@ -146,7 +149,7 @@ function appendScript(url) {
         $('script[src="' + url + '"]').remove();
     }
 
-    $("head").append("<script src='" + url + "' type='text/javascript'></script> ");
+    $("head").append("<script src='" + url + "' type='text/javascript' async='async'></script>");
 }
 
 function appendCSS(url) {

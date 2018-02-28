@@ -17,14 +17,41 @@ function onAction($action) {
 
     switch ($action) {
 
-        case "DirectSelect":
+        case "RawQuery":
 
-            $select = $_POST["select"];
-            $array = $dataBase->rawQuery($select);
-            echo encode($array);
+            $select = $_POST["query"];
+
+            try {
+                $array = $dataBase->rawQuery($select);
+
+                echo encode($array);
+            } catch (Exception $e) {
+
+                $result = Array(
+                    "resultado" => "error",
+                    "Action" => "RawQuery",
+                    "mensaje" => $dataBase->getLastError()
+                );
+
+                echo encode($result);
+            }
             break;
-        case "DirectSelectOne":
-            $array = $dataBase->rawQuery("SELECT * FROM usuario INNER JOIN musico ON usuario.idusuario = musico.idmusico;");
+        case "RawQueryOne":
+            $select = $_POST["query"];
+
+            try {
+                $array = $dataBase->rawQueryOne($select);
+                echo encode($array);
+            } catch (Exception $e) {
+
+                $result = Array(
+                    "resultado" => "error",
+                    "Action" => "RawQueryOne",
+                    "mensaje" => $dataBase->getLastError()
+                );
+
+                echo encode($result);
+            }
 
             break;
         case "ObtenerMusicos":
@@ -37,7 +64,6 @@ function onAction($action) {
             if (session_status() == PHP_SESSION_ACTIVE) {
 
                 session_destroy();
-
                 $result = Array(
                     "resultado" => "Success",
                     "mensaje" => "La sesión ha sido terminada!"
@@ -62,7 +88,7 @@ function onAction($action) {
                 if ($_SESSION[Session::Logueado] === "true") {
                     $result = Array(
                         "resultado" => "Success",
-                        "mensaje" => "Usuario logueado!",
+                        "mensaje" => "Hay un usuario que está logueado actualmente!",
                         "user" => $_SESSION[Session::UserName],
                         "pass" => $_SESSION[Session::UserPassword],
                         "privilegio" => $_SESSION[Session::Privilegio],
@@ -105,7 +131,7 @@ function onAction($action) {
 
                 $result = Array(
                     "resultado" => "Success",
-                    "mensaje" => "You are logged",
+                    "mensaje" => "Usuario Logueado!",
                     "user" => $user,
                     "pass" => $pass,
                     "privilegio" => $pri["Privilegio"]

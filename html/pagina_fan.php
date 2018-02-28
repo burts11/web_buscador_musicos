@@ -5,13 +5,27 @@
         <link href="../css/musico.css" rel="stylesheet" type="text/css"/>
     </head>
     <style>
-        .musicoVoteContainer{
+
+        #divMusicosFan .musicoBody {
+
+            height: 55%;
+        }
+        #divMusicosFan .musicoFooter {
+
+            height: 35%;
+        }
+        #divMusicosFan .musicoVoteContainer{
 
             position: relative;
             /*background-color: orange;*/
             width: 20px;
             height: 20px;
             float: right;
+        }
+
+        #divMusicosFan .musicoContainer{
+
+            margin-bottom: 200PX;
         }
 
         .musicoVoteBtn{
@@ -22,36 +36,16 @@
             height: 100%;
         }
 
-        .musicoAlbumArtContainer{
-
-            position: relative;
-            width: 100%;
-            height: 200px;
-        }
-
-        .musicoAlbumArtImg{
-
-            position: relative;
-            width: 100%;
-            height:100%;
-        }
-
         #divMusicos {
 
             display: inline-block !important;
             overflow: hidden;
         }
-
-        .musicoInfo{
-
-            position: relative;
-            padding: 10px;            
-        }
     </style>
     <body>
         <div class="_childContainer divPadding10">
-            <h1 class="tituloH1 tituloH1-Grey">Página FAN</h1>
-            <div id="divMusicos">
+            <!--<h1 class="tituloH1 tituloH1-Grey">Página FAN</h1>-->
+            <div id="divMusicosFan">
 
             </div>
         </div>

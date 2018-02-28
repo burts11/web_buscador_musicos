@@ -4,6 +4,7 @@ session_start();
 <!DOCTYPE html>
 <html>
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
         <meta charset="UTF-8">  
         <title>Index</title>
@@ -11,7 +12,6 @@ session_start();
         <script src="js/base.js" type="text/javascript"></script>
         <script src="js/bbdd.js" type="text/javascript"></script>
         <link href="css/base.css" rel="stylesheet" type="text/css"/>
-        <link href="css/homepage.css" rel="stylesheet" type="text/css"/>
         <link href="css/header.css" rel="stylesheet" type="text/css"/>
         <script src="js/jquery.slides.min.js" type="text/javascript"></script>
         <script src="js/dynamically_page.js" type="text/javascript"></script>
@@ -19,10 +19,31 @@ session_start();
         <script src="js/login.js" type="text/javascript"></script>
     </head>
     <style>
+        .headerDiv{
+
+            width: 100%;
+            height: 10%;
+            position: relative;
+            display: inline-block;
+        }
+
+        .hrSeparator {
+
+            height: 0.4em;
+            border: 0;
+            box-shadow: inset 0 0.4em 0.4em -0.4em rgba(0, 0, 0, 0.5);
+        }
+
+        .hrBottomSeparator {
+
+            height: 2px;
+            border: 0;
+            box-shadow: inset 0 6px 6px -6px rgba(0, 0, 0, 0.5);
+        }
         #_rightMenu{
 
             position: relative; 
-            
+
             display: inline-block;
             width: auto;
             height: 100%;
@@ -144,7 +165,7 @@ session_start();
                 <div class="divLogo" id="_logoContainer">
                     <img id="logoImg" class="clickableElement" src="img/logo.png">
                 </div>
-                <div id="_mainMenu" class="divMenu divPadding10">
+                <div id="_mainMenu" class="divMenu divPadding10" id="menuPrincipalDiv">
                     <div class="menuItemContainer divPadding10 clickableElement">
                         <a href="#pagina_principal" data-href='pagina_principal' id="menuBtnHome" class="menuItem clickableElement">Página principal</a>
                     </div>
@@ -192,5 +213,6 @@ session_start();
         <script src="js/dropdown.js" type="text/javascript"></script>
         <script src="js/vmodal.js" type="text/javascript"></script>
         <script src="js/index.js" type="text/javascript"></script>
+        <script src="js/pagina_principal.js" type="text/javascript"></script>
     </body>
 </html>
