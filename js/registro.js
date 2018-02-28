@@ -1,6 +1,10 @@
 onJqueryReady(function () {
 
-    $('._registroMenu .registroMenuBtn').off().click(function (e) {
+    console.log("Registro!");
+
+    var kkk = $(".registroMenuBtn");
+
+    $("._registroMenu .registroMenuBtn").click(function (e) {
 
         $(".registro-div-active").hide().removeClass("registro-div-active");
 

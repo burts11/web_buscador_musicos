@@ -48,6 +48,9 @@ function loadHashPage(url) {
             var parsedHTML = $.parseHTML(data);
             var tempDOM = $('<output>').append(parsedHTML);
 
+            var onlyHTML = $(tempDOM).html();
+            $('#_divMainContent').stop().hide().html(onlyHTML).fadeIn();
+
             $(tempDOM).find("link").each(function () {
                 try {
                     var cssLink = $(this).attr('href');
@@ -77,9 +80,6 @@ function loadHashPage(url) {
                     $(this).remove();
                 }
             });
-
-            var onlyHTML = $(tempDOM).html();
-            $('#_divMainContent').stop().hide().html(onlyHTML).fadeIn();
         },
         error: function (err) {
 

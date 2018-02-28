@@ -30,6 +30,7 @@
             box-shadow: 0 0px 10px rgba(36,37,38,0.8);
             min-width: 10em;
             min-height: 10em;
+            display: none;
         }
 
         .musico_info_data_container {
@@ -48,10 +49,10 @@
             height: auto;
             width: 100%;
         }
-        
+
         .musico_info_titulo {
-            
-           font-size: 2em;
+
+            font-size: 2em;
         }
     </style>
     <body>

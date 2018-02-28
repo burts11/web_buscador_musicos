@@ -215,5 +215,6 @@ session_start();
         <script src="js/vmodal.js" type="text/javascript"></script>
         <script src="js/index.js" type="text/javascript"></script>
         <script src="js/pagina_principal.js" type="text/javascript"></script>
+        <script src="js/registro.js" type="text/javascript"></script>
     </body>
 </html>

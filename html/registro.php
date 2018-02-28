@@ -100,14 +100,14 @@
         .div_registro_container .form-control-textfield {
 
         }
-        
+
         .div_registro_container .form-control-btn {
-            
+
             margin-top: 0.8em;
         }
-        
+
         .registrarseBtn{
-            
+
             margin-left: 3em;
         }
     </style>

@@ -29,7 +29,6 @@ onJqueryReady(function () {
                     onDialogShow: function (ev) {
 
                         var usuarioId = usuario["idusuario"];
-                        console.log("Usuario Id ->" + usuarioId);
                         callJqueryWindowEvent(VInfo.MUSICO_INFO, usuarioId);
                     },
                     onDialogClose: function (ev) {
