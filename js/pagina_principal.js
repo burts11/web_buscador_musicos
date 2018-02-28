@@ -23,10 +23,14 @@ onJqueryReady(function () {
 
             var div = $("<div>").addClass("musicoContainer clickableElement").css({width: "220px"});
 
-            $(div).unbind("click").bind("click", function () {
+            $(div).bind("click", function () {
 
-                VModal.show("musico_info", item, {modalEffect: "md-effect-3", VModalId: "test"}, {
+                VModal.show("musico_info", item, {modalEffect: "md-effect-5", VModalId: generateUniqueId()}, {
                     onDialogShow: function (ev) {
+
+                        var usuarioId = usuario["idusuario"];
+                        console.log("Usuario Id ->" + usuarioId);
+                        callJqueryWindowEvent(VInfo.MUSICO_INFO, usuarioId);
                     },
                     onDialogClose: function (ev) {
                     }

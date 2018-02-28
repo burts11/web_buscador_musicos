@@ -24,7 +24,7 @@ function onAction($action) {
             try {
                 $array = $dataBase->rawQuery($select);
 
-                echo encode($array);
+                echo jsonEncode($array);
             } catch (Exception $e) {
 
                 $result = Array(
@@ -33,7 +33,7 @@ function onAction($action) {
                     "mensaje" => $dataBase->getLastError()
                 );
 
-                echo encode($result);
+                echo jsonEncode($result);
             }
             break;
         case "RawQueryOne":
@@ -41,7 +41,7 @@ function onAction($action) {
 
             try {
                 $array = $dataBase->rawQueryOne($select);
-                echo encode($array);
+                echo jsonEncode($array);
             } catch (Exception $e) {
 
                 $result = Array(
@@ -50,13 +50,13 @@ function onAction($action) {
                     "mensaje" => $dataBase->getLastError()
                 );
 
-                echo encode($result);
+                echo jsonEncode($result);
             }
 
             break;
         case "ObtenerMusicos":
             $array = $dataBase->rawQuery("SELECT * FROM usuario INNER JOIN musico ON usuario.idusuario = musico.idmusico;");
-            echo encode($array);
+            echo jsonEncode($array);
             break;
         case "CerrarSesion":
             session_start();
@@ -75,11 +75,11 @@ function onAction($action) {
                 );
             }
 
-            echo encode($result);
+            echo jsonEncode($result);
             break;
         case "MostrarSesion":
             session_start();
-            echo encode($_SESSION);
+            echo jsonEncode($_SESSION);
             break;
         case "UsuarioLogueado":
             session_start();
@@ -107,7 +107,7 @@ function onAction($action) {
                 );
             }
 
-            echo encode($result);
+            echo jsonEncode($result);
             break;
         case "IniciarSesion":
             session_start();
@@ -124,28 +124,30 @@ function onAction($action) {
                 WHEN tipo = 2 THEN 'Local'
                 WHEN tipo = 3 THEN 'Fan' END as Privilegio FROM usuario where usuario = ? AND pass = ?", Array($user, $pass));
 
+                $privilegio = $pri["Privilegio"];
+                
                 $_SESSION[Session::UserName] = $user;
                 $_SESSION[Session::UserPassword] = $pass;
                 $_SESSION[Session::Logueado] = "true";
-                $_SESSION[Session::Privilegio] = $pri["Privilegio"];
+                $_SESSION[Session::Privilegio] = $privilegio;
 
                 $result = Array(
                     "resultado" => "Success",
                     "mensaje" => "Usuario Logueado!",
                     "user" => $user,
                     "pass" => $pass,
-                    "privilegio" => $pri["Privilegio"]
+                    "privilegio" => $privilegio
                 );
             } else {
                 $result = Array("resultado" => "Error", "mensaje" => "Wrong user/password");
             }
 
-            echo encode($result);
+            echo jsonEncode($result);
             break;
     }
 }
 
-function encode($array) {
+function jsonEncode($array) {
 
     return json_encode(json_encode($array));
 }

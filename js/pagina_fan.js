@@ -16,7 +16,6 @@ onJqueryReady(function () {
         $("#divMusicosFan").empty();
 
         $.each(result, function (i, item) {
-            console.log(item);
 
             var usuario = item;
             var nombre = usuario ["nombre"];
@@ -53,7 +52,6 @@ onJqueryReady(function () {
             $(div).append(musicoFooter);
 
             $("#divMusicosFan").append(div);
-            console.log(nombre);
         });
     });
 });

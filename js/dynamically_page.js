@@ -54,6 +54,7 @@ function loadHashPage(url) {
                     cssLink = cssLink.replace('../', '');
                     appendCSS(cssLink);
                     $(this).remove();
+
                     //                    console.log(cssLink);
                 } catch (err) {
                     console.log("Load Page CSS -> " + err.message);

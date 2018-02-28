@@ -3,6 +3,9 @@ var currentUserType = "";
 
 var Main = {
 
+    cambiarTitulo: function (titulo) {
+        document.title = titulo;
+    },
     inicio: function () {
 
         $("#_userMenu").hide();
@@ -68,18 +71,19 @@ var Main = {
             case "Administrador":
 //                Main.agregarMenuBtn("pagina_principal", "menuBtnUserHome", "Home");
                 cambiarPagina("pagina_principal");
-//                cambiarHash("pagina_principal");
+                cambiarHash("pagina_principal");
+                Main.cambiarTitulo("Home");
                 break;
             case "Fan":
                 Main.agregarMenuBtn("pagina_fan", "menuBtnUserHome", "Home");
                 cambiarPagina("pagina_fan");
                 cambiarHash("pagina_fan");
+                Main.cambiarTitulo("Home - Fan");
                 break;
             case "Musico":
                 Main.agregarMenuBtn("pagina_musico", "menuBtnUserHome", "Home");
-
                 cambiarPagina("pagina_musico");
-//                cambiarHash("pagina_musico");
+                cambiarHash("pagina_musico");
                 break;
             case "Local":
                 Main.agregarMenuBtn("pagina_local", "menuBtnUserHome", "Home");
@@ -161,7 +165,7 @@ onJqueryWindowCallbackEvent(VMessage.PAGINA_DROP_DOWN_ITEM_CLICKED, {
 
                 console.log("tes");
                 var item = $("#" + "drop_editar_perfil");
-                VModal.show("perfil", item, { modalEffect: "md-effect-2" }, {
+                VModal.show("perfil", item, {modalEffect: "md-effect-2"}, {
                     onDialogShow: function (ev) {
                     },
                     onDialogClose: function (ev) {
@@ -200,7 +204,7 @@ onJqueryReady(function () {
 
     $("#_loginContainer").click(function (e) {
 
-        VModal.show("login", this, { modalEffect: "md-effect-2" }, {
+        VModal.show("login", this, {modalEffect: "md-effect-2"}, {
             onDialogShow: function (ev) {
 
             },

@@ -26,6 +26,11 @@ var VMessage = {
     PAGINA_DROP_DOWN_ITEM_CLICKED: "page.dropdown.item.clicked"
 };
 
+var VInfo = {
+
+      MUSICO_INFO : "MUSICO_INFO"
+};
+
 function onJqueryReady(func) {
 
     $(document).ready(func());
@@ -89,10 +94,18 @@ function callJqueryEvent(data) {
     });
 }
 
+function generateUniqueId() {
+
+    var uniqueId = Math.random().toString(36).substring(2)
+            + (new Date()).getTime().toString(36);
+    
+    return uniqueId;
+}
+
 function isFunctionDefined(func) {
     if (typeof func === "function") {
         return true;
     }
-    
+
     return false;
 }

@@ -38,6 +38,10 @@ html, body {
     background-color: white;
 }
 
+label{
+    font-family: Lato;
+}
+
 .blockLabel{
 
     display: block;
@@ -45,9 +49,53 @@ html, body {
     margin-bottom: 0.1em;
 }
 
+.labelMarginBottom4em{
+    margin-bottom: 0.4em;
+}
+
+.labelMarginBottom5em{
+    margin-bottom: 0.5em;
+}
+
+.labelMarginBottom6em{
+    margin-bottom: 0.6em;
+}
+
+.labelMarginBottom7em{
+    margin-bottom: 0.7em;
+}
+
+.labelMarginBottom8em{
+    margin-bottom: 0.8em !important;
+}
+
+.labelMarginBottom9em{
+    margin-bottom: 0.9em !important;
+}
+
 .tituloH1 {
 
     padding: 10px;
+}
+
+.textoCentradoHorizontal{
+    position: relative;
+    display:inline-block;  
+    width: 100%;
+    text-align: center; 
+}
+
+.textoCentradoHorizontalUpperCase{
+    text-transform: uppercase;
+    position: relative;
+    display:inline-block;  
+    width: 100%;
+    text-align: center; 
+}
+
+.centeredHorizontalText{
+
+    text-align: center;
 }
 
 .tituloH1-Grey {
