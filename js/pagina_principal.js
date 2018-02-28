@@ -47,7 +47,7 @@ onJqueryReady(function () {
 
             $(musicoBody).append($("<div>").addClass("musicoAlbumArtContainer"));
 
-            var fullPath = Main.obtenerUserDataPath(nombre) + "img/album_art.jpg";
+            var fullPath = Main.obtenerUserDataPath(usuario["usuario"]) + "img/album_art.jpg";
             $(musicoBody).find(".musicoAlbumArtContainer").append("<img>").find("img").addClass("musicoAlbumArtImg").prop("src", fullPath);
 
             $(musicoFooter).append($("<div>").addClass("musicoInfo"));
