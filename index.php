@@ -4,13 +4,14 @@ session_start();
 <!DOCTYPE html>
 <html>
     <head>
+        <title>Index</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
         <meta charset="UTF-8">  
-        <title>Index</title>
         <script src="js/jquery-3.3.1.min.js" type="text/javascript"></script>
         <script src="js/base.js" type="text/javascript"></script>
         <script src="js/bbdd.js" type="text/javascript"></script>
+        <script src="js/classie.js" type="text/javascript"></script>
         <link href="css/base.css" rel="stylesheet" type="text/css"/>
         <link href="css/header.css" rel="stylesheet" type="text/css"/>
         <script src="js/jquery.slides.min.js" type="text/javascript"></script>

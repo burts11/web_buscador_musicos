@@ -25,7 +25,7 @@ onJqueryReady(function () {
 
             $(div).unbind("click").bind("click", function () {
 
-                VModal.show("musico_info", item, {modalEffect: "md-effect-3"}, {
+                VModal.show("musico_info", item, {modalEffect: "md-effect-3", VModalId: "test"}, {
                     onDialogShow: function (ev) {
                     },
                     onDialogClose: function (ev) {
