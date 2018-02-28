@@ -151,7 +151,7 @@ CREATE TABLE `musico` (
 
 LOCK TABLES `musico` WRITE;
 /*!40000 ALTER TABLE `musico` DISABLE KEYS */;
-INSERT INTO `musico` VALUES (1,'Balada','Carrion',666,'','STEJAV',0),(4,'Balada','Manuel Ferris',0,'','Nino Bravo',0),(5,'Epic','On Titan',0,'','SHINGEKI',0);
+INSERT INTO `musico` VALUES (2,'Rock','',0,'','Muse',3),(4,'Balada','Manuel Ferris',0,'','Nino Bravo',0),(5,'Epic','On Titan',0,'','SHINGEKI',0),(6,'Rock','',0,'','Coldplay',4);
 /*!40000 ALTER TABLE `musico` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -170,7 +170,7 @@ CREATE TABLE `usuario` (
   `pass` varchar(50) NOT NULL,
   `tipo` int(1) NOT NULL,
   PRIMARY KEY (`idusuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -179,7 +179,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'Steven','semail','steven','1234',0),(3,'Fan','fanemail','fan','1234',3),(4,'Nino','','nino','1234',1),(5,'Attack','','attack','1234',1);
+INSERT INTO `usuario` VALUES (1,'Steven','semail','steven','1234',0),(2,'Muse','','muse','1234',1),(3,'Fan','fanemail','fan','1234',3),(4,'Nino','','nino','1234',1),(5,'Attack','','attack','1234',1),(6,'Coldplay','','coldplay','1234',1),(7,'','','','',0);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -222,4 +222,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-27 17:56:19
+-- Dump completed on 2018-02-28 23:39:02
