@@ -4,7 +4,6 @@
         <meta charset="UTF-8">
     </head>
     <style>
-
         .musico_info_container {
 
             width: 100%;
@@ -19,7 +18,7 @@
             width: 100%;
             height: 100%;
             min-width: 10em;
-            min-height: 10em;
+            max-height: 18em;
         }
 
         #musicoFoto {
@@ -29,7 +28,7 @@
             height: 100%;
             box-shadow: 0 0px 10px rgba(36,37,38,0.8);
             min-width: 10em;
-            min-height: 10em;
+            max-height: 18em;
             display: none;
         }
 
@@ -68,41 +67,66 @@
             </div>
         </div>
         <script>
-            onJqueryReady(function () {
+            onJqueryWindowCallbackEventOne(VInfo.MUSICO_INFO, {
 
-                onJqueryWindowCallbackEventOne(VInfo.MUSICO_INFO, {
+                callback: function (e) {
 
-                    callback: function (e) {
+                    var select =
+                            `SELECT usuario.usuario, usuario.nombre, musico.apellidos, musico.genero, musico.nombreartistico,
+                 musico.numerocomponentes FROM usuario INNER JOIN musico ON usuario.idusuario = musico.idmusico where musico.idmusico = ${e.json.usuarioId}`;
 
-                        var select =
-                                `SELECT usuario.usuario, usuario.nombre, musico.apellidos, musico.genero, musico.nombreartistico,
-                 musico.numerocomponentes FROM usuario INNER JOIN musico ON usuario.idusuario = musico.idmusico where musico.idmusico = ${e.json}`;
+                    callAjaxBBDD(
+                            {
+                                action: "RawQueryOne",
+                                query: select
+                            }, function (result) {
 
-                        callAjaxBBDD(
-                                {
-                                    action: "RawQueryOne",
-                                    query: select
-                                }, function (result) {
+// nombre
+                        var nombreDiv = $("<div>").addClass("blockDiv marginBottom5em");
+                        var nombreLang = $("<label lang='es' data-lang-token='MusicoInfoNombre'></>")
+                                .addClass("musicoInfoTexto").text("Nombre : ");
+                        var nombreReal = $("<label>").addClass("musicoInfoTexto ").text(result["nombre"]);
+                        $(nombreDiv).append(nombreLang);
+                        $(nombreDiv).append(nombreReal);
 
-                            console.log(result);
+// nombre artistico
+                        var nombreArtisticoDiv = $("<div>").addClass("blockDiv marginBottom5em");
+                        var nombreLang = $("<label lang='es' data-lang-token='MusicoInfoNombreArtistico'></>")
+                                .addClass("musicoInfoTexto").text("Nombre artístico : ");
+                        var nombreArtisticoReal = $("<label>").addClass("musicoInfoTexto labelMarginBottom5em").text(result["nombreartistico"]);
 
-                            var nombre = $("<label>").addClass("blockLabel musicoInfoTexto labelMarginBottom5em").text("Nombre : " + result["nombre"]);
-                            var nombreartistico = $("<label>").addClass("blockLabel musicoInfoTexto labelMarginBottom5em").text("Nombre artístico : " + result["nombreartistico"]);
-                            var genero = $("<label>").addClass("blockLabel musicoInfoTexto labelMarginBottom5em").text("Género : " + result["genero"]);
-                            var componentes = $("<label>").addClass("blockLabel musicoInfoTexto labelMarginBottom5em").text("Número de componentes : " + result["numerocomponentes"]);
+                        $(nombreArtisticoDiv).append(nombreLang);
+                        $(nombreArtisticoDiv).append(nombreArtisticoReal);
 
-                            $(".musico_info_data").append(nombre);
-                            $(".musico_info_data").append(nombreartistico);
-                            $(".musico_info_data").append(genero);
-                            $(".musico_info_data").append(componentes);
+// genero
+                        var generoDiv = $("<div>").addClass("blockDiv marginBottom5em");
+                        var generoLang = $("<label lang='es' data-lang-token='MusicoInfoGenero'></>").addClass("musicoInfoTexto").text("Género : ");
+                        var generoReal = $("<label>").addClass("musicoInfoTexto").text(result["genero"]);
 
-                            $(".musico_info_titulo").text(result["nombre"]).fadeIn();
-                            $(".musico_info_data_container").hide().fadeIn("slow");
+                        $(generoDiv).append(generoLang);
+                        $(generoDiv).append(generoReal);
 
-                            $("#musicoFoto").hide().prop("src", `userdata/${result.usuario}/img/album_art.jpg`).fadeIn();
-                        });
-                    }
-                });
+// componentesDiv
+                        var componentesDiv = $("<div>").addClass("blockDiv marginBottom5em");
+                        var componentesLang = $("<label lang='es' data-lang-token='MusicoInfoComponentes'></>").addClass("musicoInfoTexto").text("Número Componentes : ");
+                        var componentesReal = $("<label>").addClass("musicoInfoTexto").text(result["numerocomponentes"]);
+
+                        $(componentesDiv).append(componentesLang);
+                        $(componentesDiv).append(componentesReal);
+
+                        $(".musico_info_data").append(nombreDiv);
+                        $(".musico_info_data").append(nombreArtisticoDiv);
+                        $(".musico_info_data").append(generoDiv);
+                        $(".musico_info_data").append(componentesDiv);
+
+                        $(".musico_info_titulo").text(result["nombre"]).fadeIn();
+                        $(".musico_info_data_container").hide().fadeIn("slow");
+
+                        $("#musicoFoto").hide().prop("src", `userdata/${result.usuario}/img/album_art.jpg`).fadeIn();
+
+                        e.json.vparams.onDialogContentLoaded();
+                    });
+                }
             });
         </script>
     </div>
