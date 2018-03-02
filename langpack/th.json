@@ -1,0 +1,11 @@
+{
+	"token": {
+		"prueba1":"Test1gdsffdsgf",
+		"prueba2":"Test2fgfgfgf"
+	},
+	"regex": [
+		["Budget", "งบประมาณ"],
+		["^Something at start of text", ""],
+		["This will be case insensitive", "i", ""]
+	]
+}

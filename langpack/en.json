@@ -1,0 +1,21 @@
+{
+	"token": {
+		"MenuBotonPrincipal":"Main Page",
+		"MenuBotonHome":"Home",
+		"MenuBotonRegistro":"Register",
+	    "MenuBotonLogin": "Login",
+		"DialogLogin_Titulo":"Login",
+		"DialogLogin_Usuario":"User",
+		"DialogLogin_Pass":"Pass",
+		"DialogLogin_Submit":"Enter",
+		"MusicoInfoNombre":"Name: ",
+		"MusicoInfoNombreArtistico":"Artist Name: ",
+		"MusicoInfoGenero":"Genre: ",
+		"MusicoInfoComponentes":"Number of components: ",
+		"Footer_CambiarIdioma":"Change Language",
+		"Footer_CambiarIdioma_Castellano":"Spanish",
+		"Footer_CambiarIdioma_Ingles":"English"
+	},
+	"regex": [
+	]
+}
