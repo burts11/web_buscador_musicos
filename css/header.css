@@ -1,8 +1,9 @@
 .headerDiv{
 
     position: relative;
-    background-color: white;
+    /*background-color: white;*/
     display: inline-block;
+    background-color: transparent;
 }
 
 .divLogo {

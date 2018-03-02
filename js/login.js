@@ -1,14 +1,6 @@
 onJqueryReady(function () {
 
-    onJqueryWindowCallbackEvent(VModalMessage.CLOSING, {
-
-        callback: function (e) {
-
-            console.log("clickkk");
-        }
-    });
-
-    onJqueryWindowCallbackEventOne(VModalMessage.READY, {
+    onJqueryWindowCallbackEventOne(VInfo.LOGIN_INFO, {
 
         callback: function (e) {
             $("#input_login_btn").click(function () {
@@ -23,14 +15,18 @@ onJqueryReady(function () {
                 iniciarSesion(user, pass, {
 
                     success: function (json) {
-                        VModal.closeWithId(e.json.modalId);
+
+                        e.json.vparams.close();
                         Main.comprobarUsuarioLogueado();
                     },
                     error: function (json) {
-                        VModal.closeWithId(e.json.modalId);
+                        e.json.vparams.close();
                     }
                 });
             });
+
+            e.json.vparams.onDialogContentLoaded();
         }
     });
 });
+

@@ -10,6 +10,7 @@
 
             height: 55%;
         }
+        
         #divMusicosFan .musicoFooter {
 
             height: 35%;
@@ -21,11 +22,6 @@
             width: 20px;
             height: 20px;
             float: right;
-        }
-
-        #divMusicosFan .musicoContainer{
-
-            margin-bottom: 200PX;
         }
 
         .musicoVoteBtn{

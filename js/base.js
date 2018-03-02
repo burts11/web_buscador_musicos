@@ -17,6 +17,7 @@ var BBDD = {
 var VModalMessage = {
 
     READY: "vmodal.READY",
+    BEFORE_SHOW: "vmodal.before.show",
     CLOSING: "vmodal.CLOSING"
 };
 
@@ -28,7 +29,9 @@ var VMessage = {
 
 var VInfo = {
 
-      MUSICO_INFO : "MUSICO_INFO"
+    MUSICO_INFO: "MUSICO_INFO",
+    PERFIL_INFO: "PERFIL_INFO",
+    LOGIN_INFO: "LOGIN_INFO"
 };
 
 function onJqueryReady(func) {
@@ -49,7 +52,7 @@ function onJqueryWindowCallbackEventOne(event, func) {
 
     $(window).one(event, function (e)
     {
-        console.log("jeventw " + event);
+//        console.log("jeventw " + event);
         func.callback(e);
         $(window).off("'" + event + "'");
     });
@@ -59,7 +62,7 @@ function onJqueryWindowCallbackEvent(event, func) {
 
     $(window).on(event, function (e)
     {
-        console.log("jevent " + event);
+//        console.log("jevent " + event);
         func.callback(e);
         $(window).off("'" + event + "'");
     });
@@ -98,7 +101,7 @@ function generateUniqueId() {
 
     var uniqueId = Math.random().toString(36).substring(2)
             + (new Date()).getTime().toString(36);
-    
+
     return uniqueId;
 }
 

@@ -45,11 +45,7 @@ function loadHashPage(url) {
     loadPage(url, {
         success: function (data) {
 
-            var parsedHTML = $.parseHTML(data);
-            var tempDOM = $('<output>').append(parsedHTML);
-
-            var onlyHTML = $(tempDOM).html();
-            $('#_divMainContent').stop().hide().html(onlyHTML).fadeIn();
+            var tempDOM = $('<output>').html(data);
 
             $(tempDOM).find("link").each(function () {
                 try {
@@ -57,28 +53,34 @@ function loadHashPage(url) {
                     cssLink = cssLink.replace('../', '');
                     appendCSS(cssLink);
                     $(this).remove();
-
-                    //                    console.log(cssLink);
                 } catch (err) {
                     console.log("Load Page CSS -> " + err.message);
                 }
             });
 
-            $(data).filter("script").each(function () {
+            var scripts = new Array();
+
+            $(tempDOM).find('script').each(function () {
 
                 var jsLink = $(this).attr('src');
-
-                if (jsLink !== null || jsLink !== "") {
+                if (jsLink !== null && jsLink !== undefined) {
 
                     try {
                         jsLink = jsLink.replace('../', '');
-                        appendScript(jsLink);
+//                        console.log("Replaced " + jsLink);
+                        scripts.push(jsLink);
+                        $(this).remove();
                     } catch (err) {
                         console.log("Load Page JS -> " + err.message);
                     }
-
-                    $(this).remove();
                 }
+            });
+
+            var onlyHTML = $(tempDOM).html();
+            $('#_divMainContent').stop().hide().html(onlyHTML).fadeIn();
+
+            scripts.forEach(function (scriptSrc) {
+                appendScript(scriptSrc);
             });
         },
         error: function (err) {
@@ -145,12 +147,20 @@ function appendCSSInline(id, css, where) {
 function appendScript(url) {
     var loaded = isScriptLoaded(url);
 
-    if (loaded)
+//    console.log("loaded -> " + loaded);
+//    if (!loaded)
+//    {
+////        async='async'
+//        $("head").append("<script src='" + url + "' type='text/javascript' ></script>");
+////        $('script[src="' + url + '"]').remove();
+//    }
+
+    if (!loaded)
     {
         $('script[src="' + url + '"]').remove();
     }
 
-    $("head").append("<script src='" + url + "' type='text/javascript' async='async'></script>");
+    $("head").append("<script src='" + url + "' type='text/javascript' ></script>");
 }
 
 function appendCSS(url) {

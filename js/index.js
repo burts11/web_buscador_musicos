@@ -145,7 +145,6 @@ var Main = {
                 cambiarPagina("pagina_principal");
                 var menuHome = $("#menuBtnHome");
                 setActive(menuHome);
-                console.log("PRUEBA");
                 return;
             }
 
@@ -160,13 +159,23 @@ onJqueryWindowCallbackEvent(VMessage.PAGINA_DROP_DOWN_ITEM_CLICKED, {
     callback: function (e) {
 
         switch (e.json.id) {
+            case "drop_idioma_castellano":
 
+                window.lang.change("es");
+                break;
+            case "drop_idioma_ingles":
+                window.lang.change("en");
+                break;
             case "drop_editar_perfil":
 
-                console.log("tes");
+                console.log("drop_editar_perfil clicked");
                 var item = $("#" + "drop_editar_perfil");
-                VModal.show("perfil", item, {modalEffect: "md-effect-2"}, {
+                VModal.show("perfil", item, {modalEffect: "md-effect-15", VModalId: "index_show_perfil"}, {
                     onDialogShow: function (ev) {
+
+                        var logoSrc = $("#_userMenuLogo").prop("src");
+                        ev["logo"] = logoSrc;
+                        callJqueryWindowEvent(VInfo.PERFIL_INFO, ev);
                     },
                     onDialogClose: function (ev) {
                     }
@@ -186,7 +195,6 @@ onJqueryWindowCallbackEvent(VMessage.PAGINA_DROP_DOWN_ITEM_CLICKED, {
 
                     }
                 });
-
                 break;
         }
     }
@@ -204,9 +212,11 @@ onJqueryReady(function () {
 
     $("#_loginContainer").click(function (e) {
 
-        VModal.show("login", this, {modalEffect: "md-effect-2"}, {
+        VModal.show("login", "", {modalEffect: "md-effect-13", VModalId: "index_show_login"}, {
             onDialogShow: function (ev) {
 
+                ev["vparams"]["sender"] = "login";
+                callJqueryWindowEvent(VInfo.LOGIN_INFO, ev);
             },
             onDialogClose: function (ev) {
             }

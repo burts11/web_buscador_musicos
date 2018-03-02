@@ -25,11 +25,14 @@ onJqueryReady(function () {
 
             $(div).bind("click", function () {
 
-                VModal.show("musico_info", item, {modalEffect: "md-effect-5", VModalId: generateUniqueId()}, {
+                VModal.show("musico_info", item, {modalEffect: "md-effect-10", VModalId: generateUniqueId()}, {
                     onDialogShow: function (ev) {
 
                         var usuarioId = usuario["idusuario"];
-                        callJqueryWindowEvent(VInfo.MUSICO_INFO, usuarioId);
+                        ev["usuarioId"] = usuarioId;
+                        ev["vparams"]["sender"] = "musico_info_principal";
+
+                        callJqueryWindowEvent(VInfo.MUSICO_INFO, ev);
                     },
                     onDialogClose: function (ev) {
                     }
@@ -52,8 +55,22 @@ onJqueryReady(function () {
 
             $(musicoFooter).append($("<div>").addClass("musicoInfo"));
 
-            $(musicoFooter).find(".musicoInfo").append($("<label>").addClass("blockLabel musicoInfoTexto clickableElement").text("Nombre artístico: " + nombreartistico));
-            $(musicoFooter).find(".musicoInfo").append($("<label>").addClass("blockLabel musicoInfoTexto clickableElement").text("Género: " + genero));
+            var nombreArtisticoDiv = $("<div>").addClass("blockDiv");
+            var nombreArtisticoLang = $("<label lang='es' data-lang-token='MusicoInfoNombreArtistico'></>")
+                    .addClass("musicoInfoTexto").text("Nombre artístico: ");
+            var nombreArtisticoReal = $("<label>").addClass("musicoInfoTexto ").text(nombreartistico);
+
+            $(nombreArtisticoDiv).append(nombreArtisticoLang).append(nombreArtisticoReal);
+
+            var generoDiv = $("<div>").addClass("blockDiv");
+            var generoLang = $("<label lang='es' data-lang-token='MusicoInfoGenero'></>")
+                    .addClass("musicoInfoTexto").text("Género : ");
+            var generoReal = $("<label>").addClass("musicoInfoTexto ").text(nombreartistico);
+
+            $(generoDiv).append(generoLang).append(generoReal);
+
+            $(musicoFooter).find(".musicoInfo").append(nombreArtisticoDiv);
+            $(musicoFooter).find(".musicoInfo").append(generoDiv);
 
             $(div).append(musicoBody);
             $(div).append(musicoFooter);

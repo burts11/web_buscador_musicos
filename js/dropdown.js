@@ -5,11 +5,25 @@ var VDropDown = {
 
             $(".dropDown_container").hide().fadeIn();
 
+//            var width = $(this).width();
+//            var height = $(this).height();
+//
+//            var top = $(this).offset().top;
+//            top -= $(this).height();
+//            top -= 10;
+//            var left = $(this).offset().left;
+//            left += width - (width / 2);
+//
+//            $(".dropDown_container").css({
+//                top: top - (height + height / 2),
+//                left: left
+//            });
+
             var top = $(this).offset().top;
-            top += $(this).height();
-            top += 10;
+            top -= $(this).height();
+            top -= 10;
             var left = $(this).offset().left;
-            left -= 50;
+            left += 50;
 
             $(".dropDown_container").css({
                 top: top,

@@ -24,6 +24,22 @@ onJqueryReady(function () {
 
             var div = $("<div>").addClass("musicoContainer clickableElement").css({width: "220px"});
 
+            $(div).bind("click", function () {
+
+                VModal.show("musico_info", item, {modalEffect: "md-effect-13", VModalId: generateUniqueId()}, {
+                    onDialogShow: function (ev) {
+
+                        var usuarioId = usuario["idusuario"];
+                        ev["usuarioId"] = usuarioId;
+                        ev["vparams"]["sender"] = "musico_info_fan";
+
+                        callJqueryWindowEvent(VInfo.MUSICO_INFO, ev);
+                    },
+                    onDialogClose: function (ev) {
+                    }
+                });
+            });
+
             var musicoHeader = $("<div>").addClass("musicoHeader");
             var musicoBody = $("<div>").addClass("musicoBody");
             var musicoFooter = $("<div>").addClass("musicoFooter");
