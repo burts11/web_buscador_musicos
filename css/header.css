@@ -8,7 +8,7 @@
 
 .divLogo {
     position: relative;
-    width: 80px;
+    width: auto;
     height: 100%;
     display: inline-block;
     overflow: hidden;    
@@ -29,7 +29,7 @@
 #logoImg{
 
     position: relative;
-    width: 100%;
+    width: 6em;
     height: 100%;
 }
 

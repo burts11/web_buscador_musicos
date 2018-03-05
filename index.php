@@ -12,6 +12,7 @@ session_start();
         <script src="js/js.cookie.js" charset="utf-8" type="text/javascript"></script>
         <script src="js/jquery-lang.js" charset="utf-8" type="text/javascript"></script>
         <script src="js/base.js" type="text/javascript"></script>
+        <script src="js/baseFunc.js" type="text/javascript"></script>
         <script src="js/bbdd.js" type="text/javascript"></script>
         <script src="js/classie.js" type="text/javascript"></script>
         <link href="css/base.css" rel="stylesheet" type="text/css"/>
@@ -128,7 +129,7 @@ session_start();
             color: var(--textColorPrimary);
         }
 
-        .dropDown_container {
+        .vPopupMenuContainer {
             position: absolute;
             display: none;
             background-color: white;
@@ -137,12 +138,12 @@ session_start();
             box-shadow: 0 0px 10px rgba(36,37,38,0.7);
         }
 
-        .dropDown_Item{
+        .vPopupMenuItem{
             padding: 0.5em;
             cursor: pointer;
         }
 
-        .dropDown_Item:hover, .dropDown_Item:focus{
+        .vPopupMenuItem:hover, .dropDown_Item:focus{
 
             background-color: #f1f1f1;
             padding: 0.5em;
@@ -151,15 +152,51 @@ session_start();
             border-radius: 0.5em;
         }
 
-        .dropDown_Item label{
+        .vPopupMenuItem label{
             cursor: pointer;
             border-radius: 0.5em;
             color: var(--textColorPrimary);
         }
 
-        .dropDown_container-show{
+        .divConciertos {
+            width: 100%;
+        }
 
-            visibility: visible;
+        .divConciertoChild {
+
+            width: 49.5%;
+            background-color: red;
+        }
+
+        .divConciertoChild2 {
+
+            width: 49.5%;
+            background-color: orange;
+        }
+
+        .divIdiomas{
+            position: relative;
+            display: inline-block;
+            overflow: hidden;    
+            /*background-color: red;*/
+        }
+
+        .idiomasContainer{
+            border: 1px;
+            border-radius: 0.5em;
+            border-width: 0.5em;
+            display: inline-block;
+            padding: 0.9em;
+            /*background-color: #222;*/
+        }
+
+        #idiomaFlag{
+
+            position: relative;
+            width: 24px;
+            height: 24px;
+            min-height: 20px;
+            min-width: 20px;
         }
     </style>
     <body>
@@ -168,6 +205,12 @@ session_start();
             <div class="headerDiv">
                 <div class="divLogo" id="_logoContainer">
                     <img id="logoImg" class="clickableElement" src="img/logo.png">
+                </div>
+                <div class="divIdiomas centeredElementVertical" id="_idiomasContainer">
+                    <div class="idiomasContainer divPadding10 clickableElement vPopupTrigger" data-popup-container="popup1" >
+                        <img id="idiomaFlag" class="clickableElement" src="img/flags/es.png">
+                        <a lang="es" data-lang-token="Footer_CambiarIdioma" id="_languageSwitchButton" class="menuItem clickableElement whiteText">en</a>
+                    </div>
                 </div>
                 <div id="_mainMenu" class="divMenu divPadding10" id="menuPrincipalDiv">
                     <div class="menuItemContainer divPadding10 clickableElement">
@@ -184,49 +227,59 @@ session_start();
                         </div>
                     </div>
                     <div id="_userMenu">
-                        <div class="centeredElementVertical userMenuPic dropDown_Trigger" id="_userMenuLogoContainer">
+                        <div class="centeredElementVertical userMenuPic vPopupTrigger" id="_userMenuLogoContainer" data-popup-container="popupPerfil">
                             <img id="_userMenuLogo" class="clickableElement centeredElement " src="img/default_user_icon.png">
                         </div>
-                        <div class="centeredElementVertical userMenuName clickableElement" id="_userMenuUserNameContainer">
-                            <a class="clickableElement userMenuUserName"></a>
-                        </div>
-                        <div class="centeredElementVertical userMenuCerrarSesion" id="_userMenuCerrarSesionContainer" >
-                            <a class="clickableElement">Cerrar Sesión</a>
-                        </div>
+                        <!--                        <div class="centeredElementVertical userMenuName clickableElement" id="_userMenuUserNameContainer">
+                                                    <a class="clickableElement userMenuUserName"></a>
+                                                </div>-->
+                        <!--                        <div class="centeredElementVertical userMenuCerrarSesion" id="_userMenuCerrarSesionContainer" >
+                                                    <a class="clickableElement">Cerrar Sesión</a>
+                                                </div>-->
                     </div>
                 </div>
             </div>
             <hr class="hrSeparator">
             <div class="_contentDiv" id="_divMainContent">
             </div>
-            <hr class="hrBottomSeparator">
+            <div class="divConciertos blockDiv">
+
+                <!--                <div class="divConciertoChild inlineDiv">a</div>
+                                <div class="divConciertoChild2 inlineDiv">a</div>-->
+            </div>
+            <!--<hr class="hrBottomSeparator">-->
             <div class="footerDiv">
                 <div class="footer_info inlineDiv">
                     <!--<label class="footer_company_label textoCentradoHorizontal">Music</label>-->
                 </div>
-                <div class="divPadding10 languageDiv md-trigger inlineDiv dropDown_Trigger" id="_languageContainer">
-                    <a lang="es" data-lang-token="Footer_CambiarIdioma" class="clickableElement textoCentradoHorizontal" id="_languageSwitchButton">Cambiar Idioma</a>
-                </div>
+
             </div>
         </div>
-        <div class="dropDown_container">
-            <div class="dropDown_Item" id="drop_idioma_castellano" data-modal='_editar_perfil_modal'>
+        <!--        <div class="dropDown_Trigger" id="clickMe"  data-popup-container="popup1">
+                    <label>CLICK ME</label>
+                </div>-->
+
+        <div class="vPopupMenuContainer" id="popup1">
+            <div class="vPopupMenuItem" id="drop_idioma_castellano" data-modal='_editar_perfil_modal'>
+                <img src="img/flags/es.png">
                 <label lang="es" data-lang-token="Footer_CambiarIdioma_Castellano">Español</label>
             </div>
-            <div class="dropDown_Item" id="drop_idioma_ingles">
+            <div class="vPopupMenuItem" id="drop_idioma_ingles">
+                <img src="img/flags/en.png">
                 <label lang="es" data-lang-token="Footer_CambiarIdioma_Ingles">Inglés</label>
             </div>
         </div>
-<!--        <div class="dropDown_container">
-            <div class="dropDown_Item" id="drop_editar_perfil" data-modal='_editar_perfil_modal'>
+
+        <div class="vPopupMenuContainer" id="popupPerfil">
+            <div class="vPopupMenuItem" id="drop_editar_perfil" data-modal='_editar_perfil_modal'>
                 <label>Editar Perfil</label>
             </div>
-            <div class="dropDown_Item" id="drop_cerrar_sesion">
+            <div class="vPopupMenuItem" id="drop_cerrar_sesion">
                 <label>Cerrar Sesión</label>
             </div>
-        </div>-->
+        </div>
         <script src="js/vmodal.js" type="text/javascript"></script>
-        <script src="js/dropdown.js" type="text/javascript"></script>
+        <script src="js/vpopupmenu.js" type="text/javascript"></script>
         <script src="js/index.js" type="text/javascript"></script>
         <script src="js/pagina_principal.js" type="text/javascript"></script>
         <script src="js/jlang.js" type="text/javascript"></script>

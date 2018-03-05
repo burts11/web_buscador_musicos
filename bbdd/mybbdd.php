@@ -1,7 +1,11 @@
 <?php
 
-require_once './bbdd.php';
 require_once './MysqliDb.php';
+
+function bbdd_inicializar() {
+    $db = new MysqliDb('localhost', 'root', '', 'proyecto');
+    return $db;
+}
 
 if (is_ajax()) {
     if (isset($_POST["action"]) && !empty($_POST["action"])) {
@@ -12,8 +16,7 @@ if (is_ajax()) {
 
 function onAction($action) {
 
-    bbdd_inicializar();
-    $dataBase = MysqliDb::getInstance();
+    $dataBase = bbdd_inicializar();
 
     switch ($action) {
 
@@ -125,7 +128,7 @@ function onAction($action) {
                 WHEN tipo = 3 THEN 'Fan' END as Privilegio FROM usuario where usuario = ? AND pass = ?", Array($user, $pass));
 
                 $privilegio = $pri["Privilegio"];
-                
+
                 $_SESSION[Session::UserName] = $user;
                 $_SESSION[Session::UserPassword] = $pass;
                 $_SESSION[Session::Logueado] = "true";

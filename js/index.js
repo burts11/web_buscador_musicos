@@ -158,12 +158,20 @@ onJqueryWindowCallbackEvent(VMessage.PAGINA_DROP_DOWN_ITEM_CLICKED, {
 
     callback: function (e) {
 
+        console.log(e);
+
         switch (e.json.id) {
             case "drop_idioma_castellano":
+
+                var img = $("#" + e.json.id + " > img").attr("src");
+                $("#idiomaFlag").attr("src", img);
 
                 window.lang.change("es");
                 break;
             case "drop_idioma_ingles":
+                var img = $("#" + e.json.id + " > img").attr("src");
+                $("#idiomaFlag").attr("src", img);
+
                 window.lang.change("en");
                 break;
             case "drop_editar_perfil":

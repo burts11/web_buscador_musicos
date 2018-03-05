@@ -19,6 +19,16 @@ div{
     /*--backgroundColorPrimary : #181818;*/
 }
 
+.whiteText 
+{
+    color: white !important;
+}
+
+.greyText 
+{
+    color: var(--textColorPrimary)  !important;
+}
+
 * {
     font-family: Lato;
 }
@@ -123,6 +133,14 @@ label{
     padding: 10px;
 }
 
+.textoUpperCase{
+    text-transform: uppercase;
+}
+
+.textoLowerCase {
+    text-transform: lowercase;
+}
+
 .textoCentradoHorizontal{
     position: relative;
     display:inline-block;  
@@ -168,7 +186,6 @@ label{
 ._contentDiv{
 
     width: 100%;
-    height: 83%;   
     overflow: auto;
     background-color: transparent;
 }

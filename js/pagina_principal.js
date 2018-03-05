@@ -25,7 +25,7 @@ onJqueryReady(function () {
 
             $(div).bind("click", function () {
 
-                VModal.show("musico_info", item, {modalEffect: "md-effect-10", VModalId: generateUniqueId()}, {
+                VModal.show("musico_info", item, {modalEffect: "md-effect-8", VModalId: generateUniqueId()}, {
                     onDialogShow: function (ev) {
 
                         var usuarioId = usuario["idusuario"];
@@ -65,7 +65,7 @@ onJqueryReady(function () {
             var generoDiv = $("<div>").addClass("blockDiv");
             var generoLang = $("<label lang='es' data-lang-token='MusicoInfoGenero'></>")
                     .addClass("musicoInfoTexto").text("Género : ");
-            var generoReal = $("<label>").addClass("musicoInfoTexto ").text(nombreartistico);
+            var generoReal = $("<label>").addClass("musicoInfoTexto ").text(genero);
 
             $(generoDiv).append(generoLang).append(generoReal);
 

@@ -1,5 +1,10 @@
-var VDropDown = {
+var VPopupMenu = {
+    vInit() {
+        $(".vPopupTrigger").click(function () {
 
+            $(this).popup();
+        });
+    },
     init: function () {
         $(".dropDown_Trigger").click(function () {
 
@@ -44,8 +49,10 @@ var VDropDown = {
     }
 };
 
-
 onJqueryReady(function () {
+    VPopupMenu.vInit();
 
-    VDropDown.init();
+//    VDropDown.init();
+    console.log("inittt");
+//        $("#clickMe").popup();
 });
