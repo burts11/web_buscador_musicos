@@ -17,7 +17,6 @@ if (is_ajax()) {
 function onAction($action) {
 
     $dataBase = bbdd_inicializar();
-
     switch ($action) {
 
         case "RawQuery":
@@ -117,6 +116,8 @@ function onAction($action) {
 
             $user = $_POST["user"];
             $pass = $_POST["pass"];
+            
+            $passCifrada = password_hash($pass, PASSWORD_DEFAULT);
 
             $dataBase->where("usuario", $user);
             $dataBase->where("pass", $pass);

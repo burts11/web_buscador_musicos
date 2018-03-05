@@ -54,7 +54,7 @@
     <body>
         <div class="_childContainer divPadding10">
             <label class="tituloH1-Grey padding10 musico_info_titulo textoCentradoHorizontalUpperCase"></label>
-            <button id="modalbtn" >MOSTRAR</button>
+            <!--<button id="modalbtn" >MOSTRAR</button>-->
             <div class="musico_info_container" style="margin-top: 1em;">
                 <div class="musico_info_pic_container">
                     <img id="musicoFoto">

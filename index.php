@@ -26,7 +26,7 @@ session_start();
         .headerDiv{
 
             width: 100%;
-            height: 10%;
+            height: 8%;
             position: relative;
             display: inline-block;
         }
@@ -44,6 +44,7 @@ session_start();
             border: 0;
             box-shadow: inset 0 6px 6px -6px rgba(0, 0, 0, 0.5);
         }
+        
         #_rightMenu{
 
             position: relative; 
@@ -54,9 +55,10 @@ session_start();
             float: right; 
             margin-right: 10px;
         }
+        
         #_userMenu, #_userMenuLogoContainer {
 
-            display: none;
+            play: none;
         }
         #_userMenu{
             /*background-color: #e5e5e5;*/
@@ -68,11 +70,13 @@ session_start();
             float: right;
             border-radius: 6px;
         }
+        
         #_userMenuLogo{
             position: relative;
             width: 60%;
             height: 60%;
         }
+        
         .userMenuPic {
 
             width: 30%;
@@ -80,6 +84,7 @@ session_start();
             position: relative;
             float: right;
         }
+        
         .userMenuName, #_userMenuUserNameContainer {
 
             left: 40%;
@@ -91,6 +96,7 @@ session_start();
             box-shadow: 0 10px 10px rgba(36,37,38,0.08);
             overflow: hidden;
         }
+        
         .userMenuCerrarSesion{
             left: 75%;
             width: 25%;
@@ -200,7 +206,6 @@ session_start();
         }
     </style>
     <body>
-        <!--<button class="mainButton">Cambiar</button>-->
         <div class="mainDiv" id="_mainDiv">
             <div class="headerDiv">
                 <div class="divLogo" id="_logoContainer">
