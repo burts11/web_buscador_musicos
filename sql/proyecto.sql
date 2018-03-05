@@ -1,8 +1,10 @@
--- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
+CREATE DATABASE  IF NOT EXISTS `proyecto` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `proyecto`;
+-- MySQL dump 10.13  Distrib 5.6.17, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: proyecto
 -- ------------------------------------------------------
--- Server version	5.5.5-10.1.28-MariaDB
+-- Server version	5.5.5-10.1.26-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -14,6 +16,30 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `ciudad`
+--
+
+DROP TABLE IF EXISTS `ciudad`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ciudad` (
+  `idciudad` int(11) NOT NULL AUTO_INCREMENT,
+  `provincia` varchar(45) NOT NULL,
+  `poblacion` varchar(45) NOT NULL,
+  PRIMARY KEY (`idciudad`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ciudad`
+--
+
+LOCK TABLES `ciudad` WRITE;
+/*!40000 ALTER TABLE `ciudad` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ciudad` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `concierto`
@@ -72,6 +98,31 @@ LOCK TABLES `fan` WRITE;
 /*!40000 ALTER TABLE `fan` DISABLE KEYS */;
 INSERT INTO `fan` VALUES (3,'fam',666,'555','sss');
 /*!40000 ALTER TABLE `fan` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `genero`
+--
+
+DROP TABLE IF EXISTS `genero`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `genero` (
+  `idgenero` int(11) NOT NULL,
+  `nombre` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`idgenero`),
+  CONSTRAINT `genero_ibfk_1` FOREIGN KEY (`idgenero`) REFERENCES `musico` (`generoID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `genero`
+--
+
+LOCK TABLES `genero` WRITE;
+/*!40000 ALTER TABLE `genero` DISABLE KEYS */;
+INSERT INTO `genero` VALUES (1,'Rock'),(2,'Pop'),(3,'Electronica'),(4,'Country');
+/*!40000 ALTER TABLE `genero` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -143,7 +194,9 @@ CREATE TABLE `musico` (
   `web` varchar(60) NOT NULL,
   `nombreartistico` varchar(50) NOT NULL,
   `numerocomponentes` int(11) NOT NULL,
+  `generoID` int(11) NOT NULL,
   PRIMARY KEY (`idmusico`),
+  KEY `genero_fk_idx` (`generoID`),
   CONSTRAINT `musico_ibfk_1` FOREIGN KEY (`idmusico`) REFERENCES `usuario` (`idusuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -154,7 +207,7 @@ CREATE TABLE `musico` (
 
 LOCK TABLES `musico` WRITE;
 /*!40000 ALTER TABLE `musico` DISABLE KEYS */;
-INSERT INTO `musico` VALUES (2,'Rock','',0,'','Muse',3),(4,'Balada','Ferri Llopis',0,'','Nino Bravo',1),(5,'Epic','On Titan',0,'','SHINGEKI',0),(6,'Rock','',0,'','Coldplay',4);
+INSERT INTO `musico` VALUES (2,'Rock','',0,'','Muse',3,1),(4,'Balada','Ferri Llopis',0,'','Nino Bravo',1,2),(5,'Epic','On Titan',0,'','SHINGEKI',0,3),(6,'Rock','',0,'','Coldplay',4,4);
 /*!40000 ALTER TABLE `musico` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -172,8 +225,10 @@ CREATE TABLE `usuario` (
   `usuario` varchar(30) NOT NULL,
   `pass` varchar(255) NOT NULL,
   `tipo` int(1) NOT NULL,
-  PRIMARY KEY (`idusuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`idusuario`),
+  UNIQUE KEY `usuario_UNIQUE` (`usuario`),
+  UNIQUE KEY `email_UNIQUE` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -182,7 +237,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'Steven','semail','steven','1234',0),(2,'Muse','','muse','1234',1),(3,'Fan','fanemail','fan','1234',3),(4,'Luis','','nino','1234',1),(5,'Attack','','attack','1234',1),(6,'Coldplay','','coldplay','1234',1);
+INSERT INTO `usuario` VALUES (1,'Steven','semail','steven','1234',0),(2,'Muse','wtwr','muse','1234',1),(3,'Fan','fanemail','fan','1234',3),(4,'Luis','wrtrwt','nino','1234',1),(5,'Attack','htrhdth','attack','1234',1),(6,'Coldplay','laihf','coldplay','1234',1);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -225,4 +280,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-05 16:30:16
+-- Dump completed on 2018-03-05 17:36:05

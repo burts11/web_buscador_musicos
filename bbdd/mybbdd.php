@@ -15,8 +15,8 @@ if (is_ajax()) {
 }
 
 function onAction($action) {
-
-    $dataBase = bbdd_inicializar();
+    bbdd_inicializar();
+    $dataBase = MysqliDb::getInstance();
     switch ($action) {
 
         case "RawQuery":
@@ -79,6 +79,41 @@ function onAction($action) {
 
             echo jsonEncode($result);
             break;
+        case "RegistrarMusico":
+            $nombre = $_POST["nombre"];
+            $email = $_POST["email"];
+            $usuario = $_POST["usuario"];
+            $pass = $_POST["pass"];
+            $tipo = 1;
+            $genero = $_POST["genero"];
+            $apellidos = $_POST["apellidos"];
+            $telefono = $_POST["telefono"];
+            $web = $_POST["web"];
+            $nombreartistico = $_POST["nombreartistico"];
+            $numerocomponentes = $_POST["numerocomponentes"];
+
+            $resultado = $dataBase->rawQuery("INSERT INTO usuario VALUES (default,'$nombre','$email','$usuario','$pass','$tipo')");
+            if ($resultado) {
+                $generoID = $dataBase->rawQuery("select idgenero from genero where nombre = $genero");
+                $idusuario = $dataBase->rawQueryOne("SELECT idusuario from usuario where usuario = '$usuario'");
+                $dataBase->rawQuery("INSERT INTO musico VALUES ('$idusuario','$generoID','$apellidos','$telefono','$web','$nombreartistico','$numerocomponentes')");
+
+                $result = Array(
+                    "resultado" => "Success",
+                    "mensaje" => "Se ha registrado correctamente",
+                );
+
+                jsonEncode($result);
+                
+                return;
+            }
+            $result = Array(
+                "resultado" => "Error",
+                "mensaje" => "No se ha registrado",
+            );
+
+            jsonEncode($result);
+            break;
         case "MostrarSesion":
             session_start();
             echo jsonEncode($_SESSION);
@@ -116,7 +151,7 @@ function onAction($action) {
 
             $user = $_POST["user"];
             $pass = $_POST["pass"];
-            
+
             $passCifrada = password_hash($pass, PASSWORD_DEFAULT);
 
             $dataBase->where("usuario", $user);

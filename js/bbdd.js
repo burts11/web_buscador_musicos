@@ -80,6 +80,33 @@ function iniciarSesion(user, pass, params) {
     });
 }
 
+function registrarMusico(params, callback) {
+var parameters = {
+        action: "RegistrarMusico",
+        nombre: params.nombre,
+        email: params.email,
+        usuario: params.usuario,
+        pass: params.pass,
+        tipo: 1,
+        numerocomponentes: params.numerocomponentes,
+        genero: params.genero,
+        apellidos: params.apellidos,
+        telefono: params.telefono,
+        web: params.web,
+        nombreartistico: params.nombreartistico
+        
+    };
+
+    callAjaxPost("bbdd/mybbdd.php", parameters, function (json) {
+
+    if (success) {
+        callback.success(json);
+    } else {
+        callback.error(json);
+    }
+    });
+}
+
 function obtenerMusicos() {
 
     $("#divMusicos").empty();
