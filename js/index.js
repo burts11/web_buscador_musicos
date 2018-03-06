@@ -170,7 +170,7 @@ var Main = {
     }
 };
 
-onJqueryWindowCallbackEvent(VMessage.PAGINA_DROP_DOWN_ITEM_CLICKED, {
+onJqueryWindowCallbackEvent(VMessage.PAGINA_POPUP_MENU_ITEM_CLICKED, {
 
     callback: function (e) {
 

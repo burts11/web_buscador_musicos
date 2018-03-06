@@ -24,7 +24,7 @@ var VModalMessage = {
 var VMessage = {
 
     PAGINA_SESION_INICIADA: "page.logchecked",
-    PAGINA_DROP_DOWN_ITEM_CLICKED: "page.dropdown.item.clicked"
+    PAGINA_POPUP_MENU_ITEM_CLICKED: "page.popupmenu.item.clicked"
 };
 
 var VInfo = {

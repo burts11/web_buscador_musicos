@@ -15,10 +15,11 @@ onJqueryReady(function () {
             var nombreartistico = usuario ["nombreartistico"];
             var genero = usuario ["genero"];
 
-            var div = $("<div>").addClass("musicoContainer clickableElement");
+            var div = $("<div>").addClass("musicoContainer");
 
-            var musicoBody = $("<div>").addClass("musicoBody");
+            var musicoBody = $("<div>").addClass("musicoBody clickableElement");
             var musicoFooter = $("<div>").addClass("musicoFooter");
+            
             $(musicoBody).append($("<div>").addClass("musicoAlbumArtContainer"));
             $(musicoBody).append("<div class='musicoBodyOver'>");
 
@@ -44,7 +45,7 @@ onJqueryReady(function () {
             $(musicoFooter).find(".musicoInfo").append(nombreArtisticoDiv);
             $(musicoFooter).find(".musicoInfo").append(generoDiv);
 
-            $(musicoFooter).append($("<div>").addClass("musicoVoteContainer"));
+            $(musicoFooter).append($("<div>").addClass("musicoVoteContainer clickableElement"));
 
             $(musicoFooter).find(".musicoVoteContainer").append("<img>");
             $(musicoFooter).find("img").addClass("musicoVoteBtn").prop("src", "img/btn_vote.png");

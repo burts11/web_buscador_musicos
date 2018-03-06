@@ -54,7 +54,6 @@
     <body>
         <div class="_childContainer divPadding10">
             <label class="tituloH1-Grey padding10 musico_info_titulo textoCentradoHorizontalUpperCase"></label>
-            <!--<button id="modalbtn" >MOSTRAR</button>-->
             <div class="musico_info_container" style="margin-top: 1em;">
                 <div class="musico_info_pic_container">
                     <img id="musicoFoto">
@@ -65,28 +64,6 @@
             </div>
         </div>
         <script>
-
-            $("#modalbtn").click(function () {
-
-                VModal.show("perfil", $("#modalbtn"), {modalEffect: "md-effect-8", VModalId: generateUniqueId()}, {
-                    onDialogShow: function (ev) {
-                        console.log(ev);
-
-//                        var usuarioId = usuario["idusuario"];
-//                        ev["usuarioId"] = usuarioId;
-//                        ev["vparams"]["sender"] = "musico_info_principal";
-//                        ev.vparams.onDialogContentLoaded();
-//                        var logoSrc = $("#_userMenuLogo").prop("src");
-//                        ev["logo"] = logoSrc;
-                        ev.vparams.onDialogContentLoaded();
-//                        callJqueryWindowEvent(VInfo.PERFIL_INFO, ev);
-//                        callJqueryWindowEvent(VInfo.MUSICO_INFO, ev);
-                    },
-                    onDialogClose: function (ev) {
-                    }
-                });
-
-            });
 
             onJqueryWindowCallbackEventOne(VInfo.MUSICO_INFO, {
 

@@ -9,6 +9,7 @@ session_start();
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
         <meta charset="UTF-8">  
         <script src="js/jquery-3.3.1.min.js" type="text/javascript"></script>
+        <script src="js/vtoast.js" type="text/javascript"></script>
         <script src="js/js.cookie.js" charset="utf-8" type="text/javascript"></script>
         <script src="js/jquery-lang.js" charset="utf-8" type="text/javascript"></script>
         <script src="js/base.js" type="text/javascript"></script>
@@ -16,6 +17,7 @@ session_start();
         <script src="js/bbdd.js" type="text/javascript"></script>
         <script src="js/classie.js" type="text/javascript"></script>
         <link href="css/base.css" rel="stylesheet" type="text/css"/>
+        <link href="css/vpopupmenu.css" rel="stylesheet" type="text/css"/>
         <link href="css/header.css" rel="stylesheet" type="text/css"/>
         <script src="js/jquery.slides.min.js" type="text/javascript"></script>
         <script src="js/dynamically_page.js" type="text/javascript"></script>
@@ -44,7 +46,7 @@ session_start();
             border: 0;
             box-shadow: inset 0 6px 6px -6px rgba(0, 0, 0, 0.5);
         }
-        
+
         #_rightMenu{
 
             position: relative; 
@@ -55,11 +57,12 @@ session_start();
             float: right; 
             margin-right: 10px;
         }
-        
+
         #_userMenu, #_userMenuLogoContainer {
 
-            play: none;
+            display: none;
         }
+
         #_userMenu{
             /*background-color: #e5e5e5;*/
             display: inline-block;
@@ -70,13 +73,13 @@ session_start();
             float: right;
             border-radius: 6px;
         }
-        
+
         #_userMenuLogo{
             position: relative;
-            width: 60%;
-            height: 60%;
+            width: 48px;
+            height: 48px;
         }
-        
+
         .userMenuPic {
 
             width: 30%;
@@ -84,7 +87,7 @@ session_start();
             position: relative;
             float: right;
         }
-        
+
         .userMenuName, #_userMenuUserNameContainer {
 
             left: 40%;
@@ -96,7 +99,7 @@ session_start();
             box-shadow: 0 10px 10px rgba(36,37,38,0.08);
             overflow: hidden;
         }
-        
+
         .userMenuCerrarSesion{
             left: 75%;
             width: 25%;
@@ -104,13 +107,20 @@ session_start();
             text-align: center;
             font-size: 1em;
         }
+        .footerInfoContainer {
+
+            width: 100%;
+            color: white;
+            padding: 2em;
+        }
 
         .footerDiv{
 
             position: relative;
             display: inline-block;
             /*background-color: red;*/
-            height: 5%;
+            /*background-color: #b7b7b7;*/
+            height: auto;
             width: 100%;
         }
 
@@ -135,50 +145,10 @@ session_start();
             color: var(--textColorPrimary);
         }
 
-        .vPopupMenuContainer {
-            position: absolute;
-            display: none;
-            background-color: white;
-            padding: 1em;
-            border-radius: 0.5em;
-            box-shadow: 0 0px 10px rgba(36,37,38,0.7);
-        }
-
-        .vPopupMenuItem{
-            padding: 0.5em;
-            cursor: pointer;
-        }
-
-        .vPopupMenuItem:hover, .dropDown_Item:focus{
-
-            background-color: #f1f1f1;
-            padding: 0.5em;
-            position: relative;
-            display: inline-block;
-            border-radius: 0.5em;
-        }
-
-        .vPopupMenuItem label{
-            cursor: pointer;
-            border-radius: 0.5em;
-            color: var(--textColorPrimary);
-        }
-
         .divConciertos {
             width: 100%;
         }
 
-        .divConciertoChild {
-
-            width: 49.5%;
-            background-color: red;
-        }
-
-        .divConciertoChild2 {
-
-            width: 49.5%;
-            background-color: orange;
-        }
 
         .divIdiomas{
             position: relative;
@@ -214,7 +184,7 @@ session_start();
                 <div class="divIdiomas centeredElementVertical" id="_idiomasContainer">
                     <div class="idiomasContainer divPadding10 clickableElement vPopupTrigger" data-popup-container="popup1" >
                         <img id="idiomaFlag" class="clickableElement" src="img/flags/es.png">
-                        <a lang="es" data-lang-token="Footer_CambiarIdioma" id="_languageSwitchButton" class="menuItem clickableElement whiteText">en</a>
+                        <a lang="es" data-lang-token="Footer_CambiarIdioma" id="_languageSwitchButton" class="menuItem clickableElement whiteText"></a>
                     </div>
                 </div>
                 <div id="_mainMenu" class="divMenu divPadding10" id="menuPrincipalDiv">
@@ -235,47 +205,27 @@ session_start();
                         <div class="centeredElementVertical userMenuPic vPopupTrigger" id="_userMenuLogoContainer" data-popup-container="popupPerfil">
                             <img id="_userMenuLogo" class="clickableElement centeredElement " src="img/default_user_icon.png">
                         </div>
-                        <!--                        <div class="centeredElementVertical userMenuName clickableElement" id="_userMenuUserNameContainer">
-                                                    <a class="clickableElement userMenuUserName"></a>
-                                                </div>-->
-                        <!--                        <div class="centeredElementVertical userMenuCerrarSesion" id="_userMenuCerrarSesionContainer" >
-                                                    <a class="clickableElement">Cerrar Sesión</a>
-                                                </div>-->
                     </div>
                 </div>
             </div>
             <hr class="hrSeparator">
             <div class="_contentDiv" id="_divMainContent">
             </div>
-            <div class="divConciertos blockDiv">
-
-                <!--                <div class="divConciertoChild inlineDiv">a</div>
-                                <div class="divConciertoChild2 inlineDiv">a</div>-->
-            </div>
-            <!--<hr class="hrBottomSeparator">-->
             <div class="footerDiv">
-                <div class="footer_info inlineDiv">
-                    <!--<label class="footer_company_label textoCentradoHorizontal">Music</label>-->
-                </div>
-
+                <div class="footerInfoContainer inlineDiv textoCentradoHorizontal"></div>
             </div>
         </div>
-        <!--        <div class="dropDown_Trigger" id="clickMe"  data-popup-container="popup1">
-                    <label>CLICK ME</label>
-                </div>-->
-
         <div class="vPopupMenuContainer" id="popup1">
             <div class="vPopupMenuItem" id="drop_idioma_castellano" data-modal='_editar_perfil_modal'>
-                <img src="img/flags/es.png">
-                <label lang="es" data-lang-token="Footer_CambiarIdioma_Castellano">Español</label>
+                <img style="top: 50px; padding-right: 0.4em; " src="img/flags/es.png">
+                <label style="vertical-align: top;"  lang="es" data-lang-token="Footer_CambiarIdioma_Castellano">Español</label>
             </div>
             <div class="vPopupMenuItem" id="drop_idioma_ingles">
-                <img src="img/flags/en.png">
-                <label lang="es" data-lang-token="Footer_CambiarIdioma_Ingles">Inglés</label>
+                <img style="top: 2px; padding-right: 0.4em" src="img/flags/en.png">
+                <label style="vertical-align: text-top;"  lang="es" data-lang-token="Footer_CambiarIdioma_Ingles">Inglés</label>
             </div>
         </div>
-
-        <div class="vPopupMenuContainer" id="popupPerfil">
+        <div class="vPopupMenuContainer" id="popupPerfil"  style="margin-right: 1em; width: auto">
             <div class="vPopupMenuItem" id="drop_editar_perfil" data-modal='_editar_perfil_modal'>
                 <label>Editar Perfil</label>
             </div>

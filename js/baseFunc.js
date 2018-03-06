@@ -14,17 +14,14 @@ $.fn.popup = function () {
                 }
             });
 
-//            var jsonSettings = $.parseJSON($(self).attr("data-settings"));
-
             $($targetId + " .vPopupMenuItem").off().click(function () {
 
                 $($targetId).fadeOut("fast");
                 var id = $(this).prop("id");
-                callJqueryWindowEvent(VMessage.PAGINA_DROP_DOWN_ITEM_CLICKED, {id: id});
+                callJqueryWindowEvent(VMessage.PAGINA_POPUP_MENU_ITEM_CLICKED, {id: id});
             });
 
-            console.log("Target id " + targetId);
-//            console.log("JSON " + jsonSettings["position"]);
+            console.log("VPopup Target Id -> " + targetId);
 
             var top = $(this).offset().top;
             top += $(this).height();

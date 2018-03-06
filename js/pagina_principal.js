@@ -15,23 +15,22 @@ onJqueryReady(function () {
         $.each(result, function (i, item) {
 
             var usuario = item;
-            var nombre = usuario ["nombre"];
+//            var nombre = usuario ["nombre"];
             var nombreartistico = usuario ["nombreartistico"];
             var genero = usuario ["genero"];
 
-            var div = $("<div>").addClass("musicoContainer clickableElement");
+            var div = $("<div>").addClass("musicoContainer");
 
-            var musicoBody = $("<div>").addClass("musicoBody");
+            var musicoBody = $("<div>").addClass("musicoBody clickableElement");
             var musicoFooter = $("<div>").addClass("musicoFooter");
 
             $(musicoBody).append($("<div>").addClass("musicoAlbumArtContainer"));
+            $(musicoBody).append("<div class='musicoBodyOver'>");
 
             var fullPath = Main.obtenerUserDataPath(usuario["usuario"]) + "img/album_art.jpg";
             $(musicoBody).find(".musicoAlbumArtContainer").append("<img>").find("img").addClass("musicoAlbumArtImg").prop("src", fullPath);
 
             $(musicoFooter).append($("<div>").addClass("musicoInfo"));
-
-            $(musicoBody).append("<div class='musicoBodyOver'>");
 
             var nombreArtisticoDiv = $("<div>").addClass("blockDiv");
             var nombreArtisticoLang = $("<label lang='es' data-lang-token='MusicoInfoNombreArtistico'></>")
