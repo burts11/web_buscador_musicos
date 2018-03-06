@@ -132,6 +132,8 @@ function onAction($action) {
                     $result = Array(
                         "resultado" => "Success",
                         "mensaje" => "Hay un usuario que está logueado actualmente!",
+                        "id" => $_SESSION[Session::UserId],
+                        "nombre" => $_SESSION[Session::UserRealName],
                         "user" => $_SESSION[Session::UserName],
                         "pass" => $_SESSION[Session::UserPassword],
                         "privilegio" => $_SESSION[Session::Privilegio],
@@ -158,30 +160,34 @@ function onAction($action) {
             $user = $_POST["user"];
             $pass = $_POST["pass"];
 
-            $passCifrada = password_hash($pass, PASSWORD_DEFAULT);
+//            $passCifrada = password_hash($pass, PASSWORD_DEFAULT);
 
             $dataBase->where("usuario", $user);
             $dataBase->where("pass", $pass);
             if ($dataBase->has("usuario")) {
 
-                $pri = $dataBase->rawQueryOne("SELECT tipo, CASE WHEN tipo = 0 THEN 'Administrador'
+                $userMatriz = $dataBase->rawQueryOne("SELECT CASE WHEN tipo = 0 THEN 'Administrador'
                 WHEN tipo = 1 THEN 'Musico'
                 WHEN tipo = 2 THEN 'Local'
-                WHEN tipo = 3 THEN 'Fan' END as Privilegio FROM usuario where usuario = ? AND pass = ?", Array($user, $pass));
+                WHEN tipo = 3 THEN 'Fan' END as Privilegio, idusuario, nombre FROM usuario where usuario = ? AND pass = ?", Array($user, $pass));
 
-                $privilegio = $pri["Privilegio"];
+                $privilegio = $userMatriz["Privilegio"];
 
                 $_SESSION[Session::UserName] = $user;
                 $_SESSION[Session::UserPassword] = $pass;
                 $_SESSION[Session::Logueado] = "true";
                 $_SESSION[Session::Privilegio] = $privilegio;
+                $_SESSION[Session::UserId] = $userMatriz["idusuario"];
+                $_SESSION[Session::UserRealName] = $userMatriz["nombre"];
 
                 $result = Array(
                     "resultado" => "Success",
                     "mensaje" => "Usuario Logueado!",
+                    "id" => $userMatriz["idusuario"],
+                    "nombre" => $userMatriz["nombre"],
                     "user" => $user,
                     "pass" => $pass,
-                    "privilegio" => $privilegio
+                    "privilegio" => $privilegio,
                 );
             } else {
                 $result = Array("resultado" => "Error", "mensaje" => "Wrong user/password");
@@ -203,8 +209,10 @@ function is_ajax() {
 
 interface Session {
 
+    const UserRealName = "session_user_real_name";
     const UserName = "session_user_name";
     const UserPassword = "session_user_pass";
+    const UserId = "session_user_id";
     const Logueado = "session_user_logged";
     const Privilegio = "session_user_privilege";
 
