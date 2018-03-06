@@ -11,6 +11,13 @@ if (is_ajax()) {
     if (isset($_POST["action"]) && !empty($_POST["action"])) {
         $action = $_POST["action"];
         onAction($action);
+    } else {
+        $result = Array(
+            "resultado" => "Error",
+            "mensaje" => "Action está vacía"
+        );
+
+        echo jsonEncode($result);
     }
 }
 
@@ -20,7 +27,6 @@ function onAction($action) {
     switch ($action) {
 
         case "RawQuery":
-
             $select = $_POST["query"];
 
             try {
@@ -94,7 +100,7 @@ function onAction($action) {
 
             $resultado = $dataBase->rawQuery("INSERT INTO usuario VALUES (default,'$nombre','$email','$usuario','$pass','$tipo')");
             if ($resultado) {
-                $generoID = $dataBase->rawQuery("select idgenero from genero where nombre = $genero");
+                $generoID = $dataBase->rawQueryOne("select idgenero from genero where nombre = $genero");
                 $idusuario = $dataBase->rawQueryOne("SELECT idusuario from usuario where usuario = '$usuario'");
                 $dataBase->rawQuery("INSERT INTO musico VALUES ('$idusuario','$generoID','$apellidos','$telefono','$web','$nombreartistico','$numerocomponentes')");
 
@@ -104,7 +110,7 @@ function onAction($action) {
                 );
 
                 jsonEncode($result);
-                
+
                 return;
             }
             $result = Array(
