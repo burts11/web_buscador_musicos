@@ -1,10 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `proyecto` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `proyecto`;
--- MySQL dump 10.13  Distrib 5.6.17, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: proyecto
 -- ------------------------------------------------------
--- Server version	5.5.5-10.1.26-MariaDB
+-- Server version	5.5.5-10.1.28-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -53,13 +51,17 @@ CREATE TABLE `concierto` (
   `idlocal` int(11) NOT NULL,
   `fecha` date NOT NULL,
   `hora` datetime NOT NULL,
-  `genero` varchar(50) NOT NULL,
+  `genero` int(11) NOT NULL,
   `valoreconomico` int(20) NOT NULL,
-  `estado` tinyint(4) NOT NULL,
-  `conciertocol` varchar(45) DEFAULT NULL,
+  `estado` int(11) NOT NULL,
+  `ciudad` int(11) NOT NULL,
+  `idmusico` int(11) DEFAULT NULL,
   PRIMARY KEY (`idconcierto`),
   KEY `idlocal` (`idlocal`),
-  CONSTRAINT `concierto_ibfk_1` FOREIGN KEY (`idlocal`) REFERENCES `local` (`idlocal`)
+  KEY `ciudad_fk_idx` (`genero`),
+  KEY `ciudad_fk_idx1` (`ciudad`),
+  CONSTRAINT `ciudad_fk` FOREIGN KEY (`genero`) REFERENCES `genero` (`idgenero`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `local_fk` FOREIGN KEY (`idlocal`) REFERENCES `local` (`idlocal`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -84,7 +86,7 @@ CREATE TABLE `fan` (
   `apellidos` varchar(100) NOT NULL,
   `telefono` int(9) NOT NULL,
   `direccion` varchar(40) NOT NULL,
-  `imagen` longtext NOT NULL,
+  `imagen` varchar(100) NOT NULL,
   PRIMARY KEY (`idfan`),
   CONSTRAINT `fan_ibfk_1` FOREIGN KEY (`idfan`) REFERENCES `usuario` (`idusuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -110,8 +112,7 @@ DROP TABLE IF EXISTS `genero`;
 CREATE TABLE `genero` (
   `idgenero` int(11) NOT NULL,
   `nombre` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`idgenero`),
-  CONSTRAINT `genero_ibfk_1` FOREIGN KEY (`idgenero`) REFERENCES `musico` (`generoID`)
+  PRIMARY KEY (`idgenero`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -133,14 +134,14 @@ DROP TABLE IF EXISTS `inscripcion`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `inscripcion` (
-  `idinscripcion` int(11) NOT NULL AUTO_INCREMENT,
-  `idmusico` int(11) DEFAULT NULL,
+  `idmusico` int(11) NOT NULL,
   `estado` int(1) NOT NULL,
   `idconcierto` int(11) NOT NULL,
-  PRIMARY KEY (`idinscripcion`),
+  PRIMARY KEY (`idmusico`,`idconcierto`),
   KEY `idmusico` (`idmusico`),
-  CONSTRAINT `inscripcion_ibfk_1` FOREIGN KEY (`idmusico`) REFERENCES `musico` (`idmusico`),
-  CONSTRAINT `inscripcion_ibfk_2` FOREIGN KEY (`idinscripcion`) REFERENCES `concierto` (`idconcierto`)
+  KEY `concierto_fk_idx` (`idconcierto`),
+  CONSTRAINT `concierto_fk` FOREIGN KEY (`idconcierto`) REFERENCES `concierto` (`idconcierto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `musico_ins_con_fk` FOREIGN KEY (`idmusico`) REFERENCES `musico` (`idmusico`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -164,7 +165,7 @@ CREATE TABLE `local` (
   `idlocal` int(11) NOT NULL,
   `ubicacion` varchar(50) NOT NULL,
   `aforo` int(10) NOT NULL,
-  `imagen` longtext NOT NULL,
+  `imagen` varchar(100) NOT NULL,
   PRIMARY KEY (`idlocal`),
   CONSTRAINT `local_ibfk_1` FOREIGN KEY (`idlocal`) REFERENCES `usuario` (`idusuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -197,6 +198,7 @@ CREATE TABLE `musico` (
   `generoID` int(11) NOT NULL,
   PRIMARY KEY (`idmusico`),
   KEY `genero_fk_idx` (`generoID`),
+  CONSTRAINT `musico_fk_genero` FOREIGN KEY (`generoID`) REFERENCES `genero` (`idgenero`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `musico_ibfk_1` FOREIGN KEY (`idmusico`) REFERENCES `usuario` (`idusuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -225,10 +227,13 @@ CREATE TABLE `usuario` (
   `usuario` varchar(30) NOT NULL,
   `pass` varchar(255) NOT NULL,
   `tipo` int(1) NOT NULL,
+  `ciudad` int(11) DEFAULT NULL,
   PRIMARY KEY (`idusuario`),
   UNIQUE KEY `usuario_UNIQUE` (`usuario`),
-  UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+  UNIQUE KEY `email_UNIQUE` (`email`),
+  KEY `fk_ciudad_idx` (`ciudad`),
+  CONSTRAINT `fk_ciudad` FOREIGN KEY (`ciudad`) REFERENCES `ciudad` (`idciudad`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -237,38 +242,60 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'Steven','semail','steven','1234',0),(2,'Muse','wtwr','muse','1234',1),(3,'Fan','fanemail','fan','1234',3),(4,'Luis','wrtrwt','nino','1234',1),(5,'Attack','htrhdth','attack','1234',1),(6,'Coldplay','laihf','coldplay','1234',1);
+INSERT INTO `usuario` VALUES (1,'Steven','semail','steven','1234',0,NULL),(2,'Muse','wtwr','muse','1234',1,NULL),(3,'Fan','fanemail','fan','1234',3,NULL),(4,'Luis','wrtrwt','nino','1234',1,NULL),(5,'Attack','htrhdth','attack','1234',1,NULL),(6,'Coldplay','laihf','coldplay','1234',1,NULL);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `votacionfan`
+-- Table structure for table `votacionconcierto`
 --
 
-DROP TABLE IF EXISTS `votacionfan`;
+DROP TABLE IF EXISTS `votacionconcierto`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `votacionfan` (
-  `idmusico` int(11) NOT NULL,
-  `idconcierto` int(11) DEFAULT NULL,
+CREATE TABLE `votacionconcierto` (
+  `idconcierto` int(11) NOT NULL,
   `idfan` int(11) NOT NULL,
-  `puntuacion` tinyint(4) NOT NULL,
-  PRIMARY KEY (`idmusico`,`idfan`),
+  PRIMARY KEY (`idconcierto`),
   KEY `idfan` (`idfan`),
-  KEY `idconcierto` (`idconcierto`),
-  CONSTRAINT `votacionfan_ibfk_1` FOREIGN KEY (`idmusico`) REFERENCES `musico` (`idmusico`),
-  CONSTRAINT `votacionfan_ibfk_2` FOREIGN KEY (`idfan`) REFERENCES `fan` (`idfan`),
-  CONSTRAINT `votacionfan_ibfk_3` FOREIGN KEY (`idconcierto`) REFERENCES `concierto` (`idconcierto`)
+  CONSTRAINT `votacionconcierto_ibfk_1` FOREIGN KEY (`idconcierto`) REFERENCES `concierto` (`idconcierto`),
+  CONSTRAINT `votacionconcierto_ibfk_2` FOREIGN KEY (`idfan`) REFERENCES `fan` (`idfan`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `votacionfan`
+-- Dumping data for table `votacionconcierto`
 --
 
-LOCK TABLES `votacionfan` WRITE;
-/*!40000 ALTER TABLE `votacionfan` DISABLE KEYS */;
-/*!40000 ALTER TABLE `votacionfan` ENABLE KEYS */;
+LOCK TABLES `votacionconcierto` WRITE;
+/*!40000 ALTER TABLE `votacionconcierto` DISABLE KEYS */;
+/*!40000 ALTER TABLE `votacionconcierto` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `votacionmusico`
+--
+
+DROP TABLE IF EXISTS `votacionmusico`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `votacionmusico` (
+  `idmusico` int(11) NOT NULL,
+  `idfan` int(11) NOT NULL,
+  PRIMARY KEY (`idmusico`,`idfan`),
+  KEY `idfan` (`idfan`),
+  CONSTRAINT `votacionmusico_ibfk_1` FOREIGN KEY (`idmusico`) REFERENCES `musico` (`idmusico`),
+  CONSTRAINT `votacionmusico_ibfk_2` FOREIGN KEY (`idfan`) REFERENCES `fan` (`idfan`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `votacionmusico`
+--
+
+LOCK TABLES `votacionmusico` WRITE;
+/*!40000 ALTER TABLE `votacionmusico` DISABLE KEYS */;
+/*!40000 ALTER TABLE `votacionmusico` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -280,4 +307,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-05 17:36:05
+-- Dump completed on 2018-03-06 20:36:02
