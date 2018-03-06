@@ -10,6 +10,7 @@ onJqueryReady(function () {
         $.each(result, function (i, item) {
 
             var usuario = item;
+            var usuarioId = usuario["idusuario"];
             var nombre = usuario ["nombre"];
             var nombreartistico = usuario ["nombreartistico"];
             var genero = usuario ["genero"];
@@ -50,7 +51,7 @@ onJqueryReady(function () {
 
             callAjaxBBDD(
                     {
-                        action: "RawQueryOne", query: `select * from votacionmusico where idfan = ${Usuario.id} and idmusico = ${usuario["idusuario"]} `
+                        action: "RawQueryOne", query: `select * from votacionmusico where idfan = ${Usuario.id} and idmusico = ${usuarioId} `
                     }, function (json) {
 
                 if (!jsonEmpty(json)) {
@@ -67,7 +68,6 @@ onJqueryReady(function () {
                 VModal.show("musico_info", item, {modalEffect: "md-effect-13", VModalId: generateUniqueId()}, {
                     onDialogShow: function (ev) {
 
-                        var usuarioId = usuario["idusuario"];
                         ev["usuarioId"] = usuarioId;
                         ev["vparams"]["sender"] = "musico_info_fan";
 
@@ -89,9 +89,33 @@ onJqueryReady(function () {
 
                         VToast.mostrarError("Ya has votado a este músico");
                         return;
-                    }
+                    } else {
+                        VToast.log("Se puede votar a " + nombre);
 
-                    VToast.log("Se puede votar a " + nombre);
+                        callAjaxBBDD({
+
+                            action: "Insert",
+                            tabla: "votacionmusico",
+                            data: {
+                                idmusico: usuarioId,
+                                idfan: Usuario.id
+                            }
+                        }, function (json) {
+
+                            VToast.logS("Like");
+
+                            if (success(json)) {
+                                VToast.log("Liked " + nombre);
+                                $(musicoFooter).find(".musicoVoteBtn").prop("src", "img/btn_liked.png");
+                            } else {
+                                VToast.log("Error al darle like a " + nombre);
+                            }
+
+                            VToast.log(json);
+
+                            VToast.logF("Like");
+                        });
+                    }
                 });
             });
 
