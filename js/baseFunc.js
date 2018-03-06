@@ -7,6 +7,13 @@ $.fn.popup = function () {
             var targetId = $(self).attr("data-popup-container");
             var $targetId = "#" + targetId;
 
+            $('html').off().focusin(function (e) {
+                if (e.target.id !== $targetId) {
+
+                    $($targetId).fadeOut();
+                }
+            });
+
 //            var jsonSettings = $.parseJSON($(self).attr("data-settings"));
 
             $($targetId + " .vPopupMenuItem").off().click(function () {
@@ -20,12 +27,9 @@ $.fn.popup = function () {
 //            console.log("JSON " + jsonSettings["position"]);
 
             var top = $(this).offset().top;
-            top += $(this).height() + ($(this).height() / 2);
+            top += $(this).height();
             var left = $(this).offset().left;
             left += 0;
-
-            console.log("Top : " + top);
-
             $("#" + targetId).css({
                 top: top,
                 left: left

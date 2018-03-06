@@ -52,7 +52,6 @@ function onJqueryWindowCallbackEventOne(event, func) {
 
     $(window).one(event, function (e)
     {
-//        console.log("jeventw " + event);
         func.callback(e);
         $(window).off("'" + event + "'");
     });
@@ -62,7 +61,6 @@ function onJqueryWindowCallbackEvent(event, func) {
 
     $(window).on(event, function (e)
     {
-//        console.log("jevent " + event);
         func.callback(e);
         $(window).off("'" + event + "'");
     });
@@ -112,3 +110,12 @@ function isFunctionDefined(func) {
 
     return false;
 }
+
+function jsonEmpty(json) {
+    if (jQuery.isEmptyObject(json))
+    {
+        return true;
+    }
+    return false;
+}
+

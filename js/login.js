@@ -15,11 +15,16 @@ onJqueryReady(function () {
                 iniciarSesion(user, pass, {
 
                     success: function (json) {
-
+                        console.log("Login success -> ");
+                        console.log(json);
                         e.json.vparams.close();
                         Main.comprobarUsuarioLogueado();
                     },
                     error: function (json) {
+
+                        console.log("Login error -> ");
+                        console.log(json);
+
                         e.json.vparams.close();
                     }
                 });

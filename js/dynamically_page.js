@@ -85,6 +85,9 @@ function loadHashPage(url) {
         },
         error: function (err) {
 
+            VToast.logS("Load has page error");
+            VToast.log(err);
+            VToast.logF("Load has page error");
         }
     });
 }
