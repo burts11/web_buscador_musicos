@@ -1,6 +1,20 @@
 var currentUser = "";
 var currentUserType = "";
 
+var Usuario = {
+
+    id: "",
+    nombre: "",
+    privilegio: "",
+
+    asignar: function (id, nombre, privilegio) {
+
+        this.id = id;
+        this.nombre = nombre;
+        this.privilegio = privilegio;
+    }
+};
+
 var Main = {
 
     cambiarTitulo: function (titulo) {
@@ -64,12 +78,15 @@ var Main = {
     },
     onUsuarioLogueado: function (e)
     {
+        VToast.logS("Usuario Logueado");
         console.log(e);
+        VToast.logF("Usuario Logueado");
+
+        Usuario.asignar(e.id, e.nombre, e.privilegio);
 
         switch (e["privilegio"]) {
 
             case "Administrador":
-//                Main.agregarMenuBtn("pagina_principal", "menuBtnUserHome", "Home");
                 cambiarPagina("pagina_principal");
                 cambiarHash("pagina_principal");
                 Main.cambiarTitulo("Home");
@@ -111,7 +128,6 @@ var Main = {
         $("#menuBtnUserHome").remove();
     },
     agregarMenuBtn: function (href, id, texto) {
-//        alert("called");
         $("#_mainMenu").find("#" + id).parent(".menuItemContainer").remove();
         $("#_mainMenu").find("#" + id).remove();
 
@@ -211,12 +227,6 @@ onJqueryWindowCallbackEvent(VMessage.PAGINA_DROP_DOWN_ITEM_CLICKED, {
 onJqueryReady(function () {
 
     Main.inicio();
-
-    onJqueryCallbackEvent(BBDD.LOGIN, {
-        callback: function () {
-
-        }
-    });
 
     $("#_loginContainer").click(function (e) {
 
