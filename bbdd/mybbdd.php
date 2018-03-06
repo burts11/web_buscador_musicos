@@ -26,6 +26,44 @@ function onAction($action) {
     $dataBase = MysqliDb::getInstance();
     switch ($action) {
 
+        case "Insert":
+            $tabla = $_POST["tabla"];
+            $data = $_POST["data"];
+
+            try {
+                $result = $dataBase->insert($tabla, $data);
+
+                if ($result) {
+
+                    $result = Array(
+                        "resultado" => "Success",
+                        "action" => "Insert",
+                        "mensaje" => "Insert en la tabla -> " . $tabla,
+                        "insertData" => $data,
+                        "lastQuery" => $dataBase->getLastQuery()
+                    );
+
+                    echo jsonEncode($result);
+                } else {
+                    $result = Array(
+                        "resultado" => "error",
+                        "action" => "Insert",
+                        "mensaje" => $dataBase->getLastError(),
+                        "insertData" => $data
+                    );
+                }
+            } catch (Exception $e) {
+
+                $result = Array(
+                    "resultado" => "error",
+                    "action" => "Insert",
+                    "mensaje" => $dataBase->getLastError()
+                );
+
+                echo jsonEncode($result);
+            }
+            break;
+
         case "RawQuery":
             $select = $_POST["query"];
 
@@ -37,7 +75,8 @@ function onAction($action) {
 
                 $result = Array(
                     "resultado" => "error",
-                    "Action" => "RawQuery",
+                    "action" => "RawQuery",
+                    "lastQuery" => $dataBase->getLastQuery(),
                     "mensaje" => $dataBase->getLastError()
                 );
 
@@ -54,7 +93,7 @@ function onAction($action) {
 
                 $result = Array(
                     "resultado" => "error",
-                    "Action" => "RawQueryOne",
+                    "action" => "RawQueryOne",
                     "mensaje" => $dataBase->getLastError()
                 );
 
