@@ -1,17 +1,9 @@
 onJqueryReady(function () {
-
-    var select = "SELECT * FROM usuario INNER JOIN musico ON usuario.idusuario = musico.idmusico;";
-    callAjax(METHOD.POST, "bbdd/mybbdd.php",
-            {
-                action: "RawQuery",
-                query: select
-            }, function (result) {
-
+    callAjaxBBDD({
+        action: "RawQuery",
+        query: "SELECT * FROM usuario INNER JOIN musico ON usuario.idusuario = musico.idmusico;"
+    }, function (result) {
         console.log(result);
-    });
-
-    callAjax(METHOD.POST, "bbdd/mybbdd.php", {
-        action: "ObtenerMusicos"}, function (result) {
 
         $("#divMusicosFan").empty();
 
@@ -22,9 +14,55 @@ onJqueryReady(function () {
             var nombreartistico = usuario ["nombreartistico"];
             var genero = usuario ["genero"];
 
-            var div = $("<div>").addClass("musicoContainer clickableElement").css({width: "220px"});
+            var div = $("<div>").addClass("musicoContainer clickableElement");
 
-            $(div).bind("click", function () {
+            var musicoBody = $("<div>").addClass("musicoBody");
+            var musicoFooter = $("<div>").addClass("musicoFooter");
+            $(musicoBody).append($("<div>").addClass("musicoAlbumArtContainer"));
+            $(musicoBody).append("<div class='musicoBodyOver'>");
+
+            var fullPath = Main.obtenerUserDataPath(usuario["usuario"]) + "img/album_art.jpg";
+            $(musicoBody).find(".musicoAlbumArtContainer").append("<img>").find("img").addClass("musicoAlbumArtImg").prop("src", fullPath);
+
+            $(musicoFooter).append($("<div>").addClass("musicoInfo"));
+
+            var nombreArtisticoDiv = $("<div>").addClass("blockDiv");
+            var nombreArtisticoLang = $("<label lang='es' data-lang-token='MusicoInfoNombreArtistico'></>")
+                    .addClass("musicoInfoTexto").text("Nombre artístico: ");
+            var nombreArtisticoReal = $("<label>").addClass("musicoInfoTexto ").text(nombreartistico);
+
+            $(nombreArtisticoDiv).append(nombreArtisticoLang).append(nombreArtisticoReal);
+
+            var generoDiv = $("<div>").addClass("blockDiv");
+            var generoLang = $("<label lang='es' data-lang-token='MusicoInfoGenero'></>")
+                    .addClass("musicoInfoTexto").text("Género : ");
+            var generoReal = $("<label>").addClass("musicoInfoTexto ").text(genero);
+
+            $(generoDiv).append(generoLang).append(generoReal);
+
+            $(musicoFooter).find(".musicoInfo").append(nombreArtisticoDiv);
+            $(musicoFooter).find(".musicoInfo").append(generoDiv);
+
+            $(musicoFooter).append($("<div>").addClass("musicoVoteContainer"));
+
+            $(musicoFooter).find(".musicoVoteContainer").append("<img>");
+            $(musicoFooter).find("img").addClass("musicoVoteBtn").prop("src", "img/btn_vote.png");
+
+            callAjaxBBDD(
+                    {
+                        action: "RawQueryOne", query: `select * from votacionmusico where idfan = ${Usuario.id} and idmusico = ${usuario["idusuario"]} `
+                    }, function (json) {
+
+                if (!jsonEmpty(json)) {
+
+                    $(musicoFooter).find(".musicoVoteBtn").prop("src", "img/btn_liked.png");
+                }
+            });
+
+            $(div).append(musicoBody);
+            $(div).append(musicoFooter);
+
+            $(musicoBody).unbind("click").bind("click", function () {
 
                 VModal.show("musico_info", item, {modalEffect: "md-effect-13", VModalId: generateUniqueId()}, {
                     onDialogShow: function (ev) {
@@ -40,34 +78,43 @@ onJqueryReady(function () {
                 });
             });
 
-            var musicoHeader = $("<div>").addClass("musicoHeader");
-            var musicoBody = $("<div>").addClass("musicoBody");
-            var musicoFooter = $("<div>").addClass("musicoFooter");
+            $(musicoFooter).find(".musicoVoteContainer").off().click(function () {
 
-            $(musicoHeader).append($("<label>").addClass("musicoHeaderTitulo").text(nombre));
+                callAjaxBBDD(
+                        {
+                            action: "RawQueryOne", query: `select * from votacionmusico where idfan = ${Usuario.id} and idmusico = ${usuario["idusuario"]} `
+                        }, function (json) {
 
-            $(div).append(musicoHeader);
-            $(div).append("<hr class='musicoSeparator'>");
+                    if (!jsonEmpty(json)) {
 
-            $(musicoBody).append($("<div>").addClass("musicoAlbumArtContainer"));
+                        VToast.mostrarError("Ya has votado a este músico");
+                        return;
+                    }
 
-            var fullPath = Main.obtenerUserDataPath(usuario["usuario"]) + "img/album_art.jpg";
-            $(musicoBody).find(".musicoAlbumArtContainer").append("<img>").find("img").addClass("musicoAlbumArtImg").prop("src", fullPath);
+                    VToast.log("Se puede votar a " + nombre);
+                });
+            });
 
-            $(musicoFooter).append($("<div>").addClass("musicoInfo"));
+            $(musicoBody).mouseenter(function () {
+                $(musicoBody).find(".musicoAlbumArtImg").addClass("zoomMusicoIn");
+                $(musicoBody).find(".musicoBodyOver").addClass("fade-in-musico").show();
+            });
 
-            $(musicoFooter).find(".musicoInfo").append($("<label>").addClass("blockLabel musicoInfoTexto clickableElement").text("Nombre artístico: " + nombreartistico));
-            $(musicoFooter).find(".musicoInfo").append($("<label>").addClass("blockLabel musicoInfoTexto clickableElement").text("Género: " + genero));
+            $(musicoBody).mouseleave(function () {
 
-            $(musicoFooter).append($("<div>").addClass("musicoVoteContainer"));
+                $(musicoBody).find(".musicoBodyOver").stop().animate({opacity: 0}, 200);
+                $(musicoBody).find(".musicoBodyOver").removeClass("fade-in-musico");
+                $(musicoBody).find(".musicoAlbumArtImg").removeClass("zoomMusicoIn").addClass("zoomMusicoOut");
 
-            $(musicoFooter).find(".musicoVoteContainer").append("<img>");
-            $(musicoFooter).find("img").addClass("musicoVoteBtn").prop("src", "img/btn_vote.png");
-
-            $(div).append(musicoBody);
-            $(div).append(musicoFooter);
+//                $(musicoBody).find(".musicoBodyOver").removeClass("musicoBodyOver_fadeIn").addClass("musicoBodyOver_fadeOut");
+            });
 
             $("#divMusicosFan").append(div);
+            $(div).addClass("musicoAnimIn");
+            setTimeout(function () {
+
+                $(div).addClass("musicoAnimIn2");
+            }, 20);
         });
     });
 });

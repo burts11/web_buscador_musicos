@@ -8,7 +8,7 @@
 
         #divMusicosFan .musicoBody {
 
-            height: 55%;
+            height: 75%;
         }
         
         #divMusicosFan .musicoFooter {
@@ -19,9 +19,10 @@
 
             position: relative;
             /*background-color: orange;*/
-            width: 20px;
-            height: 20px;
+            width: 1.2em;
+            height: 1.2em;
             float: right;
+            right: 1.2em;
         }
 
         .musicoVoteBtn{
