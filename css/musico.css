@@ -2,7 +2,6 @@
 
     display: inline-block;
     transition: box-shadow .3s;
-    background-color: white;
     position: relative;
     border-radius: 0px;
     box-shadow: 0 0px 10px rgba(36,37,38,0.2);
@@ -11,6 +10,7 @@
     height: 20em;
     width: 22em;
     overflow: hidden;
+    background-color: rgba(255,255,255,0.05);
 }
 
 .musicoHeader{
@@ -28,12 +28,13 @@
 }
 
 .musicoContainer:hover{
-    background-color: white;
+    /*    background-color: white;*/
     box-shadow: 0 0px 1em rgba(36,37,38,0.4);
 }
 
 .musicoFooter{
 
+    background-color: transparent;
     position: relative;
     display: inline-block;
     width: 100%;
@@ -219,6 +220,7 @@
     display: inline-block;
     position: relative;
     overflow: hidden;
+    background-color: transparent;
 }
 
 .musicoAlbumArtContainer{
