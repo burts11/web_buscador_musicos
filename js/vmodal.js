@@ -20,6 +20,10 @@ var VModal = {
 
             success: function (data) {
 
+//                var $mainDiv = "#_mainDiv";
+
+//                $($mainDiv).addClass("blurred__");
+
                 agregarVModalCSS();
 
                 var modalId = $(modalTriggerDom).attr("data-modal");
@@ -30,6 +34,8 @@ var VModal = {
                     modalId = asignarJsonValueSiExiste("VModalId", params);
                     modalEffect = asignarJsonValueSiExiste("modalEffect", params);
                 }
+
+                var $modalId = "#" + modalId;
 
 //                params["modalEffect"] = modalEffect;
 
@@ -47,11 +53,46 @@ var VModal = {
                         '</div>'
                         + ' <div class="md-overlay" id="' + modalOverlayId + '"></div>';
 
-                var modalInlineCSS = "#__modal_close_btn { display: none;}  .md-overlay {background:transparent;background-color:rgba(0,0,0,0.1)}.md-closeBtn{display:block;width:100%;height:100%;position:relative}.md-content_v2{ height:0px; margin-top:4px;display:block;position:relative;z-index:1000;margin-top:20px !important}.md-modal-closeDiv{position:relative;display:block;width:32px;height:32px;float:right;right:-0.5em;top:0.5em;z-index:2000}";
+                var modalInlineCSS = "#__modal_close_btn { display: none;}  .md-overlay {background:transparent;background-color:rgba(0,0,0,0.5)}.md-closeBtn{display:block;width:100%;height:100%;position:relative}.md-content_v2{ height:0px; margin-top:4px;display:block;position:relative;z-index:1000;margin-top:20px !important; padding-right:20px !important}.md-modal-closeDiv{position:relative;display:block;width:32px;height:32px;float:right;right:-0.5em;top:0.5em;z-index:2000}";
                 modalInlineCSS = modalInlineCSS.replace("_main_overlay", modalOverlayId);
+
                 appendCSSInline("vmodal_inline_style", modalInlineCSS, "head");
 
                 $("#_mainDiv").append(modalMainDiv);
+
+                var $modalObject = $("#_mainDiv").find("#" + modalId);
+
+                if (params.hasOwnProperty("FullSize")) {
+
+                    console.log("full size not null");
+                    $($modalId).addClass("md-modal-full-size");
+                }
+
+                if (params.hasOwnProperty("CustomSize")) {
+
+                    $($modalId).addClass("md-modal-custom-size");
+                    $($modalId).find(".md-content").addClass("md-modal-custom-size");
+
+                    var customSize = params["CustomSize"];
+//                    console.log(customSize);
+                    if (customSize === "true") {
+
+//                        console.log($("#_mainDiv").find("#" + modalId));
+                        var width = params["modalWidth"];
+                        var height = params["modalHeight"];
+
+                        var minifySize = `.md-modal-custom-size{width:${width} !important;max-width:none!important;max-height:none!important;height:${height} !important} ${ $modalId } .md-content_v2 { padding-right:0px !important} `;
+                        appendCSSInline("minifyCustomSize", minifySize, $modalObject);
+                    }
+                }
+
+                if (params.hasOwnProperty("CustomPadding")) {
+
+                    var paddingSettings = params["padding"];
+                    var minifyPadding = `${  $modalId } .__root_modal_content { padding: ${paddingSettings } !important}`;
+
+                    appendCSSInline("minifyCustomPadding", minifyPadding, $modalObject);
+                }
 
                 var modalCloseBtn = $("#" + modalId).find("#__modal_close_btn");
                 $(modalCloseBtn).unbind("click").bind("click", function (e) {
@@ -61,6 +102,7 @@ var VModal = {
                     }
 
                     $("#" + modalId).removeClass("md-show");
+//                    $($mainDiv).removeClass("blurred__");
                     setTimeout(
                             function ()
                             {
@@ -73,6 +115,8 @@ var VModal = {
                 $("#" + modalId + " #__modal_close_btn").hide();
 
                 var modalContentHTTML = removerScriptYCSS(data);
+//                var childContainer = $(modalContentHTTML).find("._childContainer");
+
                 $("#" + modalId + " > .md-content").append(modalContentHTTML);
 
                 setTimeout(
@@ -112,6 +156,8 @@ var VModal = {
 
                                     $(this).off();
                                 });
+                                
+//                                callJqueryWindowEvent(modalId )
                             };
 
                             if (isFunctionDefined(func.onDialogShow)) {
@@ -128,7 +174,7 @@ var VModal = {
 
 function asignarJsonValueSiExiste(jsonValue, params) {
 
-    if (params[jsonValue] !== null) {
+    if (params.hasOwnProperty(jsonValue)) {
 
         return params[jsonValue];
     }
@@ -136,7 +182,7 @@ function asignarJsonValueSiExiste(jsonValue, params) {
 
 function removerScriptYCSS(data) {
 
-    var temp = $('<div>').html(data);
+    var temp = $('<div class="__root_modal_content">').html(data);
     $(temp).find('script').each(function () {
 
         var jsLink = $(this).attr('src');
