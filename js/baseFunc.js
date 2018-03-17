@@ -1,27 +1,33 @@
 $.fn.popup = function () {
     this.each(function () {
-        if (true === $(this).hasClass("vPopupTrigger")) {
+        if ($(this).hasClass("vPopupTrigger")) {
 
             var self = this;
 
             var targetId = $(self).attr("data-popup-container");
             var $targetId = "#" + targetId;
 
-            $('html').off().focusin(function (e) {
-                if (e.target.id !== $targetId) {
+            document.onkeydown = function (evt) {
+                evt = evt || window.event;
+                if (evt.keyCode === 27) {
 
-                    $($targetId).fadeOut();
+                    hide($targetId);
                 }
+            };
+
+//            console.log("VPopup Target Id -> " + $targetId);
+
+            $(self).bind('clickoutside', function (event) {
+
+                $($targetId).fadeOut();
+                $($targetId).unbind('clickoutside');
             });
 
-            $($targetId + " .vPopupMenuItem").off().click(function () {
-
-                $($targetId).fadeOut("fast");
+            $($targetId + " .vPopupMenuItem").bind('click', function () {
                 var id = $(this).prop("id");
                 callJqueryWindowEvent(VMessage.PAGINA_POPUP_MENU_ITEM_CLICKED, {id: id});
+                $($targetId).fadeOut();
             });
-
-            console.log("VPopup Target Id -> " + targetId);
 
             var top = $(this).offset().top;
             top += $(this).height();
@@ -32,9 +38,13 @@ $.fn.popup = function () {
                 left: left
             });
 
-            $("#" + targetId).fadeIn();
+            $("#" + targetId).hide().fadeIn();
         }
 
         return $(this); // support chaining
     });
 };
+
+function hide(target) {
+    $(target).fadeOut();
+}
