@@ -96,19 +96,30 @@ var Main = {
                 cambiarPagina("pagina_fan");
                 cambiarHash("pagina_fan");
                 Main.cambiarTitulo("Home - Fan");
+
+                $("#menuBtnHome").text("Main page");
+                $("#menuBtnHome").hide().fadeIn();
                 break;
             case "Musico":
                 Main.agregarMenuBtn("pagina_musico", "menuBtnUserHome", "Home");
                 cambiarPagina("pagina_musico");
                 cambiarHash("pagina_musico");
+
+                $("#menuBtnHome").text("Main page");
+                $("#menuBtnHome").hide().fadeIn();
                 break;
             case "Local":
                 Main.agregarMenuBtn("pagina_local", "menuBtnUserHome", "Home");
 
                 cambiarPagina("pagina_local");
                 cambiarHash("pagina_local");
+
+                $("#menuBtnHome").text("Main page");
+                $("#menuBtnHome").hide().fadeIn();
                 break;
             default:
+
+                $("#menuBtnHome").fadeOut();
                 cambiarPagina("pagina_principal");
                 cambiarHash("pagina_principal");
                 break;
@@ -123,7 +134,8 @@ var Main = {
         $("#menuBtnHome").attr("data-href", "pagina_principal");
         $("#menuBtnHome").attr("href", "#pagina_principal");
         $("#menuBtnUserHome").remove();
-
+        cambiarPagina("pagina_principal");
+        cambiarHash("pagina_principal");
         window.location.reload();
     },
     agregarMenuBtn: function (href, id, texto) {
