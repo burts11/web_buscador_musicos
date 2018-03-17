@@ -1,10 +1,10 @@
 .vPopupMenuContainer {
     position: absolute;
     display: none;
-    background-color: #f5f5f5;
+    background-color: rgba(0,0,0,0.4);
     padding: 0.5em;
     border-radius: 0.1em;
-    box-shadow: 0 0px 4px rgba(36,37,38,0.7);
+    box-shadow: 0 0px 10px rgba(36,37,38,1);
 }
 
 .vPopupMenuItem{
@@ -13,9 +13,9 @@
     width: auto;
 }
 
-.vPopupMenuItem:hover, .dropDown_Item:focus{
+.vPopupMenuItem:hover{
 
-    background-color: #ffffff;
+    /*background-color: #ffffff;*/
     padding: 0.5em;
     position: relative;
     display: inline-block;
@@ -26,4 +26,8 @@
     cursor: pointer;
     border-radius: 0.5em;
     color: var(--textColorPrimary);
+}
+
+.vPopupMenuItem label:hover{
+    color: var(--textColorPrimaryShine);
 }
