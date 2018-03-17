@@ -2,233 +2,238 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <link href="../css/newTextInput.css" rel="stylesheet" type="text/css"/>
     </head>
     <style>
-        h1{
-            color: orange;
-        }
-        .registroContainer{
+        .bm_conciertoInfoContainer{
 
+            width: 100%;
+            height: 100% !important;
             position: relative;
             display: inline-block;
-            width: 100%;
-            height: 100%;
+            /*background-color: red;*/  
         }
 
-        .top {
+        .bm_searchContainer{
 
+            width: 100%;
+            height: 8%;
+            margin-left: 0px;
+            position: relative;
+            display: inline-block;
+            /*background-color: orange;*/
+        }
+
+        #bm_searchField{
+
+            width: 90%;
+            height: 80%;
+            position: relative;
+            left: 2em;
+        }
+
+        .bm_searchImage{
+
+            position: relative;
+            width: 2em;
+            height: 2em;
+            top: 1.5em;
+            left: 2em;
+        }
+
+        .bmSearchResultContainer  
+        {
+            position: relative;
+            display: inline-block;
+            width: 18em;
+            height: 12em;
+            margin-left: 0.5em;
+            margin-top: 0.3em;
+            /*background-color: red;*/  
+        }
+
+        .bmSearchResultBody{
+            position: relative;
+            width: 100%;
+            height: 80%;
+            background-color: rgba(0,0,0,0.8);  
+            overflow: hidden;
+        }
+
+        .bmSearchResultFooter{
+            position: relative;
             width: 100%;
             height: 20%;
-            /*background-color: orange;*/
+            background-color: rgba(0,0,0,0.5);  
+            text-align: center;
+        }
+
+        .bmThumbnail {
+
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        #bm_results{
+
+            width: 98%;
+            margin-top: 0.5em;
+            margin-left: 1em;
+            /*background-color: rgba(0,0,0,0.5);*/
+        }
+
+        .bm_filtroChild{
+
+            background-color: var(--backgroundControlPrimary);
+            padding: 0.8em;
+            display: inline-block;
+            font-size: 0.7em;
+            color: white;
+        }
+
+        .bm_filtroChild-active{
+
+            background-color: var(--colorPrimaryShine);
+        }
+
+        .bm_filtroContainer{
+
             position: relative;
             display: block;
+            height: 2em;
+            width: 95%;
         }
 
-        ._registroMenu{
+        .bm_filtroWrapper{
 
-            position: relative;
-            height: 100%;
-            margin-bottom: 10px;
-            display: block;
-            top: 0;
-            color: var(--textColorPrimary);  
+            height: auto;
         }
 
-        .registroMenuBtn{
-            background-color: white;
-            position: relative;
-            width: 10%;
-            height: 100%;
-            display: inline-block;
-            /*background-color: red;*/
-            padding : 20px; 
-            text-align: center;
-            /*box-shadow: 0 0px 4px rgba(36,37,38,0.2);*/
-            margin-left: 0.5em;
-        }
-
-        .registroMenuBtn:hover {
-            background-color: #eaeaea;  
-            position: relative;
-            width: 10%;
-            height: 100%;
-            display: inline-block;
-            /*background-color: red;*/
-            padding : 20px; 
-            text-align: center;
-            box-shadow: 0 0px 10px rgba(36,37,38,0.2);
-        }
-
-        .registroMenuBtn_selected {
-            background-color: #eaeaea;  
-            position: relative;
-            width: 10%;
-            height: 100%;
-            display: inline-block;
-            /*background-color: red;*/
-            padding : 20px; 
-            text-align: center;
-            box-shadow: 0 0px 10px rgba(36,37,38,0.2);
-        }
-
-        .div_registro_fan, .div_registro_local{
-
-            display: none;
-            min-width: 20em;
-            min-height: 20em;
-        }
-
-        .div_registro_container  {
-
-            margin-top: 0em;
-            position: relative;
-            display: block;
-            height: 100%;
-            /*background-color: blue;*/
-            min-height: 20em;
-        }
-
-        .div_registro_container .form-control .form-control-label{
-
-            float: left;
-            width:10%;
-            text-align:left;
-            top: 0.5em;
-            position: relative;
-        }
-
-        .div_registro_container .form-control-textfield {
-
-        }
-
-        .div_registro_container .form-control-btn {
-
-            margin-top: 0.8em;
-        }
-
-        .registrarseBtn{
-
-            margin-left: 3em;
+        ._childContainer{
+            overflow-y: auto !important;
         }
     </style>
     <body>
-        <div class="_childContainer divPadding10">
-            <div class="registroContainer">
-                <div class="top">
-                    <div class="_registroMenu">
-                        <div class="registroMenuBtn registroMenuBtn_selected clickableElement" data-regid="registro_musico">
-                            <label class="clickableElement">Músico</label>
+        <!--        <div class="bmSearchResultContainer">
+                    <div class="bmSearchResultBody">
+                        <img> 
+                    </div>
+                    <div class="bmSearchResultFooter">
+                        <label class="bmSearchName padding10 centeredElementVertical">Hola</label>
+                    </div>
+                </div> -->
+        <div class="_childContainer divPadding10 ">
+            <div class="bm_conciertoInfoContainer">
+                <div class="bm_searchContainer">
+                    <img class="bm_searchImage clickableElement centeredElementVertical inlineDiv" src="img/search.png">
+                    <input type="text" class="form-control-textfield fontSize9em inlineDiv" id="bm_searchField" placeholder="Buscar..."> 
+                </div>
+                <div class="bm_filtroContainer">
+                    <div class="bm_filtroWrapper centeredElementHorizontal">
+                        <div class="bm_filtroChild clickableElement bm_filtroChild-active" id="bm_filtro_artistas">
+                            <label class="clickableElement">Artistas</label>
                         </div>
-                        <div class="registroMenuBtn clickableElement" data-regid="registro_local">
-                            <label class="clickableElement">Local</label>
-                        </div>
-                        <div class="registroMenuBtn clickableElement" data-regid="registro_fan">
-                            <label class="clickableElement">Fan</label>
+                        <div class="bm_filtroChild clickableElement"  id="bm_filtro_conciertos">
+                            <label class="clickableElement">Conciertos</label>
                         </div>
                     </div>
                 </div>
-                <!--<h1 class="tituloH1 tituloH1-Grey registro_h1">Registro</h1>-->
+                <div id="bm_results">
 
-                <div class="div_registro_container">
-                    <div class="div_registro_musico  registro-div-active divPadding10" id="registro_musico">
-                        <div class="form-container">
-                            <div class="form-control">
-                                <label class="form-control-label">Género </label> 
-                                <select name="musico_genero">
-                                    <option>Pop</option>
-                                    <option>Rock</option>
-                                    <option>Electrónica</option>
-                                </select>
-                                <br>
-                            </div>
-                            <div class="form-control">
-                                <label class="form-control-label">Nombre </label> <input class="form-control-textfield"  type="text" id="input_musico_nombre" value="">
-                            </div>
-                            <div class="form-control">
-                                <label class="form-control-label">Apellidos</label> <input class="form-control-textfield"  type="text" id="input_musico_apellidos" value="">
-                            </div>
-                            <div class="form-control">
-                                <label class="form-control-label">Teléfono</label> <input class="form-control-textfield"  type="text" id="input_musico_telefono" value="">
-                            </div>
-                            <div class="form-control">
-                                <label class="form-control-label">Email </label> <input  class="form-control-textfield" type="text" id="input_musico_email" value="">
-                            </div>
-                            <div class="form-control">
-                                <label class="form-control-label">Web </label> <input type="text" class="form-control-textfield" id="input_musico_web" value="">
-                            </div>
-                            <div class="form-control">
-                                <label class="form-control-label">Nombre artístico </label> <input   class="form-control-textfield" type="text" id="input_musico_artistico" value="">
-                            </div>
-                            <div class="form-control">
-                                <label class="form-control-label">Componentes del grupo </label> <input  class="form-control-textfield" type="text" id="input_musico_componentes" value="">
-                            </div>
-                            <div class="form-control">
-                                <label class="form-control-label">Usuario </label> <input  class="form-control-textfield" type="text" id="input_musico_ausuario" value="">
-                            </div>
-                            <div class="form-control">
-                                <label class="form-control-label">Contraseña </label> <input  class="form-control-textfield" type="text" id="input_musico_pass" value="">
-                            </div>
-                            <div class="form-control">
-                                <button class="form-control-btn registrarseBtn">Registrarse</label> 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="div_registro_fan  divPadding10" id="registro_fan">
-                        <div class="form-container">
-                            <div class="form-control">
-                                <label class="form-control-label">Nombre</label> <input  class="form-control-textfield" type="text" id="input_fan_nombre" value="">
-                            </div>
-                            <div class="form-control">
-                                <label class="form-control-label">Apellidos</label> <input class="form-control-textfield" type="text" id="input_fan_apellidos" value="">
-                            </div>
-                            <div class="form-control">
-                                <label class="form-control-label">Email </label> <input class="form-control-textfield" type="text" id="input_fan_email" value="">
-                            </div>
-                            <div class="form-control">
-                                <label class="form-control-label">Usuario </label> <input class="form-control-textfield" type="text" id="input_fan_usuario" value="">
-                            </div>
-                            <div class="form-control">
-                                <label class="form-control-label">Contraseña </label> <input class="form-control-textfield" type="text" id="input_fan_pass" value="">
-                            </div>
-                            <div class="form-control">
-                                <label class="form-control-label">Ubicacion </label> <input class="form-control-textfield" type="text" id="input_fan_ubicacion" value="">
-                            </div>
-                            <div class="form-control">
-                                <label class="form-control-label">Aforo </label> <input class="form-control-textfield" type="text" id="input_fan_aforo" value="">
-                            </div>
-                            <div class="form-control">
-                                <button class="form-control-btn registrarseBtn">Registrarse</label> 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="div_registro_local  divPadding10" id="registro_local">
-                        <div class="form-container">
-                            <div class="form-control">
-                                <label class="form-control-label">Nombre</label> <input class="form-control-textfield" type="text" id="input_local_nombre" value="">
-                            </div>
-                            <div class="form-control">
-                                <label class="form-control-label">Email </label> <input class="form-control-textfield" type="text" id="input_local_email" value="">
-                            </div>
-                            <div class="form-control">
-                                <label class="form-control-label">Usuario </label> <input class="form-control-textfield" type="text" id="input_local_usuario" value="">
-                            </div>
-                            <div class="form-control">
-                                <label class="form-control-label">Contraseña </label> <input class="form-control-textfield" type="text" id="input_local_pass" value="">
-                            </div>
-                            <div class="form-control">
-                                <label class="form-control-label">Ubicacion </label> <input class="form-control-textfield" type="text" id="input_local_ubicacion" value="">
-                            </div>
-                            <div class="form-control">
-                                <label class="form-control-label">Aforo </label> <input class="form-control-textfield" type="text" id="input_local_aforo" value="">
-                            </div>
-                            <div class="form-control">
-                                <button class="form-control-btn registrarseBtn">Registrarse</label> 
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>
-        <script src="../js/registro.js" type="text/javascript"></script>
+        <script>
+            var filtroSeleccionado = "bm_filtro_artistas";
+            var searchTimer;
+            
+            function buscarConciertos(val) {
+
+                $("#bm_results").children().fadeOut();
+//                $("#bm_results").empty();
+                clearTimeout(searchTimer);
+
+                var search = val;
+                if (search.length >= 1)
+                {
+
+                }
+                console.log("Buscando conciertos!");
+            }
+
+            function buscarArtistas(val) {
+                clearTimeout(searchTimer);
+
+                $("#bm_results").children().fadeOut();
+                $("#bm_results").empty();
+
+                var search = val;
+                if (search.length >= 1)
+                {
+                    searchTimer = setTimeout(function () {
+
+                        var query = `select * from musico inner join usuario on usuario.idusuario = musico.idmusico where nombreartistico like "%${val}%"`;
+
+                        callAjaxBBDD(
+                                {
+                                    action: "RawQuery",
+                                    query: query
+                                }, function (result) {
+
+                            $.each(result, function (i, item) {
+                                var container = $('<div class="bmSearchResultContainer">' +
+                                        '            <div class="bmSearchResultBody clickableElement">' +
+                                        '                <img class="bmThumbnail"> ' +
+                                        '            </div>' +
+                                        '            <div class="bmSearchResultFooter">' +
+                                        '                <label class="bmSearchName padding10 centeredElement"></label>' +
+                                        '            </div>' +
+                                        '        </div>');
+
+                                $(container).find(".bmSearchResultBody img").prop("src", Main.obtenerUserDataPath(item["usuario"]) + "img/album_art.jpg");
+                                $(container).find(".bmSearchName").text(item["nombreartistico"]);
+
+                                console.log(item);
+                                $("#bm_results").append(container).hide().fadeIn();
+                            });
+                        });
+                    }, 250);
+                }
+            }
+
+            $("#bm_searchField").off().on("keyup", function () {
+
+                var texto = $("#bm_searchField").val();
+
+                if (texto === "")
+                {
+                    $("#bm_results").children().fadeOut();
+                    $("#bm_results").empty();
+                    return;
+                }
+
+                switch (filtroSeleccionado) {
+
+                    case "bm_filtro_artistas":
+                        buscarArtistas(texto);
+                        break;
+                    case "bm_filtro_conciertos":
+                        buscarConciertos(texto);
+                        break;
+                }
+            });
+
+            $(".bm_filtroContainer .bm_filtroChild").click(function (e) {
+
+                $(".bm_filtroChild").not(this).removeClass("bm_filtroChild-active");
+                $(this).addClass("bm_filtroChild-active");
+
+                filtroSeleccionado = $(this).prop("id");
+                
+                $("#bm_searchField").keyup();
+            });
+        </script>
     </body>
 </html>
