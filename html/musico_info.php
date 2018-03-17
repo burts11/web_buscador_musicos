@@ -51,8 +51,8 @@
             font-size: 2em;
         }
     </style>
-    <body>
-        <div class="_childContainer divPadding10">
+    <body>        
+        <div class="_childContainer">
             <label class="tituloH1-Grey padding10 musico_info_titulo textoCentradoHorizontalUpperCase"></label>
             <div class="musico_info_container" style="margin-top: 1em;">
                 <div class="musico_info_pic_container">

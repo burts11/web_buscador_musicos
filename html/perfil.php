@@ -49,7 +49,7 @@
         }
     </style>
     <body>
-        <div class="_childContainer divPadding10">
+        <div class="_childContainer">
             <!--<button id="btnPerfil">PERFIL DIALOG</button>-->
             <!--<label class="tituloH1-Grey padding10 musico_info_titulo textoCentradoHorizontalUpperCase">Perfil</label>-->
             <div class="perfil_info_container">

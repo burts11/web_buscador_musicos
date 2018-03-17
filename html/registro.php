@@ -18,10 +18,20 @@
         .top {
 
             width: 100%;
-            height: 20%;
+            height: 5%;
             /*background-color: orange;*/
             position: relative;
             display: block;
+        }
+
+        .div_registro_container  {
+
+            position: relative;
+            display: block;
+            width: 100%;
+            /*background-color: blue;*/
+            min-height: 20em;
+            top: 5%;
         }
 
         ._registroMenu{
@@ -35,7 +45,8 @@
         }
 
         .registroMenuBtn{
-            background-color: white;
+            /*background-color: white;*/
+
             position: relative;
             width: 10%;
             height: 100%;
@@ -48,7 +59,7 @@
         }
 
         .registroMenuBtn:hover {
-            background-color: #eaeaea;  
+            background-color: var(--backgroundControlPrimary);  
             position: relative;
             width: 10%;
             height: 100%;
@@ -60,7 +71,8 @@
         }
 
         .registroMenuBtn_selected {
-            background-color: #eaeaea;  
+            /*background-color: #eaeaea;*/  
+            background-color: var(--backgroundControlPrimary);  
             position: relative;
             width: 10%;
             height: 100%;
@@ -78,16 +90,6 @@
             min-height: 20em;
         }
 
-        .div_registro_container  {
-
-            margin-top: 0em;
-            position: relative;
-            display: block;
-            height: 100%;
-            /*background-color: blue;*/
-            min-height: 20em;
-        }
-
         .div_registro_container .form-control .form-control-label{
 
             float: left;
@@ -95,10 +97,6 @@
             text-align:left;
             top: 0.5em;
             position: relative;
-        }
-
-        .div_registro_container .form-control-textfield {
-
         }
 
         .div_registro_container .form-control-btn {
@@ -229,6 +227,45 @@
                 </div>
             </div>
         </div>
-        <script src="../js/registro.js" type="text/javascript"></script>
+        <script>
+            function Registrar() {
+                $("#registro_musico .registrarseBtn").click(function () {
+
+//                    alert("hola");
+
+                    var musico_nombre = $("#input_musico_nombre").val();
+                    var musico_apellidos = $("#input_musico_apellidos").val();
+                    var musico_telefono = $("#input_musico_telefono").val();
+                    var musico_email = $("#input_musico_email").val();
+                    var musico_web = $("#input_musico_web").val();
+                    var musico_artistico = $("#input_musico_artistico").val();
+                    var musico_componentes = $("#input_musico_componentes").val();
+                    var musico_ausuario = $("#input_musico_ausuario").val();
+                    var musico_pass = $("#input_musico_pass").val();
+                    var json = {nombre: "Javi", email: "hola@hotmail.com", usuario: "Jeehvi", pass: "1234", tipo: "1", numerocomponentes: "4", genero: "Rock", apellidos: "Steven Marc", telefono: "673940549", web: "google.es", nombreartistico: "Lil PolMother"};
+                    registrarMusico(json, {
+                        success: function (json) {
+                            console.log(json);
+                        },
+                        error: function (json) {
+                            console.log(json);
+                        }
+                    });
+                });
+            }
+
+            $("._registroMenu .registroMenuBtn").click(function (e) {
+                $(".registro-div-active").hide().removeClass("registro-div-active");
+
+                var id = $(this).attr("data-regid");
+
+                $("._registroMenu .registroMenuBtn").not(this).removeClass("registroMenuBtn_selected");
+                $(this).addClass("registroMenuBtn_selected");
+
+                $("#" + id).fadeIn();
+                $("#" + id).addClass("registro-div-active");
+                console.log(e);
+            });
+        </script>
     </body>
 </html>
