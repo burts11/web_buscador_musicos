@@ -1,6 +1,7 @@
 <?php
 
-require_once './MysqliDb.php';
+require_once 'MysqliDb.php';
+require_once 'util.php';
 
 function bbdd_inicializar() {
     $db = new MysqliDb('localhost', 'root', '', 'proyecto');
@@ -22,10 +23,58 @@ if (is_ajax()) {
 }
 
 function onAction($action) {
+
     bbdd_inicializar();
     $dataBase = MysqliDb::getInstance();
+
     switch ($action) {
 
+        case "RawQueryRet":
+            $query = $_POST["query"];
+
+            try {
+                $result = $dataBase->rawQuery($query);
+
+//                echo "<p><- Filas afectadas -></p>";
+//                echo "<p><Count -> " . $dataBase->count . "</p>";
+//                echo "<p><- Filas afectadas -/></p>";
+//
+//                echo "<p><- Resultado -></p>";
+//                print_array($result);
+//                echo "<p><- Resultado -/></p>";
+
+                if ($dataBase->querySucceeded()) {
+
+                    $result = Array(
+                        "resultado" => "Success",
+                        "data" => $result,
+                        "action" => "RawQueryRet",
+                        "lastQuery" => $dataBase->getLastQuery(),
+                        "mensaje" => "El query ha sido ejecutado con éxito!"
+                    );
+
+                    echo jsonEncode($result);
+                } else {
+                    $result = Array(
+                        "resultado" => "Error",
+                        "action" => "RawQueryRet",
+                        "lastQuery" => $dataBase->getLastQuery(),
+                        "mensaje" => $dataBase->getLastError()
+                    );
+                    echo jsonEncode($result);
+                }
+            } catch (Exception $e) {
+
+                $result = Array(
+                    "resultado" => "Error",
+                    "action" => "RawQueryRet",
+                    "lastQuery" => $dataBase->getLastQuery(),
+                    "mensaje" => $dataBase->getLastError()
+                );
+                echo jsonEncode($result);
+            }
+
+            break;
         case "Insert":
             $tabla = $_POST["tabla"];
             $data = $_POST["data"];
@@ -63,13 +112,11 @@ function onAction($action) {
                 echo jsonEncode($result);
             }
             break;
-
         case "RawQuery":
-            $select = $_POST["query"];
+            $query = $_POST["query"];
 
             try {
-                $array = $dataBase->rawQuery($select);
-
+                $array = $dataBase->rawQuery($query);
                 echo jsonEncode($array);
             } catch (Exception $e) {
 
@@ -84,10 +131,10 @@ function onAction($action) {
             }
             break;
         case "RawQueryOne":
-            $select = $_POST["query"];
+            $query = $_POST["query"];
 
             try {
-                $array = $dataBase->rawQueryOne($select);
+                $array = $dataBase->rawQueryOne($query);
                 echo jsonEncode($array);
             } catch (Exception $e) {
 
@@ -100,10 +147,6 @@ function onAction($action) {
                 echo jsonEncode($result);
             }
 
-            break;
-        case "ObtenerMusicos":
-            $array = $dataBase->rawQuery("SELECT * FROM usuario INNER JOIN musico ON usuario.idusuario = musico.idmusico;");
-            echo jsonEncode($array);
             break;
         case "CerrarSesion":
             session_start();
@@ -129,35 +172,39 @@ function onAction($action) {
             $email = $_POST["email"];
             $usuario = $_POST["usuario"];
             $pass = $_POST["pass"];
-            $tipo = 1;
+            $tipo = $_POST["tipo"];
             $genero = $_POST["genero"];
             $apellidos = $_POST["apellidos"];
             $telefono = $_POST["telefono"];
             $web = $_POST["web"];
             $nombreartistico = $_POST["nombreartistico"];
             $numerocomponentes = $_POST["numerocomponentes"];
+            $ciudad = $_POST["ciudad"];
 
-            $resultado = $dataBase->rawQuery("INSERT INTO usuario VALUES (default,'$nombre','$email','$usuario','$pass','$tipo')");
-            if ($resultado) {
-                $generoID = $dataBase->rawQueryOne("select idgenero from genero where nombre = $genero");
-                $idusuario = $dataBase->rawQueryOne("SELECT idusuario from usuario where usuario = '$usuario'");
-                $dataBase->rawQuery("INSERT INTO musico VALUES ('$idusuario','$generoID','$apellidos','$telefono','$web','$nombreartistico','$numerocomponentes')");
+            $resultado = $dataBase->rawQuery("INSERT INTO usuario VALUES (default, '$nombre','$email','$usuario','$pass','$tipo', '$ciudad')");
+
+            if ($dataBase->querySucceeded()) {
+
+                $idGenero = $dataBase->rawQueryValue("select idgenero from genero where nombre = '$genero' limit 1");
+                $idUsuario = $dataBase->rawQueryValue("Select idusuario from usuario where usuario = '$usuario' limit 1");
+                $resultInsertMusico = $dataBase->rawQuery("INSERT INTO musico VALUES ('$idUsuario','$genero','$apellidos','$telefono','$web','$nombreartistico','$numerocomponentes', '$idGenero')");
+
+                if ($dataBase->querySucceeded()) {
+
+                    $result = Array(
+                        "resultado" => "Success",
+                        "mensaje" => "Usuario y músico creado!",
+                    );
+                }
+            } else {
 
                 $result = Array(
-                    "resultado" => "Success",
-                    "mensaje" => "Se ha registrado correctamente",
+                    "resultado" => "Error",
+                    "mensaje" => $dataBase->getLastError()
                 );
-
-                jsonEncode($result);
-
-                return;
             }
-            $result = Array(
-                "resultado" => "Error",
-                "mensaje" => "No se ha registrado",
-            );
-
-            jsonEncode($result);
+            
+            echo jsonEncode($result);
             break;
         case "MostrarSesion":
             session_start();
@@ -199,7 +246,7 @@ function onAction($action) {
             $user = $_POST["user"];
             $pass = $_POST["pass"];
 
-//            $passCifrada = password_hash($pass, PASSWORD_DEFAULT);
+            $passCifrada = password_verify($pass, PASSWORD_DEFAULT);
 
             $dataBase->where("usuario", $user);
             $dataBase->where("pass", $pass);
