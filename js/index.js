@@ -122,10 +122,9 @@ var Main = {
     onSesionFinalizada: function (e) {
         $("#menuBtnHome").attr("data-href", "pagina_principal");
         $("#menuBtnHome").attr("href", "#pagina_principal");
-        cambiarPagina("pagina_principal");
-        window.location.hash = "pagina_principal";
-
         $("#menuBtnUserHome").remove();
+
+        window.location.reload();
     },
     agregarMenuBtn: function (href, id, texto) {
         $("#_mainMenu").find("#" + id).parent(".menuItemContainer").remove();
@@ -228,6 +227,27 @@ onJqueryReady(function () {
 
     Main.inicio();
 
+    $("#_registrarContainer").click(function (e) {
+
+        VModal.show("registro", "#_registrarContainer", {
+            modalEffect: "md-effect-15",
+            VModalId: "buscar_modal",
+            CustomSize: "true",
+            modalWidth: "98%",
+            modalHeight: "98%",
+            CustomPadding: "true",
+            padding: "0px"
+        }, {
+            onDialogShow: function (ev) {
+
+                console.log(ev);
+                ev.vparams.onDialogContentLoaded();
+            },
+            onDialogClose: function (ev) {
+            }
+        });
+    });
+
     $("#_loginContainer").click(function (e) {
 
         VModal.show("login", "", {modalEffect: "md-effect-13", VModalId: "index_show_login"}, {
@@ -235,6 +255,27 @@ onJqueryReady(function () {
 
                 ev["vparams"]["sender"] = "login";
                 callJqueryWindowEvent(VInfo.LOGIN_INFO, ev);
+            },
+            onDialogClose: function (ev) {
+            }
+        });
+    });
+
+    $("#_searchDiv").click(function () {
+
+        VModal.show("buscar_modal", "#searchDiv", {
+            modalEffect: "md-effect-15",
+            VModalId: "buscar_modal",
+            CustomSize: "true",
+            modalWidth: "98%",
+            modalHeight: "98%",
+            CustomPadding: "true",
+            padding: "0px"
+        }, {
+            onDialogShow: function (ev) {
+
+                console.log(ev);
+                ev.vparams.onDialogContentLoaded();
             },
             onDialogClose: function (ev) {
             }
