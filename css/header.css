@@ -1,9 +1,21 @@
-.headerDiv{
-
+.headerContainer{
+    width: 100%;
+    height: 8%;
     position: relative;
+    display: inline-block;
+    /*background-color: rgba(255,255,255,0.05);*/
+    background-color: rgb(35, 35, 35) !important;
+}
+
+.headerDiv{
+    width: 100%;
+    height: 100%;
     /*background-color: white;*/
     display: inline-block;
-    background-color: transparent;
+    position: relative; /* Set the navbar to fixed position */
+    -moz-box-shadow:0 0 8px 0 black;
+    -webkit-box-shadow:0 0 8px 0 black;
+    box-shadow:0 0 8px 0 black;
 }
 
 .divLogo {
@@ -12,6 +24,8 @@
     height: 100%;
     display: inline-block;
     overflow: hidden;    
+    left: 0.5em;
+
     /*background-color: red;*/
 }
 
@@ -28,8 +42,8 @@
 #logoImg{
 
     position: relative;
-    width: 80px;
-    height: 100%;   
+    width: 60px;
+    height: 60px;   
 }
 
 .menuItem, a{
@@ -39,7 +53,7 @@
     border-radius: 6px;
     border-width: 1px;
     text-decoration: none !important;
-    color: gray;
+    color: var(--textColorPrimary);
 }
 
 a:hover, a:visited, a:link, a:active
@@ -77,27 +91,6 @@ a:hover, a:visited, a:link, a:active
     border: 0px;
 }
 
-.centeredElement{
-
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%,-50%);
-}
-
-.centeredElementVertical{
-
-    position: absolute;
-    top: 50%;
-    transform: translate(0, -50%);
-}
-
-.centeredElementHorizontal{
-
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, 0);
-}
-
 .userMenuUserName{
 
     position: relative;
@@ -121,8 +114,11 @@ a:hover, a:visited, a:link, a:active
 .userMenuChild {
     /*background-color: red;*/
     display: inline-block;
-    width: 20%;
     text-align: center;
+    position: relative;
+    /*background-color: rgba(0,0,0,0.5);*/
+    border-radius: 10px;
+    margin-left: 0.2em;
 }
 
 .userMenuContainer{
@@ -139,8 +135,18 @@ a:hover, a:visited, a:link, a:active
     height: 100%;
 }
 
-#_loginDiv{
+#_rightMenu{
 
+    position: relative; 
+    display: inline-block;
+    width: auto;
+    height: 100%;
+    float: right; 
+    margin-right: 1em;
+}
+
+#_loginDiv{
+    /*background-color: red;*/
     display: inline-block;
     position: relative;
     width: auto;
@@ -158,8 +164,53 @@ a:hover, a:visited, a:link, a:active
 }
 
 .loginDiv{
-    width: 30%;
     position: relative;
     display: inline-block;
     float: left;
+}
+
+.menuFontSize1{
+
+    font-size: 0.9em;
+}
+
+#_searchDiv{
+
+    width: 5em;
+    margin-right: 2em;
+    /*background-color: orange;*/
+    height: 100%;
+}
+
+.searchButtonImage {
+
+    width: 32px;
+    height: 32px;
+}
+
+
+.divIdiomas{
+    position: relative;
+    display: inline-block;
+    overflow: hidden;    
+    left: 1em;
+    /*background-color: red;*/
+}
+
+.idiomasContainer{
+    border: 1px;
+    border-radius: 0.5em;
+    border-width: 0.5em;
+    display: inline-block;
+    padding: 0.9em;
+    /*background-color: #222;*/
+}
+
+#idiomaFlag{
+
+    position: relative;
+    width: 24px;
+    height: 24px;
+    min-height: 20px;
+    min-width: 20px;
 }
