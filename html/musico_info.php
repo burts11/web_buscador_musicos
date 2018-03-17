@@ -16,6 +16,7 @@
             height: 100%;
             min-width: 10em;
             max-height: 18em;
+            left: 0.6em;
         }
 
         #musicoFoto {
