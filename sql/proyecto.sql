@@ -27,7 +27,7 @@ CREATE TABLE `ciudad` (
   `provincia` varchar(45) NOT NULL,
   `poblacion` varchar(45) NOT NULL,
   PRIMARY KEY (`idciudad`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36,6 +36,7 @@ CREATE TABLE `ciudad` (
 
 LOCK TABLES `ciudad` WRITE;
 /*!40000 ALTER TABLE `ciudad` DISABLE KEYS */;
+INSERT INTO `ciudad` VALUES (1,'Catalunya','Barcelona');
 /*!40000 ALTER TABLE `ciudad` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -71,6 +72,7 @@ CREATE TABLE `concierto` (
 
 LOCK TABLES `concierto` WRITE;
 /*!40000 ALTER TABLE `concierto` DISABLE KEYS */;
+INSERT INTO `concierto` VALUES (1,7,'2018-03-05','0000-00-00 00:00:00',1,2000,1,1,NULL);
 /*!40000 ALTER TABLE `concierto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -122,7 +124,7 @@ CREATE TABLE `genero` (
 
 LOCK TABLES `genero` WRITE;
 /*!40000 ALTER TABLE `genero` DISABLE KEYS */;
-INSERT INTO `genero` VALUES (1,'Rock'),(2,'Pop'),(3,'Electronica'),(4,'Country');
+INSERT INTO `genero` VALUES (1,'Rock'),(2,'Balada'),(3,'Epic'),(4,'Country');
 /*!40000 ALTER TABLE `genero` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -177,6 +179,7 @@ CREATE TABLE `local` (
 
 LOCK TABLES `local` WRITE;
 /*!40000 ALTER TABLE `local` DISABLE KEYS */;
+INSERT INTO `local` VALUES (7,'Barcelona',1000,'');
 /*!40000 ALTER TABLE `local` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -209,7 +212,7 @@ CREATE TABLE `musico` (
 
 LOCK TABLES `musico` WRITE;
 /*!40000 ALTER TABLE `musico` DISABLE KEYS */;
-INSERT INTO `musico` VALUES (2,'Rock','',0,'','Muse',3,1),(4,'Balada','Ferri Llopis',0,'','Nino Bravo',1,2),(5,'Epic','On Titan',0,'','SHINGEKI',0,3),(6,'Rock','',0,'','Coldplay',4,4);
+INSERT INTO `musico` VALUES (2,'Rock','',0,'','Muse',3,1),(4,'Balada','Ferri Llopis',0,'','Nino Bravo',1,2),(5,'Epic','On Titan',0,'','SHINGEKI',0,3),(6,'Rock','',0,'','Coldplay',4,1),(8,'Epic','Hell',0,'','Two Steps From Hell',0,3);
 /*!40000 ALTER TABLE `musico` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -233,7 +236,7 @@ CREATE TABLE `usuario` (
   UNIQUE KEY `email_UNIQUE` (`email`),
   KEY `fk_ciudad_idx` (`ciudad`),
   CONSTRAINT `fk_ciudad` FOREIGN KEY (`ciudad`) REFERENCES `ciudad` (`idciudad`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -242,7 +245,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'Steven','semail','steven','1234',0,NULL),(2,'Muse','wtwr','muse','1234',1,NULL),(3,'Fan','fanemail','fan','1234',3,NULL),(4,'Luis','wrtrwt','nino','1234',1,NULL),(5,'Attack','htrhdth','attack','1234',1,NULL),(6,'Coldplay','laihf','coldplay','1234',1,NULL);
+INSERT INTO `usuario` VALUES (1,'Steven','test@gmail.com','steven','1234',0,NULL),(2,'Muse','wtwr','muse','1234',1,NULL),(3,'Fan','tesgtg@gmail.com','fan','1234',3,NULL),(4,'Luis','wrtrwt','nino','1234',1,NULL),(5,'Attack','htrhdth','attack','1234',1,NULL),(6,'Coldplay','laihf','coldplay','1234',1,NULL),(7,'Local','local@gmail.com','local','1234',2,1),(8,'TSFH','tsfh@gmail.com','tsfh','1234',1,1);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -295,6 +298,7 @@ CREATE TABLE `votacionmusico` (
 
 LOCK TABLES `votacionmusico` WRITE;
 /*!40000 ALTER TABLE `votacionmusico` DISABLE KEYS */;
+INSERT INTO `votacionmusico` VALUES (2,3),(4,3),(5,3),(6,3),(8,3);
 /*!40000 ALTER TABLE `votacionmusico` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -307,4 +311,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-06 20:36:02
+-- Dump completed on 2018-03-17  4:07:11
