@@ -19,7 +19,7 @@ onJqueryReady(function () {
 
             var musicoBody = $("<div>").addClass("musicoBody clickableElement");
             var musicoFooter = $("<div>").addClass("musicoFooter");
-            
+
             $(musicoBody).append($("<div>").addClass("musicoAlbumArtContainer"));
             $(musicoBody).append("<div class='musicoBodyOver'>");
 
@@ -66,7 +66,9 @@ onJqueryReady(function () {
 
             $(musicoBody).unbind("click").bind("click", function () {
 
-                VModal.show("musico_info", item, {modalEffect: "md-effect-13", VModalId: generateUniqueId()}, {
+                VModal.show("musico_info", item, {modalEffect: "md-effect-13", VModalId: generateUniqueId(),
+                    CustomPadding: "true",
+                    padding: "0px"}, {
                     onDialogShow: function (ev) {
 
                         ev["usuarioId"] = usuarioId;
@@ -103,7 +105,7 @@ onJqueryReady(function () {
                             }
                         }, function (json) {
 
-                            VToast.logS("Like");
+//                            VToast.logS("Like");
 
                             if (success(json)) {
                                 VToast.log("Liked " + nombre);
@@ -114,7 +116,7 @@ onJqueryReady(function () {
 
                             VToast.log(json);
 
-                            VToast.logF("Like");
+//                            VToast.logF("Like");
                         });
                     }
                 });
