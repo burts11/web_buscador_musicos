@@ -44,7 +44,7 @@ function loadHashPage(url) {
 
     loadPage(url, {
         success: function (data) {
-
+            console.log("Loaded page !");
             var tempDOM = $('<output>').html(data);
 
             $(tempDOM).find("link").each(function () {
@@ -66,7 +66,7 @@ function loadHashPage(url) {
                 if (jsLink !== null && jsLink !== undefined) {
 
                     try {
-                        jsLink = jsLink.replace('../', '');
+                        jsLink  = jsLink.replace('../', '');
 //                        console.log("Replaced " + jsLink);
                         scripts.push(jsLink);
                         $(this).remove();
@@ -77,7 +77,7 @@ function loadHashPage(url) {
             });
 
             var onlyHTML = $(tempDOM).html();
-            $('#_divMainContent').stop().hide().html(onlyHTML).fadeIn();
+            $('#_divMainContent').empty().stop(true, true).hide().html(onlyHTML).fadeIn();
 
             scripts.forEach(function (scriptSrc) {
                 appendScript(scriptSrc);
@@ -148,7 +148,7 @@ function appendCSSInline(id, css, where) {
 }
 
 function appendScript(url) {
-    var loaded = isScriptLoaded(url);
+//    var loaded = isScriptLoaded(url);
 
 //    console.log("loaded -> " + loaded);
 //    if (!loaded)
@@ -158,10 +158,11 @@ function appendScript(url) {
 ////        $('script[src="' + url + '"]').remove();
 //    }
 
-    if (!loaded)
-    {
-        $('script[src="' + url + '"]').remove();
-    }
+    $('script[src="' + url + '"]').remove();
+//
+//    if (!loaded)
+//    {
+//    }
 
     $("head").append("<script src='" + url + "' type='text/javascript' ></script>");
 }
