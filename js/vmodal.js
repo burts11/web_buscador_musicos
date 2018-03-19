@@ -98,6 +98,14 @@ var VModal = {
                     appendCSSInline("minifyCustomPadding", minifyPadding, $modalObject);
                 }
 
+                if (params.hasOwnProperty("ContentPadding")) {
+
+                    var paddingSettings = params["ContentPadding"];
+                    var minifyPadding = `${  $modalId } .md-content { padding: ${paddingSettings } !important;}`;
+
+                    appendCSSInline("minifyCustomPadding", minifyPadding, $modalObject);
+                }
+
                 var modalCloseBtn = $("#" + modalId).find("#__modal_close_btn");
                 $(modalCloseBtn).unbind("click").bind("click", function (e) {
 
@@ -128,17 +136,10 @@ var VModal = {
                     });
 
                     function animOutFinished() {
-                        console.log($modalId + " closing animation finished!");
+//                        console.log($modalId + " closing animation finished!");
                         $("#" + modalId).hide().remove();
                         $("#" + modalOverlayId).remove();
                     }
-
-//                    setTimeout(
-//                            function ()
-//                            {
-////                                $("#" + modalId).remove();
-////                                $("#" + modalOverlayId).remove();
-//                            }, 10);
                 });
 
 // esconder el boton de cerrar para mostrarlo con una animación
@@ -172,7 +173,7 @@ var VModal = {
                                 if (params["modalEffect"] === "vModalFadeIn-show") {
                                     $($modalId).css({opacity: 0, top: "-=20px"});
 
-                                    $($modalId).animate({
+                                    $($modalId).stop(true, true).animate({
                                         top: "+=20px", opacity: 1
                                     }, {
                                         duration: 450,
@@ -188,7 +189,6 @@ var VModal = {
                                 }
 
                                 $("#" + modalId + " .md-content").one('animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd OAnimation animationEnd webkitAnimationEnd oAnimationEnd WebkitAnimation msAnimationEnd webkitTransitionEnd oTransitionEnd oTransitionEnd msTransitionEnd transitionEnd', function () {
-
                                     animInFinished();
                                     $(this).off();
                                 });
