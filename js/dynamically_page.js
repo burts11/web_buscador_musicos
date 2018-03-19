@@ -1,5 +1,12 @@
+var queueEvents = [];
+
 var default_content = "";
 var lastURL = "";
+
+var paginasPublicas = ["pagina_principal", "musico_info_v2"];
+var paginasFan = ["pagina_principal", "pagina_fan", "musico_info_v2"];
+var paginasMusico = ["pagina_principal", "pagina_musico", "musico_info_v2"];
+var paginasLocal = ["pagina_principal", "pagina_local", "musico_info_v2"];
 
 $(document).ready(function () {
 
@@ -9,16 +16,79 @@ $(document).ready(function () {
 
 function asignarBotonesMenu() {
 
-    $('#_mainMenu div a').off().click(function (e) {
+    $('#_mainMenu div a').unbind("click").bind("click", function (e) {
 
         setActive(e.currentTarget);
         var page = $(e.currentTarget).attr("data-href");
-        cambiarPagina(page);
+        cambiarHash(page);
     });
 }
 
+function queueEvent(event, json) {
+    queueEvents.push({
+        event: event,
+        json: json
+    });
+}
+
+Array.prototype.contains = function (element) {
+    return this.indexOf(element) > -1;
+};
+
 function cambiarPagina(hash)
 {
+    callAjaxBBDD({action: "UsuarioLogueado"}, function (result) {
+        var count = 0;
+        console.log(result);
+        console.log(hash);
+
+        if (!success(result)) {
+
+            if (paginasPublicas.contains(hash)) {
+                _cambiarPagina(hash);
+                return;
+            }
+        }
+
+        if (success(result)) {
+
+            var privilegioGlobal = Usuario.privilegio;
+
+            switch (privilegioGlobal)
+            {
+                case "Fan":
+                    if (!paginasFan.contains(hash)) {
+                        cambiarHash("pagina_principal");
+                        return;
+                    }
+                    _cambiarPagina(hash);
+                    break;
+                case "Musico":
+                    if (!paginasMusico.contains(hash)) {
+                        cambiarHash("pagina_principal");
+                        return;
+                    }
+                    _cambiarPagina(hash);
+                    break;
+                case "Local":
+                    if (!paginasLocal.contains(hash)) {
+                        cambiarHash("pagina_principal");
+                        return;
+                    }
+                    _cambiarPagina(hash);
+                    break;
+                default:
+                    alert("Dynamically Page.js! No es ni fan ni musico ni local!");
+                    break;
+            }
+            count++;
+        }
+
+        console.log("Count -> " + count);
+    });
+}
+
+function _cambiarPagina(hash) {
     if (!hash) {
         hash = window.location.hash;
     }
@@ -44,6 +114,11 @@ function loadHashPage(url) {
 
     loadPage(url, {
         success: function (data) {
+            
+            callJqueryWindowEvent("ContentChanging", {action: "yes"});
+
+            $('#_divMainContent').fadeOut();
+
             console.log("Loaded page !");
             var tempDOM = $('<output>').html(data);
 
@@ -66,7 +141,7 @@ function loadHashPage(url) {
                 if (jsLink !== null && jsLink !== undefined) {
 
                     try {
-                        jsLink  = jsLink.replace('../', '');
+                        jsLink = jsLink.replace('../', '');
 //                        console.log("Replaced " + jsLink);
                         scripts.push(jsLink);
                         $(this).remove();
@@ -81,6 +156,12 @@ function loadHashPage(url) {
 
             scripts.forEach(function (scriptSrc) {
                 appendScript(scriptSrc);
+            });
+
+            $.each(queueEvents, function (i, item) {
+
+                callJqueryWindowEvent(item["event"], item["json"]);
+                queueEvents.splice(i, 1);
             });
         },
         error: function (err) {
