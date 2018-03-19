@@ -112,6 +112,12 @@ class MysqliDb {
      */
     public $count = 0;
 
+      /**
+     * Variable which holds an amount of num rows
+     * @var string
+     */
+    public $num_rows = 0;
+    
     /**
      * Variable which holds an amount of returned rows during get/getOne/select queries with withTotalCount()
      * @var string
@@ -517,9 +523,9 @@ class MysqliDb {
 
             call_user_func_array(array($stmt, 'bind_param'), $this->refValues($params));
         }
-
         $stmt->execute();
         $this->count = $stmt->affected_rows;
+        $this->num_rows = $stmt->num_rows;
         $this->_stmtError = $stmt->error;
         $this->_stmtErrno = $stmt->errno;
         $this->_lastQuery = $this->replacePlaceHolders($this->_query, $params);
@@ -1858,7 +1864,6 @@ class MysqliDb {
      */
     protected function _prepareQuery() {
         $stmt = $this->mysqli()->prepare($this->_query);
-
         if ($stmt !== false) {
             if ($this->traceEnabled)
                 $this->traceStartQ = microtime(true);
