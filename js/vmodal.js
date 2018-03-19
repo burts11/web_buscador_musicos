@@ -12,7 +12,6 @@ var VModal = {
     closeWithId: function (id) {
 
         $("#" + id + " #__modal_close_btn").click();
-        $("#" + id).remove();
     },
     show: function (contentHREF, modalTriggerDom, params, func) {
 
@@ -53,7 +52,7 @@ var VModal = {
                         '</div>'
                         + ' <div class="md-overlay" id="' + modalOverlayId + '"></div>';
 
-                var modalInlineCSS = "#__modal_close_btn { display: none;}  .md-overlay {background:transparent;background-color:rgba(0,0,0,0.5)}.md-closeBtn{display:block;width:100%;height:100%;position:relative}.md-content_v2{ height:0px; margin-top:4px;display:block;position:relative;z-index:1000;margin-top:20px !important; padding-right:20px !important}.md-modal-closeDiv{position:relative;display:block;width:32px;height:32px;float:right;right:-0.5em;top:0.5em;z-index:2000}";
+                var modalInlineCSS = "#__modal_close_btn { display: none;}  .md-overlay {background:transparent;background-color:rgba(0,0,0,0.5)}.md-closeBtn{display:block;width:100%;height:100%;position:relative}.md-content_v2{ height:0px; margin-top:4px;display:block;position:relative;z-index:1000;margin-top:20px !important;}.md-modal-closeDiv{position:relative;display:block;width:32px;height:32px;float:right;right:-0.5em;top:0.5em;z-index:2000}";
                 modalInlineCSS = modalInlineCSS.replace("_main_overlay", modalOverlayId);
 
                 appendCSSInline("vmodal_inline_style", modalInlineCSS, "head");
@@ -74,22 +73,27 @@ var VModal = {
                     $($modalId).find(".md-content").addClass("md-modal-custom-size");
 
                     var customSize = params["CustomSize"];
-//                    console.log(customSize);
                     if (customSize === "true") {
 
-//                        console.log($("#_mainDiv").find("#" + modalId));
                         var width = params["modalWidth"];
                         var height = params["modalHeight"];
 
-                        var minifySize = `.md-modal-custom-size{width:${width} !important;max-width:none!important;max-height:none!important;height:${height} !important} ${ $modalId } .md-content_v2 { padding-right:0px !important} `;
+                        var minifySize = `.md-modal-custom-size{width:${width} !important;max-width:none!important;max-height:none!important;height:${height} !important} ${ $modalId } .md-content_v2 { padding-right:0px !important; } `;
                         appendCSSInline("minifyCustomSize", minifySize, $modalObject);
                     }
+                }
+
+                if (params.hasOwnProperty("modalTop")) {
+
+                    var modalTop = params["modalTop"];
+                    var minifyTop = `${ $modalId } { top: ${modalTop} ;}`;
+                    appendCSSInline("minifyModalTop", minifyTop, $modalObject);
                 }
 
                 if (params.hasOwnProperty("CustomPadding")) {
 
                     var paddingSettings = params["padding"];
-                    var minifyPadding = `${  $modalId } .__root_modal_content { padding: ${paddingSettings } !important}`;
+                    var minifyPadding = `${  $modalId } .__root_modal_content { padding: ${paddingSettings } !important;}`;
 
                     appendCSSInline("minifyCustomPadding", minifyPadding, $modalObject);
                 }
@@ -97,24 +101,52 @@ var VModal = {
                 var modalCloseBtn = $("#" + modalId).find("#__modal_close_btn");
                 $(modalCloseBtn).unbind("click").bind("click", function (e) {
 
+                    $("body").removeClass("disabledScroll");
+
+                    if (params["modalEffect"] === "vModalFadeIn-show") {
+                        $($modalId).removeClass("vModalFadeIn-show");
+                        $($modalId).animate({
+                            top: "-=20px", opacity: 0
+                        }, {
+                            duration: 450,
+                            complete: function () {
+                                animOutFinished();
+                            }
+                        });
+                    } else {
+                        $("#" + modalId).removeClass("md-show");
+                    }
+
                     if (isFunctionDefined(func.onDialogClose)) {
                         func.onDialogClose(e.currentTarget);
                     }
 
-                    $("#" + modalId).removeClass("md-show");
-//                    $($mainDiv).removeClass("blurred__");
-                    setTimeout(
-                            function ()
-                            {
-                                $("#" + modalId).remove();
-                                $("#" + modalOverlayId).remove();
-                            }, 50);
+                    $("#" + modalId + " .md-content").one('OAnimation animationEnd webkitAnimationEnd oAnimationEnd WebkitAnimation msAnimationEnd webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionEnd', function (e) {
+
+                        animOutFinished();
+                        $(this).off();
+                    });
+
+                    function animOutFinished() {
+                        console.log($modalId + " closing animation finished!");
+                        $("#" + modalId).hide().remove();
+                        $("#" + modalOverlayId).remove();
+                    }
+
+//                    setTimeout(
+//                            function ()
+//                            {
+////                                $("#" + modalId).remove();
+////                                $("#" + modalOverlayId).remove();
+//                            }, 10);
                 });
 
 // esconder el boton de cerrar para mostrarlo con una animación
                 $("#" + modalId + " #__modal_close_btn").hide();
 
                 var modalContentHTTML = removerScriptYCSS(data);
+
+                $(modalContentHTTML).attr("data-vModalId", modalId);
 //                var childContainer = $(modalContentHTTML).find("._childContainer");
 
                 $("#" + modalId + " > .md-content").append(modalContentHTTML);
@@ -125,40 +157,53 @@ var VModal = {
                             $("#" + modalId).show();
 
                             params["close"] = function () {
+
                                 VModal.closeWithId(modalId);
                             };
 
                             params["onDialogContentLoaded"] = function () {
 
+                                $("body").addClass("disabledScroll");
                                 console.log("< - Modal Id: " + modalId + " ->");
-                                console.log({vparams: params});
 
                                 $("#" + modalId + " .md-content_v2").css({height: "auto"});
                                 $("#" + modalId).addClass("md-show");
 
-                                if (params["modalEffect"] === "md-effect-13") {
-                                    $("#" + modalId + " #__modal_close_btn").show("slow");
+                                if (params["modalEffect"] === "vModalFadeIn-show") {
+                                    $($modalId).css({opacity: 0, top: "-=20px"});
 
-                                    console.log("Animación finalizada");
-                                    console.log("< - Modal Id: " + modalId + " -/>");
+                                    $($modalId).animate({
+                                        top: "+=20px", opacity: 1
+                                    }, {
+                                        duration: 450,
+                                        complete: function () {
+                                            animInFinished();
+                                        }
+                                    });
                                 }
 
-                                $("#" + modalId + " .md-content").off().one('OAnimation WebkitAnimation msAnimationEnd webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function () {
-
+                                if (params["modalEffect"] === "md-effect-13") {
                                     $("#" + modalId + " #__modal_close_btn").show("slow");
+                                    animInFinished();
+                                }
 
-                                    console.log("Animación finalizada");
-                                    console.log("< - Modal Id: " + modalId + " -/>");
+                                $("#" + modalId + " .md-content").one('animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd OAnimation animationEnd webkitAnimationEnd oAnimationEnd WebkitAnimation msAnimationEnd webkitTransitionEnd oTransitionEnd oTransitionEnd msTransitionEnd transitionEnd', function () {
 
-                                    if (isFunctionDefined(func.onDialogDomAnimation)) {
-                                        func.onDialogDomAnimation({vparams: params});
-                                    }
-
+                                    animInFinished();
                                     $(this).off();
                                 });
-                                
-//                                callJqueryWindowEvent(modalId )
                             };
+
+                            function animInFinished() {
+                                $("#" + modalId + " #__modal_close_btn").show("slow");
+
+                                if (isFunctionDefined(func.onDialogDomAnimation)) {
+                                    func.onDialogDomAnimation({vparams: params});
+                                }
+
+                                console.log("Animación finalizada");
+                                console.log("< - Modal Id: " + modalId + " -/>");
+                            }
 
                             if (isFunctionDefined(func.onDialogShow)) {
                                 func.onDialogShow({vparams: params});
