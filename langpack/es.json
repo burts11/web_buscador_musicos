@@ -12,9 +12,21 @@
 		"MusicoInfoNombreArtistico":"Nombre artístico: ",
 		"MusicoInfoGenero":"Género: ",
 		"MusicoInfoComponentes":"Número de componentes: ",
-		"Footer_CambiarIdioma":"Cambiar Idioma",
 		"Footer_CambiarIdioma_Castellano":"Español",
-		"Footer_CambiarIdioma_Ingles":"Inglés"
+		"Footer_CambiarIdioma_Ingles":"Inglés",
+		"Buscar_Dialogo_Artistas": "Artistas",
+		"Buscar_Dialogo_Conciertos": "Conciertos",
+		"Buscar...": "Buscar...",
+		"Perfil_Musico_Nombre":"Nombre ",
+		"Perfil_Musico_NombreArtistico":"Nombre artístico ",
+		"Perfil_Musico_Apellidos":"Apellidos ",
+		"Perfil_Musico_Email":"Email ",
+		"Perfil_Musico_Web":"Web ",
+		"Perfil_Musico_Telefono":"Teléfono ",
+		"Perfil_Fan_Nombre":"Nombre ",
+		"Perfil_Fan_Apellidos":"Apellidos ",
+		"Perfil_Fan_Direccion":"Dirección  ",
+		"Perfil_Fan_Telefono":"Teléfono "
 	},
 	"regex": [
 	]
