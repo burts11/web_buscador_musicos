@@ -26,10 +26,9 @@
 
         #bm_searchField{
 
-            width: 90%;
-            height: 80%;
+            width: 100%;
+            height: 100%;
             position: relative;
-            left: 2em;
         }
 
         .bm_searchImage{
@@ -37,8 +36,6 @@
             position: relative;
             width: 2em;
             height: 2em;
-            top: 1.5em;
-            left: 2em;
         }
 
         .bmSearchResultContainer  
@@ -88,7 +85,7 @@
             background-color: var(--backgroundControlPrimary);
             padding: 0.8em;
             display: inline-block;
-            font-size: 0.7em;
+            font-size: 0.85em;
             color: white;
         }
 
@@ -103,6 +100,7 @@
             display: block;
             height: 2em;
             width: 95%;
+            margin-top: 1em;
         }
 
         .bm_filtroWrapper{
@@ -112,6 +110,22 @@
 
         ._childContainer{
             overflow-y: auto !important;
+        }
+
+        .bm_searchImageWrapper 
+        {
+            position: relative;
+            display: inline-block;
+            width: 2.5em;
+            height: 100%;
+        }
+
+        .bm_searchWrapper 
+        {
+            position: relative;
+            display: inline-block;
+            width: 90%;
+            height: 100%;
         }
     </style>
     <body>
@@ -126,29 +140,31 @@
         <div class="_childContainer divPadding10 ">
             <div class="bm_conciertoInfoContainer">
                 <div class="bm_searchContainer">
-                    <img class="bm_searchImage clickableElement centeredElementVertical inlineDiv" src="img/search.png">
-                    <input type="text" class="form-control-textfield fontSize9em inlineDiv" id="bm_searchField" placeholder="Buscar..."> 
+                    <div class="bm_searchImageWrapper">
+                        <img class="bm_searchImage clickableElement centeredElement inlineDiv" src="img/search.png">
+                    </div>
+                    <div class="bm_searchWrapper">
+                        <input type="text" class="form-control-textfield fontSize9em inlineDiv" id="bm_searchField" lang="es" placeholder="Buscar..."> 
+                    </div>
                 </div>
                 <div class="bm_filtroContainer">
                     <div class="bm_filtroWrapper centeredElementHorizontal">
                         <div class="bm_filtroChild clickableElement bm_filtroChild-active" id="bm_filtro_artistas">
-                            <label class="clickableElement">Artistas</label>
+                            <label lang="es" data-lang-token="Buscar_Dialogo_Artistas" class="clickableElement">Artistas</label>
                         </div>
                         <div class="bm_filtroChild clickableElement"  id="bm_filtro_conciertos">
-                            <label class="clickableElement">Conciertos</label>
+                            <label lang="es" data-lang-token="Buscar_Dialogo_Conciertos" class="clickableElement">Conciertos</label>
                         </div>
                     </div>
                 </div>
                 <div id="bm_results">
-
-
                 </div>
             </div>
         </div>
         <script>
             var filtroSeleccionado = "bm_filtro_artistas";
             var searchTimer;
-            
+
             function buscarConciertos(val) {
 
                 $("#bm_results").children().fadeOut();
@@ -194,6 +210,12 @@
 
                                 $(container).find(".bmSearchResultBody img").prop("src", Main.obtenerUserDataPath(item["usuario"]) + "img/album_art.jpg");
                                 $(container).find(".bmSearchName").text(item["nombreartistico"]);
+                                $(container).find(".bmSearchResultBody").click(function () {
+                                    
+                                    cambiarHash("musico_info_v2");
+                                    queueEvent(VInfo.MUSICO_INFO_V2, {data: item});
+                                    VModal.closeWithId("buscar_modal");
+                                });
 
                                 console.log(item);
                                 $("#bm_results").append(container).hide().fadeIn();
@@ -231,7 +253,7 @@
                 $(this).addClass("bm_filtroChild-active");
 
                 filtroSeleccionado = $(this).prop("id");
-                
+
                 $("#bm_searchField").keyup();
             });
         </script>
