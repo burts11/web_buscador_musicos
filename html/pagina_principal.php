@@ -23,7 +23,7 @@
             height: 30em;
             position: relative;
             display: inline-block;
-            color: orange;
+            /*color: orange;*/
             overflow: hidden;
         }
 
@@ -70,8 +70,7 @@
             display: inline-block;
             position: relative;
             width: 100%;
-            top: -180%;
-            margin: auto;
+            height: 180%;
             /*            height: 100% !important;*/
         }
 
