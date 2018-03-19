@@ -73,6 +73,7 @@ perspective effects (not including the modals and the overlay).
     position: relative;
     /*border-radius: 3px;*/
     margin: 0 auto;
+    padding: 15px 40px 15px;
     /*box-shadow: 0 4px 4px rgba(36,37,38, 0.9) !important;*/
 }
 
@@ -88,7 +89,7 @@ perspective effects (not including the modals and the overlay).
 
 .md-content .__root_modal_content {
     /*padding: 15px 40px 30px;*/
-    padding: 15px 40px 15px;
+    /*padding: 15px 40px 15px;*/
     margin: 0;
     font-weight: 300;
     font-size: 1.15em;
