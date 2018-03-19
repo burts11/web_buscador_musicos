@@ -17,13 +17,13 @@ $.fn.popup = function () {
 
 //            console.log("VPopup Target Id -> " + $targetId);
 
-            $(self).bind('clickoutside', function (event) {
+            $(self).unbind("clickoutside").bind('clickoutside', function (event) {
 
                 $($targetId).fadeOut();
                 $($targetId).unbind('clickoutside');
             });
 
-            $($targetId + " .vPopupMenuItem").bind('click', function () {
+            $($targetId + " .vPopupMenuItem").unbind("click").bind('click', function () {
                 var id = $(this).prop("id");
                 callJqueryWindowEvent(VMessage.PAGINA_POPUP_MENU_ITEM_CLICKED, {id: id});
                 $($targetId).fadeOut();
