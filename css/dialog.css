@@ -6,3 +6,70 @@
     margin: 4px;
     box-shadow: inset 0 1px 1px -1px rgba(0, 0, 0, 0.5);
 }
+
+.vModalFadeIn-show{
+
+/*    -webkit-animation:moveFromTop ease-out 1;
+    -moz-animation:moveFromTop ease-out 1;
+    animation:moveFromTop ease-out 1;
+
+    -webkit-animation-fill-mode:forwards;
+    -moz-animation-fill-mode:forwards;
+    animation-fill-mode:forwards;
+
+    -webkit-animation-iteration-count:1;
+
+    -webkit-animation-duration:1s;
+    -moz-animation-duration:1s;
+    animation-duration:1s;
+
+    -webkit-transform-origin: 100% 50%;*/
+}
+
+.vModalFadeIn-close{
+    -webkit-transform-origin: 100% 50%;
+
+    -webkit-animation:moveFromBottom ease-out 1;
+    -moz-animation:moveFromBottom ease-out 1;
+    animation:moveFromBottom ease-out 1;
+
+    -webkit-animation-fill-mode:forwards;
+    -moz-animation-fill-mode:forwards;
+    animation-fill-mode:forwards;
+
+    /*-webkit-animation-iteration-count:1;*/
+
+    -webkit-animation-duration:0.5s;
+    -moz-animation-duration:0.5s;
+    animation-duration:0.5s;
+}
+
+@-webkit-keyframes moveFromTop { from {top:70px; opacity:0; } to { opacity:1; } }
+@-moz-keyframes moveFromTop { from {top:70px; opacity:0; } to { opacity:1; } }
+@keyframes moveFromTop { from {top:70px; opacity:0; } to { opacity:1; } }
+
+@-webkit-keyframes moveFromBottom { from {  opacity:1; } to { top:-10px; opacity:0; } }
+@-moz-keyframes moveFromBottom { from { opacity:1; } to { top:-10px;opacity:0; } }
+@keyframes moveFromBottom { from {   opacity:1; } to { top:-10px; opacity:0; } }
+
+/*
+@keyframes bobbingAnim {
+    10% {
+        transform: translate(0, -10px) translateZ(0);       
+    },
+    20% {
+        transform: translate(0,  -20px) translateZ(0);       
+    }, 
+    30% {
+        transform: translate(0,  -30px) translateZ(0);       
+    },
+    40% {
+        transform: translate(0,  -40px) translateZ(0);       
+    }, 
+    50% {
+        transform: translate(0,  -50px) translateZ(0);       
+    },
+    100% {
+        transform: translate(0,  -100px) translateZ(0);       
+    },
+}*/
