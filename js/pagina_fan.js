@@ -3,12 +3,13 @@ onJqueryReady(function () {
         action: "RawQuery",
         query: "SELECT * FROM usuario INNER JOIN musico ON usuario.idusuario = musico.idmusico;"
     }, function (result) {
-        console.log(result);
 
         $("#divMusicosFan").empty();
 
         $.each(result, function (i, item) {
 
+//            console.log(item);
+            
             var usuario = item;
             var usuarioId = usuario["idusuario"];
             var nombre = usuario ["nombre"];
@@ -66,7 +67,7 @@ onJqueryReady(function () {
 
             $(musicoBody).unbind("click").bind("click", function () {
 
-                VModal.show("musico_info", item, {modalEffect: "md-effect-13", VModalId: generateUniqueId(),
+                VModal.show("musico_info", item, {modalEffect: "vModalFadeIn-show", VModalId: generateUniqueId(),
                     CustomPadding: "true",
                     padding: "0px"}, {
                     onDialogShow: function (ev) {
@@ -74,6 +75,7 @@ onJqueryReady(function () {
                         ev["usuarioId"] = usuarioId;
                         ev["vparams"]["sender"] = "musico_info_fan";
 
+//                        queueEvent(VInfo.MUSICO_INFO, ev);
                         callJqueryWindowEvent(VInfo.MUSICO_INFO, ev);
                     },
                     onDialogClose: function (ev) {
@@ -81,7 +83,7 @@ onJqueryReady(function () {
                 });
             });
 
-            $(musicoFooter).find(".musicoVoteContainer").off().click(function () {
+            $(musicoFooter).find(".musicoVoteContainer").unbind("click").bind("click", function () {
 
                 callAjaxBBDD(
                         {
