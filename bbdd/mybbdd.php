@@ -65,6 +65,18 @@ function onAction($action) {
             }
             echo jsonEncode($result);
             break;
+        case "RegistrarLocal":
+            $nombre = $_POST["input_local_nombre"];
+            $email = $_POST["input_local_email"];
+            $usuario = $_POST["input_local_usuario"];
+            $pass = $_POST["input_local_pass"];
+            $ubicacion = $_POST["input_local_ubicacion"];
+            $aforo = $_POST["input_local_aforo"];
+            $tipo = 2;
+
+            $dataBase->rawQuery("INSERT INTO usuario values (default,'$nombre','$email','$usuario','$pass',$tipo,'$ciudad')");
+            
+            break;
         case "Test":
 
             $serialized = $_POST["serialized"];
