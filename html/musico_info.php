@@ -2,9 +2,8 @@
 <html>
     <style>
         .musico_info_container {
-
-            width: 100%;
-            height: 100%;
+            width: auto;
+            height: auto;
             position: relative;
             display: block;
         }
@@ -14,9 +13,6 @@
             position: relative;
             width: 100%;
             height: 100%;
-            min-width: 10em;
-            max-height: 18em;
-            left: 0.6em;
         }
 
         #musicoFoto {
@@ -25,8 +21,6 @@
             width: 100%;
             height: 100%;
             box-shadow: 0 0px 10px rgba(36,37,38,0.8);
-            min-width: 10em;
-            max-height: 18em;
             display: none;
         }
 
@@ -122,7 +116,9 @@
                         $(".musico_info_titulo").text(result["nombre"]).fadeIn();
                         $(".musico_info_data_container").hide().fadeIn("slow");
 
-                        $("#musicoFoto").hide().prop("src", `userdata/${result.usuario}/img/album_art.jpg`).fadeIn();
+                        $("#musicoFoto").prop("src", `userdata/${result.usuario}/img/album_art.jpg`).fadeIn();
+                        console.log("Musico info -> " + result.usuario);
+                        console.log($("#musicoFoto"));
 
                         e.json.vparams.onDialogContentLoaded();
                     });
