@@ -191,8 +191,24 @@
                                     <label class="form-control-label">Contraseña </label> <input name="input_fan_pass" class="form-control-textfield" type="text" id="input_fan_pass" value="">
                                 </div>
                                 <div class="form-control">
-                                    <label class="form-control-label">Ciudad </label> <input name="input_fan_ciudad" class="form-control-textfield" type="text" id="input_fan_ciudad" value="">
+                                    <label class="form-control-label">Comunidad </label>
+                                    <select id="comunidad_fan">
+
+                                    </select>
                                 </div>
+                                <div class="form-control">
+                                    <label class="form-control-label">Provincias </label>
+                                    <select id="provincia_fan">
+
+                                    </select>
+                                </div>
+                                <div class="form-control">
+                                    <label class="form-control-label">Municipio </label>
+                                    <select id="municipio_fan">
+
+                                    </select>
+                                </div>
+
                                 <div class="form-control">
                                     <label class="form-control-label">Telefono </label> <input name="input_fan_telefono" class="form-control-textfield" type="text" id="input_fan_telefono" value="">
                                 </div>
@@ -208,22 +224,22 @@
                     <div class="div_registro_local  divPadding10" id="registro_local">
                         <div class="form-container">
                             <div class="form-control">
-                                <label class="form-control-label">Nombre</label> <input class="form-control-textfield" type="text" id="input_local_nombre" value="">
+                                <label class="form-control-label">Nombre</label> <input name="input_local_nombre" class="form-control-textfield" type="text" id="input_local_nombre" value="">
                             </div>
                             <div class="form-control">
-                                <label class="form-control-label">Email </label> <input class="form-control-textfield" type="text" id="input_local_email" value="">
+                                <label class="form-control-label">Email </label> <input name="input_local_email" class="form-control-textfield" type="text" id="input_local_email" value="">
                             </div>
                             <div class="form-control">
-                                <label class="form-control-label">Usuario </label> <input class="form-control-textfield" type="text" id="input_local_usuario" value="">
+                                <label class="form-control-label">Usuario </label> <input name="input_local_usuario" class="form-control-textfield" type="text" id="input_local_usuario" value="">
                             </div>
                             <div class="form-control">
-                                <label class="form-control-label">Contraseña </label> <input class="form-control-textfield" type="text" id="input_local_pass" value="">
+                                <label class="form-control-label">Contraseña </label> <input name="input_local_pass" class="form-control-textfield" type="text" id="input_local_pass" value="">
                             </div>
                             <div class="form-control">
-                                <label class="form-control-label">Ubicacion </label> <input class="form-control-textfield" type="text" id="input_local_ubicacion" value="">
+                                <label class="form-control-label">Ubicacion </label> <input name="input_local_ubicacion" class="form-control-textfield" type="text" id="input_local_ubicacion" value="">
                             </div>
                             <div class="form-control">
-                                <label class="form-control-label">Aforo </label> <input class="form-control-textfield" type="text" id="input_local_aforo" value="">
+                                <label class="form-control-label">Aforo </label> <input name="input_local_aforo" class="form-control-textfield" type="text" id="input_local_aforo" value="">
                             </div>
                             <div class="form-control">
                                 <button class="form-control-btn registrarseBtn">Registrarse</label> 
@@ -234,17 +250,95 @@
             </div>
         </div>
         <script>
+            var query = `select comunidad from comunidades group by comunidad`;
+            var params = {
+                action: "RawQueryRet",
+                query: query};
 
+            callAjaxBBDD(params, function (result) {
+
+                if (success(result)) {
+
+
+                    $.each(result.data, function (i, item) {
+                        $("#comunidad_fan").append("<option>" + item.comunidad + "</option>");
+                    });
+
+                }
+            });
+
+            $("#comunidad_fan").change(function () {
+
+                var comunidad = $(this).val();
+                var query = `select provincia from comunidades where comunidad='${comunidad}' group by provincia`;
+                var params = {
+                    action: "RawQueryRet",
+                    query: query};
+
+                callAjaxBBDD(params, function (result) {
+
+                    if (success(result)) {
+
+                        $("#provincia_fan").empty();
+
+                        $.each(result.data, function (i, item) {
+                            $("#provincia_fan").append("<option>" + item.provincia + "</option>");
+                        });
+
+                    }
+                });
+            });
+
+            $("#provincia_fan").change(function () {
+
+                var provincia = $(this).val();
+                var query = `select munucipio from comunidades where provincia='${provincia}'`;
+                var params = {
+                    action: "RawQueryRet",
+                    query: query};
+
+                callAjaxBBDD(params, function (result) {
+
+                    if (success(result)) {
+
+                        $("#municipio_fan").empty();
+
+                        $.each(result.data, function (i, item) {
+                            $("#municipio_fan").append("<option>" + item.munucipio + "</option>");
+
+                        });
+
+                    }
+                });
+            });
             $("#registrarFan").click(registrarFan);
             function registrarFan() {
-                
-                var form = $("#fan_form").serialize();
-                form += "&action=RegistrarFan";
-                console.log(form);
-                callAjaxBBDD(form,function(result){
-                    console.log(result);
-                    return false;
+                var id_municipio_fan = $("#municipio_fan").val();
+                var query = `select idciudad from comunidades where munucipio='${id_municipio_fan}'`;
+
+                var params = {
+                    action: "RawQueryRet",
+                    query: query};
+                callAjaxBBDD(params, function (result) {
+
+                    if (success(result)) {
+
+//                        var id = result.data;
+
+                        var idmunicipio = result.data[0].idciudad;
+
+                        var form = $("#fan_form").serialize();
+                        form += "&action=RegistrarFan&input_fan_ciudad=" + idmunicipio;
+                        console.log(form);
+                        callAjaxBBDD(form, function (result) {
+                            console.log(result);
+                            return false;
+                        });
+                    }
                 });
+
+                console.log(query);
+
                 return false;
             }
 
