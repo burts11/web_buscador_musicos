@@ -29,6 +29,42 @@ function onAction($action) {
 
     switch ($action) {
 
+        case "RegistrarFan":
+            $nombre = $_POST["input_fan_nombre"];
+            $apellidos = $_POST["input_fan_apellidos"];
+            $email = $_POST["input_fan_email"];
+            $usuario = $_POST["input_fan_usuario"];
+            $pass = $_POST["input_fan_pass"];
+            $ciudad = $_POST["input_fan_ciudad"];
+            $telefono = $_POST["input_fan_telefono"];
+            $direccion = $_POST["input_fan_direccion"];
+            $tipo = 3;
+            $dataBase->rawQuery("INSERT INTO usuario values (default,'$nombre','$email','$usuario','$pass',$tipo,'$ciudad')");
+
+            if ($dataBase->querySucceeded()) {
+                $id = $dataBase->rawQueryValue("select idusuario from usuario where usuario = '$usuario' limit 1");
+                if ($dataBase->querySucceeded()) {
+                    $dataBase->rawQuery("INSERT INTO fan values ('$id','$apellidos','$telefono','$direccion','')");
+                    if ($dataBase->querySucceeded()) {
+                        $result = Array(
+                            "resultado" => "Success",
+                            "mensaje" => "Fan registrado correctamente!"
+                        );
+                    } else {
+                        $result = Array(
+                            "resultado" => "error",
+                            "mensaje" => $dataBase->getLastError()
+                        );
+                    }
+                }
+            } else {
+                $result = Array(
+                    "resultado" => "error",
+                    "mensaje" => $dataBase->getLastError()
+                );
+            }
+            echo jsonEncode($result);
+            break;
         case "Test":
 
             $serialized = $_POST["serialized"];
