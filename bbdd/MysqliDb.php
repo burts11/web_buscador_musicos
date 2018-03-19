@@ -495,11 +495,7 @@ class MysqliDb {
     public function querySucceeded() {
 
         $_count = (int) ($this->count);
-
-        if ($_count >= 1)
-            return true;
-
-        return false;
+        return $_count >= 1;
     }
 
     /**
