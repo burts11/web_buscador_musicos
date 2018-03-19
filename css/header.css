@@ -1,10 +1,12 @@
 .headerContainer{
     width: 100%;
     height: 8%;
-    position: relative;
+    position: fixed;
     display: inline-block;
     /*background-color: rgba(255,255,255,0.05);*/
-    background-color: rgb(35, 35, 35) !important;
+    /*background-color: rgb(35, 35, 35) !important;*/
+    background-color: rgba( 16,16,16,0.50) !important;
+    z-index: 50;
 }
 
 .headerDiv{
@@ -176,7 +178,7 @@ a:hover, a:visited, a:link, a:active
 
 #_searchDiv{
 
-    width: 5em;
+    width: 3em;
     margin-right: 2em;
     /*background-color: orange;*/
     height: 100%;
@@ -187,7 +189,6 @@ a:hover, a:visited, a:link, a:active
     width: 32px;
     height: 32px;
 }
-
 
 .divIdiomas{
     position: relative;
@@ -213,4 +214,7 @@ a:hover, a:visited, a:link, a:active
     height: 24px;
     min-height: 20px;
     min-width: 20px;
+    border:none;
+    outline: none;
+    border-style: none;
 }
