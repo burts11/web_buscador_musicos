@@ -14,13 +14,19 @@ session_start();
         <link href="css/dialog.css" rel="stylesheet" type="text/css"/>
         <link href="css/vpopupmenu.css" rel="stylesheet" type="text/css"/>
         <link href="css/header.css" rel="stylesheet" type="text/css"/>
+        <link href="css/jaudio.css" rel="stylesheet" type="text/css"/>
+        <link href="css/jquery-filestyle.css" rel="stylesheet" type="text/css"/>
         <script src="js/jquery-3.3.1.min.js" type="text/javascript"></script>
+        <script src="js/keys.js" type="text/javascript"></script>
         <script src="js/slick.min.js" type="text/javascript"></script>
+        <script src="js/jaudio.js" type="text/javascript"></script>
         <script src="js/jquery.ba-outside-events.min.js" type="text/javascript"></script>
+        <script src="js/jquery-filestyle.min.js" type="text/javascript"></script>
         <script src="js/vtoast.js" type="text/javascript"></script>
         <script src="js/vlog.js" type="text/javascript"></script>
-        <script src="js/js.cookie.js" charset="utf-8" type="text/javascript"></script>
         <script src="js/jquery-lang.js" charset="utf-8" type="text/javascript"></script>
+        <script src="js/js.cookie.js" charset="utf-8" type="text/javascript"></script>
+        <script src="js/jlang.js" type="text/javascript"></script>
         <script src="js/base.js" type="text/javascript"></script>
         <script src="js/baseFunc.js" type="text/javascript"></script>
         <script src="js/bbdd.js" type="text/javascript"></script>
@@ -28,7 +34,6 @@ session_start();
         <script src="js/jquery.slides.min.js" type="text/javascript"></script>
         <script src="js/dynamically_page.js" type="text/javascript"></script>
         <script src="js/homepage.js" type="text/javascript"></script>
-        <script src="js/login.js" type="text/javascript"></script>
     </head>
     <style>
         .hrSeparator {
@@ -135,33 +140,29 @@ session_start();
     <body>
         <!--rgb(35, 35, 35) DIALOG COLOR --> 
         <div class="mainDiv" id="_mainDiv">
-            <div class="mainBackground parallax parallax-dark example"></div>
+            <div class="mainBackground"></div>
             <div class="mainSombra"></div>
-            <div class="headerContainer">
+            <div class="headerContainer" id="_mainHeader">
                 <div class="headerDiv">
                     <div class="divLogo" id="_logoContainer">
                         <img id="logoImg" class="clickableElement centeredElementVertical" src="img/logo.png">
                     </div>
                     <div class="divIdiomas centeredElementVertical" id="_idiomasContainer">
                         <div class="idiomasContainer divPadding10 clickableElement vPopupTrigger" data-popup-container="popup1" >
-                            <img id="idiomaFlag" class="clickableElement" src="img/flags/es.png">
-                            <a lang="es" data-lang-token="Footer_CambiarIdioma" id="_languageSwitchButton" class="menuItem clickableElement whiteText"></a>
+                            <img id="idiomaFlag" class="clickableElement" style="display: none;">
+                            <!--src="img/flags/es.png"-->
                         </div>
                     </div>
                     <div id="_mainMenu" class="divMenu divPadding10" id="menuPrincipalDiv">
-                        <div class="menuItemContainer divPadding10 clickableElement">
-                            <a lang="es" data-lang-token="MenuBotonPrincipal" href="#pagina_principal" data-href='pagina_principal' id="menuBtnHome" class="menuItem clickableElement"></a>
+                        <div class="menuItemContainer divPadding10 clickableElement" >
+                            <a lang="es" data-lang-token="MenuBotonPrincipal" style="display: none;" data-href='pagina_principal' id="menuBtnHome" class="menuItem clickableElement">Página principal</a>
                         </div>
-                        <!--                        <div class="menuItemContainer divPadding10 clickableElement" id="menuRegistroDiv">
-                                                    <a lang="es" data-lang-token="MenuBotonRegistro" href="#registro" data-href='registro' id="menuBtnRegistro" class=" clickableElement">Registro</a>
-                                                </div>-->
                     </div>
                     <div id="_rightMenu">
                         <div id="_searchDiv" class="inlineDiv clickableElement">
                             <img class="searchButtonImage clickableElement centeredElementVertical" src=img/search.png>
-                            <!--<a lang="es" data-lang-token="MenuBotonSearch" class="clickableElement menuFontSize1 centeredElementVertical textoCentradoHorizontal" id="_searchButton">Buscar</a>-->
                         </div>
-                        <div id="_loginDiv">
+                        <div id="_loginDiv" style="display: none;">
                             <div class="userMenuChild divPadding10 centeredElementVertical loginDiv md-trigger" id="_loginContainer" data-modal="__login_modal">
                                 <a lang="es" data-lang-token="MenuBotonLogin" class="clickableElement menuFontSize1" id="_loginButton">Iniciar Sesión</a>
                             </div>
@@ -177,7 +178,6 @@ session_start();
                     </div>
                 </div>
             </div>
-            <hr class="hrSeparator">
             <div class="_contentDiv" id="_divMainContent">
             </div>
             <div class="footerDiv">
@@ -188,11 +188,11 @@ session_start();
         </div>
 
         <div class="vPopupMenuContainer" id="popup1">
-            <div class="vPopupMenuItem" id="drop_idioma_castellano" data-modal='_editar_perfil_modal'>
+            <div class="vPopupMenuItem" id="drop_idioma_es" data-modal='_editar_perfil_modal'>
                 <img style="top: 50px; padding-right: 0.4em; " src="img/flags/es.png">
                 <label style="vertical-align: top;"  lang="es" data-lang-token="Footer_CambiarIdioma_Castellano">Español</label>
             </div>
-            <div class="vPopupMenuItem" id="drop_idioma_ingles">
+            <div class="vPopupMenuItem" id="drop_idioma_en">
                 <img style="top: 2px; padding-right: 0.4em" src="img/flags/en.png">
                 <label style="vertical-align: text-top;"  lang="es" data-lang-token="Footer_CambiarIdioma_Ingles">Inglés</label>
             </div>
@@ -209,7 +209,6 @@ session_start();
         <script src="js/vpopupmenu.js" type="text/javascript"></script>
         <script src="js/index.js" type="text/javascript"></script>
         <!--<script src="js/pagina_principal.js" type="text/javascript"></script>-->
-        <script src="js/jlang.js" type="text/javascript"></script>
         <script>
             $("#euroBtn").click(function () {
 
