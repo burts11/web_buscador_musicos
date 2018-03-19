@@ -137,9 +137,9 @@ var Main = {
     seleccionarBotonMenu: function (e) {
 
         if (!success(e)) {
-//            cambiarHash("pagina_principal");
-            cambiarHash("musico_info_v2");
-            cambiarPagina("musico_info_v2");
+            cambiarHash("pagina_principal");
+//            cambiarHash("musico_info_v2");
+//            cambiarPagina("musico_info_v2");
             console.log("not success");
         }
 
