@@ -59,7 +59,7 @@ function iniciarSesion(user, pass, params) {
 }
 
 function registrarMusico(params, callback) {
-var parameters = {
+    var parameters = {
         action: "RegistrarMusico",
         nombre: params.nombre,
         email: params.email,
@@ -76,16 +76,16 @@ var parameters = {
 
     callAjaxPost("bbdd/mybbdd.php", parameters, function (json) {
 
-    if (success) {
-        callback.success(json);
-    } else {
-        callback.error(json);
-    }
+        if (success) {
+            callback.success(json);
+        } else {
+            callback.error(json);
+        }
     });
 }
 
 function success(e) {
-    
+
     if (e["resultado"].toString().toLowerCase() === "success") {
         return true;
     }
@@ -98,7 +98,20 @@ function successJSON(e) {
     if (e.json["resultado"].toString().toLowerCase() === "success") {
         return true;
     }
-    
+
+    return false;
+}
+
+function successRowsMatched(e) {
+    var queryInfo = e["queryInfo"];
+    var splittedQueryInfo = queryInfo.split(queryInfo.substring(queryInfo.indexOf(':') + 1)[0]);
+    var rowsChanged = parseInt(splittedQueryInfo[2]);
+
+    if (rowsChanged >= 1)
+    {
+        return true;
+    }
+
     return false;
 }
 
