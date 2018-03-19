@@ -2,6 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <script src="../js/registro.js" type="text/javascript"></script>
     </head>
     <style>
         h1{
@@ -172,32 +173,37 @@
                         </div>
                     </div>
                     <div class="div_registro_fan  divPadding10" id="registro_fan">
-                        <div class="form-container">
-                            <div class="form-control">
-                                <label class="form-control-label">Nombre</label> <input  class="form-control-textfield" type="text" id="input_fan_nombre" value="">
+                        <form id="fan_form">
+                            <div class="form-container">
+                                <div class="form-control">
+                                    <label class="form-control-label">Nombre</label> <input name="input_fan_nombre"  class="form-control-textfield" type="text" id="input_fan_nombre" value="">
+                                </div>
+                                <div class="form-control">
+                                    <label class="form-control-label">Apellidos</label> <input name="input_fan_apellidos" class="form-control-textfield" type="text" id="input_fan_apellidos" value="">
+                                </div>
+                                <div class="form-control">
+                                    <label class="form-control-label">Email </label> <input name="input_fan_email" class="form-control-textfield" type="text" id="input_fan_email" value="">
+                                </div>
+                                <div class="form-control">
+                                    <label class="form-control-label">Usuario </label> <input name="input_fan_usuario" class="form-control-textfield" type="text" id="input_fan_usuario" value="">
+                                </div>
+                                <div class="form-control">
+                                    <label class="form-control-label">Contraseña </label> <input name="input_fan_pass" class="form-control-textfield" type="text" id="input_fan_pass" value="">
+                                </div>
+                                <div class="form-control">
+                                    <label class="form-control-label">Ciudad </label> <input name="input_fan_ciudad" class="form-control-textfield" type="text" id="input_fan_ciudad" value="">
+                                </div>
+                                <div class="form-control">
+                                    <label class="form-control-label">Telefono </label> <input name="input_fan_telefono" class="form-control-textfield" type="text" id="input_fan_telefono" value="">
+                                </div>
+                                <div class="form-control">
+                                    <label class="form-control-label">Direccion </label> <input name="input_fan_direccion" class="form-control-textfield" type="text" id="input_fan_direccion" value="">
+                                </div>
+                                <div class="form-control">
+                                    <button id="registrarFan" class="form-control-btn registrarseBtn">Registrarse</label> 
+                                </div>
                             </div>
-                            <div class="form-control">
-                                <label class="form-control-label">Apellidos</label> <input class="form-control-textfield" type="text" id="input_fan_apellidos" value="">
-                            </div>
-                            <div class="form-control">
-                                <label class="form-control-label">Email </label> <input class="form-control-textfield" type="text" id="input_fan_email" value="">
-                            </div>
-                            <div class="form-control">
-                                <label class="form-control-label">Usuario </label> <input class="form-control-textfield" type="text" id="input_fan_usuario" value="">
-                            </div>
-                            <div class="form-control">
-                                <label class="form-control-label">Contraseña </label> <input class="form-control-textfield" type="text" id="input_fan_pass" value="">
-                            </div>
-                            <div class="form-control">
-                                <label class="form-control-label">Ubicacion </label> <input class="form-control-textfield" type="text" id="input_fan_ubicacion" value="">
-                            </div>
-                            <div class="form-control">
-                                <label class="form-control-label">Aforo </label> <input class="form-control-textfield" type="text" id="input_fan_aforo" value="">
-                            </div>
-                            <div class="form-control">
-                                <button class="form-control-btn registrarseBtn">Registrarse</label> 
-                            </div>
-                        </div>
+                        </form>
                     </div>
                     <div class="div_registro_local  divPadding10" id="registro_local">
                         <div class="form-container">
@@ -228,6 +234,21 @@
             </div>
         </div>
         <script>
+
+            $("#registrarFan").click(registrarFan);
+            function registrarFan() {
+                
+                var form = $("#fan_form").serialize();
+                form += "&action=RegistrarFan";
+                console.log(form);
+                callAjaxBBDD(form,function(result){
+                    console.log(result);
+                    return false;
+                });
+                return false;
+            }
+
+
             function Registrar() {
                 $("#registro_musico .registrarseBtn").click(function () {
 
