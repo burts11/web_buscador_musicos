@@ -31,7 +31,8 @@ var VInfo = {
 
     MUSICO_INFO: "MUSICO_INFO",
     PERFIL_INFO: "PERFIL_INFO",
-    LOGIN_INFO: "LOGIN_INFO"
+    LOGIN_INFO: "LOGIN_INFO",
+    MUSICO_INFO_V2: "MUSICO_INFO_V2"
 };
 
 function onJqueryReady(func) {
@@ -62,7 +63,7 @@ function onJqueryWindowCallbackEvent(event, func) {
     $(window).on(event, function (e)
     {
         func.callback(e);
-        $(window).off("'" + event + "'");
+//        $(window).off(event);
     });
 }
 
