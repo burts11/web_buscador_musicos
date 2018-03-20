@@ -74,7 +74,7 @@
             </div>
         </div>
         <script>
-
+            
             $('#loadUserPic').jfilestyle('theme', 'black');
 
             var modalId = $("#form_fan").parents(".__root_modal_content").first().attr("data-vModalId");
