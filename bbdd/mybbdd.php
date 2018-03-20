@@ -73,9 +73,31 @@ function onAction($action) {
             $ubicacion = $_POST["input_local_ubicacion"];
             $aforo = $_POST["input_local_aforo"];
             $tipo = 2;
-
-            $dataBase->rawQuery("INSERT INTO usuario values (default,'$nombre','$email','$usuario','$pass',$tipo,'$ciudad')");
-            
+            $ciudad = $_POST["input_local_ciudad"];
+            $dataBase->rawQuery("INSERT INTO usuario values (default,'$nombre','$email','$usuario','$pass','$tipo','$ciudad')");
+            if ($dataBase->querySucceeded()) {
+                $id = $dataBase->rawQueryValue("select idusuario from usuario where usuario = '$usuario' limit 1");
+                if ($dataBase->querySucceeded()) {
+                    $dataBase->rawQuery("INSERT INTO local values ('$id','$ubicacion','$aforo','')");
+                    if ($dataBase->querySucceeded()) {
+                        $result = Array(
+                            "resultado" => "Success",
+                            "mensaje" => "Local registrado correctamente!"
+                        );
+                    } else {
+                        $result = Array(
+                            "resultado" => "error",
+                            "mensaje" => $dataBase->getLastError()
+                        );
+                    }
+                }
+            } else {
+                $result = Array(
+                    "resultado" => "error",
+                    "mensaje" => $dataBase->getLastError()
+                );
+            }
+            echo jsonEncode($result);
             break;
         case "Test":
 
