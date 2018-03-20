@@ -99,6 +99,45 @@ function onAction($action) {
             }
             echo jsonEncode($result);
             break;
+        case "RegistrarMusico":
+            $nombre = $_POST["input_musico_nombre"];
+            $apellidos = $_POST["input_musico_apellidos"];
+            $telefono = $_POST["input_musico_telefono"];
+            $web = $_POST["input_musico_web"];
+            $nombreartistico = $_POST["input_musico_artistico"];
+            $componentes = $_POST["input_musico_componentes"];
+            $email = $_POST["input_musico_email"];
+            $usuario = $_POST["input_musico_usuario"];
+            $pass = $_POST["input_musico_pass"];
+            $generoid = $_POST["input_musico_genero"];
+            $tipo = 1;
+            
+            $ciudad = $_POST["input_musico_ciudad"];
+            $dataBase->rawQuery("INSERT INTO usuario values (default,'$nombre','$email','$usuario','$pass','$tipo','$ciudad')");
+            if ($dataBase->querySucceeded()) {
+                $id = $dataBase->rawQueryValue("select idusuario from usuario where usuario = '$usuario' limit 1");
+                if ($dataBase->querySucceeded()) {
+                    $dataBase->rawQuery("INSERT INTO musico values ('$id','$apellidos','$telefono','$web','$nombreartistico','$componentes','$generoid')");
+                    if ($dataBase->querySucceeded()) {
+                        $result = Array(
+                            "resultado" => "Success",
+                            "mensaje" => "Local registrado correctamente!"
+                        );
+                    } else {
+                        $result = Array(
+                            "resultado" => "error",
+                            "mensaje" => $dataBase->getLastError()
+                        );
+                    }
+                }
+            } else {
+                $result = Array(
+                    "resultado" => "error",
+                    "mensaje" => $dataBase->getLastError()
+                );
+            }
+            echo jsonEncode($result);
+            break;
         case "Test":
 
             $serialized = $_POST["serialized"];

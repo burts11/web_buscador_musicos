@@ -7,7 +7,8 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
         inicializar();
         cargarFanComunidades();
         cargarLocalComunidades();
-
+        cargarMusicoComunidades();
+        cargarGeneros();
 
         $("#comunidad_fan").change(function () {
 
@@ -27,6 +28,15 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
 
             cargarLocalMunicipios();
         });
+        $("#comunidad_musico").change(function () {
+
+            cargarMusicoProvincias();
+        });
+
+        $("#provincia_musico").change(function () {
+
+            cargarMusicoMunicipios();
+        });
 
         function cargarFanComunidades() {
             var query = `select comunidad from comunidades group by comunidad`;
@@ -40,7 +50,6 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
                     $.each(result.data, function (i, item) {
                         $("#comunidad_fan").append("<option>" + item.comunidad + "</option>");
                     });
-                    console.log(result);
                     cargarFanProvincias();
                 }
             });
@@ -60,7 +69,6 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
                     $.each(result.data, function (i, item) {
                         $("#provincia_fan").append("<option>" + item.provincia + "</option>");
                     });
-                    console.log(result);
                     cargarFanMunicipios();
                 }
             });
@@ -122,7 +130,6 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
                     $.each(result.data, function (i, item) {
                         $("#comunidad_local").append("<option>" + item.comunidad + "</option>");
                     });
-                    console.log(result);
                     cargarLocalProvincias();
                 }
             });
@@ -142,7 +149,6 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
                     $.each(result.data, function (i, item) {
                         $("#provincia_local").append("<option>" + item.provincia + "</option>");
                     });
-                    console.log(result);
                     cargarLocalMunicipios();
                 }
             });
@@ -192,10 +198,116 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
             });
             return false;
         }
+        function cargarMusicoComunidades() {
+            var query = `select comunidad from comunidades group by comunidad`;
+            var params = {
+                action: "RawQueryRet",
+                query: query};
+            callAjaxBBDD(params, function (result) {
+
+                if (success(result)) {
+
+                    $.each(result.data, function (i, item) {
+                        $("#comunidad_musico").append("<option>" + item.comunidad + "</option>");
+                    });
+                    cargarMusicoProvincias();
+                }
+            });
+        }
+
+        function cargarMusicoProvincias() {
+            var comunidad = $("#comunidad_musico").val();
+            var query = `select provincia from comunidades where comunidad='${comunidad}' group by provincia`;
+            var params = {
+                action: "RawQueryRet",
+                query: query};
+            callAjaxBBDD(params, function (result) {
+
+                if (success(result)) {
+
+                    $("#provincia_musico").empty();
+                    $.each(result.data, function (i, item) {
+                        $("#provincia_musico").append("<option>" + item.provincia + "</option>");
+                    });
+                    console.log(result);
+                    cargarMusicoMunicipios();
+                }
+            });
+        }
+
+        function cargarMusicoMunicipios()
+        {
+            var provincia = $("#provincia_musico").val();
+            var query = `select munucipio from comunidades where provincia='${provincia}'`;
+            var params = {
+                action: "RawQueryRet",
+                query: query};
+            callAjaxBBDD(params, function (result) {
+
+                if (success(result)) {
+
+                    $("#municipio_musico").empty();
+                    $.each(result.data, function (i, item) {
+                        $("#municipio_musico").append("<option>" + item.munucipio + "</option>");
+                    });
+                }
+            });
+        }
+
+        function registrarMusico() {
+            console.log("Registrando Musico!");
+            var id_municipio_musico = $("#municipio_musico").val();
+            var query = `select idciudad from comunidades where munucipio='${id_municipio_musico}'`;
+            var params = {
+                action: "RawQueryRet",
+                query: query};
+            callAjaxBBDD(params, function (result) {
+
+                if (success(result)) {
+
+                    var idmunicipio = result.data[0].idciudad;
+                    var form = $("#musico_form").serialize();
+                    var generoId = $("#genero option:selected").attr("data-musico-generoid");
+                    form += "&action=RegistrarMusico&input_musico_ciudad=" + idmunicipio + "&input_musico_genero=" + generoId;
+                    callAjaxBBDD(form, function (result) {
+                        console.log(result);
+                        return false;
+                    });
+                } else {
+                    console.log(result);
+                }
+            });
+            return false;
+        }
+
+        function cargarGeneros() {
+
+            var query = `select * from genero`;
+            var params = {
+                action: "RawQueryRet",
+                query: query};
+            callAjaxBBDD(params, function (result) {
+
+                if (success(result)) {
+
+                    $("#genero").empty();
+                    $.each(result.data, function (i, item) {
+
+                        var option = $("<option>" + item.nombre + "</option>");
+                        $(option).attr("data-musico-generoId", item.idgenero);
+                        $("#genero").append(option);
+                    });
+
+                    registrarMusico();
+
+                }
+            });
+        }
 
         function inicializar() {
             $("#registrarFan").click(registrarFan);
             $("#registrarLocal").click(registrarLocal);
+            $("#registrarMusico").click(registrarMusico);
             inicializarJValidator();
         }
 
@@ -251,6 +363,29 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
                     input_local_email: "<label class='jqueryValidatorMessage'>Introduce un email válido</label>"
                 }
             });
+            $("#musico_form").validate({
+                rules: {
+                    input_musico_nombre: "required",
+                    input_musico_usuario: "required",
+                    input_musico_email: {
+                        required: true,
+                        email: true
+                    },
+                    input_musico_pass: {
+                        required: true,
+                        minlength: 5
+                    }
+                },
+                messages: {
+                    input_musico_nombre: "<label class='jqueryValidatorMessage'>Escribe tu nombre</label>",
+                    input_musico_usuario: "<label class='jqueryValidatorMessage'>Usuario requerido</label>",
+                    input_musico_pass: {
+                        required: "<label class='jqueryValidatorMessage'>Contraseña requerida</label>",
+                        minlength: "<label class='jqueryValidatorMessage'>La contraseña tiene que tener 5 carácteres como mínimo</label>"
+                    },
+                    input_musico_email: "<label class='jqueryValidatorMessage'>Introduce un email válido</label>"
+                }
+            });
         }
 
         $("._registroMenu .registroMenuBtn").click(function (e) {
@@ -263,6 +398,8 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
 
             var formId = $(this).attr("data-formid");
             $(formId).valid();
+
+            cargarGeneros();
         });
     }
 });

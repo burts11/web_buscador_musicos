@@ -110,9 +110,9 @@
 
             margin-left: 3em;
         }
-        
+
         .jqueryValidatorMessage{
-            
+
             position: relative;
             margin-left: 1em;
             font-size: 0.8em;
@@ -140,47 +140,68 @@
 
                 <div class="div_registro_container">
                     <div class="div_registro_musico  registro-div-active divPadding10" id="registro_musico">
-                        <div class="form-container">
-                            <div class="form-control">
-                                <label class="form-control-label">Género </label> 
-                                <select name="musico_genero">
-                                    <option>Pop</option>
-                                    <option>Rock</option>
-                                    <option>Electrónica</option>
-                                </select>
-                                <br>
+                        <form id="musico_form">
+                            <div class="form-container">
+                                <div class="form-control">
+                                    <label class="form-control-label">Género </label> 
+                                    <select id="genero" name="input_musico_genero">
+                                      
+                                    </select>
+                                    <br>
+                                </div>
+                                <div class="form-control">
+                                    <label class="form-control-label">Nombre </label> <input name="input_musico_nombre" class="form-control-textfield"  type="text" id="input_musico_nombre" value="">
+                                </div>
+                                <div class="form-control">
+                                    <label class="form-control-label">Apellidos</label> <input name="input_musico_apellidos" class="form-control-textfield"  type="text" id="input_musico_apellidos" value="">
+                                </div>
+                                <div class="form-control">
+                                    <label class="form-control-label">Teléfono</label> <input name="input_musico_telefono" class="form-control-textfield"  type="text" id="input_musico_telefono" value="">
+                                </div>
+                                <div class="form-control">
+                                    <label class="form-control-label">Email </label> <input name="input_musico_email"  class="form-control-textfield" type="text" id="input_musico_email" value="">
+                                </div>
+
+                                <div class="form-control">
+                                    <label class="form-control-label">Web </label> <input name="input_musico_web" type="text" class="form-control-textfield" id="input_musico_web" value="">
+                                </div>
+                               
+                                </div>
+                                <div class="form-control">
+                                    <label class="form-control-label">Nombre artístico </label> <input name="input_musico_artistico"  class="form-control-textfield" type="text" id="input_musico_artistico" value="">
+                                </div>
+                                <div class="form-control">
+                                    <label class="form-control-label">Componentes del grupo </label> <input name="input_musico_componentes" class="form-control-textfield" type="text" id="input_musico_componentes" value="">
+                                </div>
+                                <div class="form-control">
+                                    <label class="form-control-label">Usuario </label> <input name="input_musico_usuario"  class="form-control-textfield" type="text" id="input_musico_usuario" value="">
+                                </div>
+                                <div class="form-control">
+                                    <label class="form-control-label">Contraseña </label> <input name="input_musico_pass"  class="form-control-textfield" type="text" id="input_musico_pass" value="">
+                                </div>
+                                <div class="form-control">
+                                    <label class="form-control-label">Comunidad </label>
+                                    <select id="comunidad_musico">
+
+                                    </select>
+                                </div>
+                                <div class="form-control">
+                                    <label class="form-control-label">Provincias </label>
+                                    <select id="provincia_musico">
+
+                                    </select>
+                                </div>
+                                <div class="form-control">
+                                    <label class="form-control-label">Municipio </label>
+                                    <select id="municipio_musico">
+
+                                    </select>
+                                    <div class="form-control">
+                                        <button id="registrarMusico" class="form-control-btn registrarseBtn">Registrarse</label> 
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-control">
-                                <label class="form-control-label">Nombre </label> <input class="form-control-textfield"  type="text" id="input_musico_nombre" value="">
-                            </div>
-                            <div class="form-control">
-                                <label class="form-control-label">Apellidos</label> <input class="form-control-textfield"  type="text" id="input_musico_apellidos" value="">
-                            </div>
-                            <div class="form-control">
-                                <label class="form-control-label">Teléfono</label> <input class="form-control-textfield"  type="text" id="input_musico_telefono" value="">
-                            </div>
-                            <div class="form-control">
-                                <label class="form-control-label">Email </label> <input  class="form-control-textfield" type="text" id="input_musico_email" value="">
-                            </div>
-                            <div class="form-control">
-                                <label class="form-control-label">Web </label> <input type="text" class="form-control-textfield" id="input_musico_web" value="">
-                            </div>
-                            <div class="form-control">
-                                <label class="form-control-label">Nombre artístico </label> <input   class="form-control-textfield" type="text" id="input_musico_artistico" value="">
-                            </div>
-                            <div class="form-control">
-                                <label class="form-control-label">Componentes del grupo </label> <input  class="form-control-textfield" type="text" id="input_musico_componentes" value="">
-                            </div>
-                            <div class="form-control">
-                                <label class="form-control-label">Usuario </label> <input  class="form-control-textfield" type="text" id="input_musico_ausuario" value="">
-                            </div>
-                            <div class="form-control">
-                                <label class="form-control-label">Contraseña </label> <input  class="form-control-textfield" type="text" id="input_musico_pass" value="">
-                            </div>
-                            <div class="form-control">
-                                <button class="form-control-btn registrarseBtn">Registrarse</label> 
-                            </div>
-                        </div>
+                        </form>
                     </div>
                     <div class="div_registro_fan  divPadding10" id="registro_fan">
                         <form id="fan_form">
@@ -201,6 +222,12 @@
                                     <label class="form-control-label">Contraseña </label> <input name="input_fan_pass" class="form-control-textfield" type="text" id="input_fan_pass" value="">
                                 </div>
                                 <div class="form-control">
+                                    <label class="form-control-label">Telefono </label> <input name="input_fan_telefono" class="form-control-textfield" type="text" id="input_fan_telefono" value="">
+                                </div>
+                                <div class="form-control">
+                                    <label class="form-control-label">Direccion </label> <input name="input_fan_direccion" class="form-control-textfield" type="text" id="input_fan_direccion" value="">
+                                </div>
+                                <div class="form-control">
                                     <label class="form-control-label">Comunidad </label>
                                     <select id="comunidad_fan">
 
@@ -218,13 +245,6 @@
 
                                     </select>
                                 </div>
-
-                                <div class="form-control">
-                                    <label class="form-control-label">Telefono </label> <input name="input_fan_telefono" class="form-control-textfield" type="text" id="input_fan_telefono" value="">
-                                </div>
-                                <div class="form-control">
-                                    <label class="form-control-label">Direccion </label> <input name="input_fan_direccion" class="form-control-textfield" type="text" id="input_fan_direccion" value="">
-                                </div>
                                 <div class="form-control">
                                     <button id="registrarFan" class="form-control-btn registrarseBtn">Registrarse</label> 
                                 </div>
@@ -233,26 +253,26 @@
                     </div>
                     <div class="div_registro_local  divPadding10" id="registro_local">
                         <form id="local_form">
-                        <div class="form-container">
-                            <div class="form-control">
-                                <label class="form-control-label">Nombre</label> <input name="input_local_nombre" class="form-control-textfield" type="text" id="input_local_nombre" value="">
-                            </div>
-                            <div class="form-control">
-                                <label class="form-control-label">Email </label> <input name="input_local_email" class="form-control-textfield" type="text" id="input_local_email" value="">
-                            </div>
-                            <div class="form-control">
-                                <label class="form-control-label">Usuario </label> <input name="input_local_usuario" class="form-control-textfield" type="text" id="input_local_usuario" value="">
-                            </div>
-                            <div class="form-control">
-                                <label class="form-control-label">Contraseña </label> <input name="input_local_pass" class="form-control-textfield" type="text" id="input_local_pass" value="">
-                            </div>
-                            <div class="form-control">
-                                <label class="form-control-label">Ubicacion </label> <input name="input_local_ubicacion" class="form-control-textfield" type="text" id="input_local_ubicacion" value="">
-                            </div>
-                            <div class="form-control">
-                                <label class="form-control-label">Aforo </label> <input name="input_local_aforo" class="form-control-textfield" type="text" id="input_local_aforo" value="">
-                            </div>
-                            <div class="form-control">
+                            <div class="form-container">
+                                <div class="form-control">
+                                    <label class="form-control-label">Nombre</label> <input name="input_local_nombre" class="form-control-textfield" type="text" id="input_local_nombre" value="">
+                                </div>
+                                <div class="form-control">
+                                    <label class="form-control-label">Email </label> <input name="input_local_email" class="form-control-textfield" type="text" id="input_local_email" value="">
+                                </div>
+                                <div class="form-control">
+                                    <label class="form-control-label">Usuario </label> <input name="input_local_usuario" class="form-control-textfield" type="text" id="input_local_usuario" value="">
+                                </div>
+                                <div class="form-control">
+                                    <label class="form-control-label">Contraseña </label> <input name="input_local_pass" class="form-control-textfield" type="text" id="input_local_pass" value="">
+                                </div>
+                                <div class="form-control">
+                                    <label class="form-control-label">Ubicacion </label> <input name="input_local_ubicacion" class="form-control-textfield" type="text" id="input_local_ubicacion" value="">
+                                </div>
+                                <div class="form-control">
+                                    <label class="form-control-label">Aforo </label> <input name="input_local_aforo" class="form-control-textfield" type="text" id="input_local_aforo" value="">
+                                </div>
+                                <div class="form-control">
                                     <label class="form-control-label">Comunidad </label>
                                     <select id="comunidad_local">
 
@@ -270,10 +290,10 @@
 
                                     </select>
                                 </div>
-                            <div class="form-control">
-                                <button id="registrarLocal" class="form-control-btn registrarseBtn">Registrarse</label> 
+                                <div class="form-control">
+                                    <button id="registrarLocal" class="form-control-btn registrarseBtn">Registrarse</label> 
+                                </div>
                             </div>
-                        </div>
                         </form>
                     </div>
                 </div>
