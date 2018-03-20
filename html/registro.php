@@ -125,10 +125,10 @@
             <div class="registroContainer">
                 <div class="top">
                     <div class="_registroMenu centeredElementHorizontal">
-                        <div class="registroMenuBtn registroMenuBtn_selected clickableElement" data-regid="registro_musico" data-formid="" >
+                        <div class="registroMenuBtn registroMenuBtn_selected clickableElement" data-regid="registro_musico" data-formid="#musico_form" >
                             <label class="clickableElement">Músico</label>
                         </div>
-                        <div class="registroMenuBtn clickableElement" data-regid="registro_local" data-formid="">
+                        <div class="registroMenuBtn clickableElement" data-regid="registro_local" data-formid="#local_form">
                             <label class="clickableElement">Local</label>
                         </div>
                         <div class="registroMenuBtn clickableElement" data-regid="registro_fan" data-formid="#fan_form">
@@ -232,6 +232,7 @@
                         </form>
                     </div>
                     <div class="div_registro_local  divPadding10" id="registro_local">
+                        <form id="local_form">
                         <div class="form-container">
                             <div class="form-control">
                                 <label class="form-control-label">Nombre</label> <input name="input_local_nombre" class="form-control-textfield" type="text" id="input_local_nombre" value="">
@@ -252,9 +253,28 @@
                                 <label class="form-control-label">Aforo </label> <input name="input_local_aforo" class="form-control-textfield" type="text" id="input_local_aforo" value="">
                             </div>
                             <div class="form-control">
-                                <button class="form-control-btn registrarseBtn">Registrarse</label> 
+                                    <label class="form-control-label">Comunidad </label>
+                                    <select id="comunidad_local">
+
+                                    </select>
+                                </div>
+                                <div class="form-control">
+                                    <label class="form-control-label">Provincias </label>
+                                    <select id="provincia_local">
+
+                                    </select>
+                                </div>
+                                <div class="form-control">
+                                    <label class="form-control-label">Municipio </label>
+                                    <select id="municipio_local">
+
+                                    </select>
+                                </div>
+                            <div class="form-control">
+                                <button id="registrarLocal" class="form-control-btn registrarseBtn">Registrarse</label> 
                             </div>
                         </div>
+                        </form>
                     </div>
                 </div>
             </div>
