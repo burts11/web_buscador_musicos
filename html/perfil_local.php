@@ -71,7 +71,69 @@
             </div>
         </div>
         <script>
+            cargarInfo();
 
+            $("#btnActualizarLocal").click(function () {
+
+                actualizarInfo();
+//                VModal.closeWithId(modalId);
+                return false;
+            });
+
+            function cargarInfo() {
+
+                var id = Usuario.id;
+                var query = `SELECT * from local inner join usuario on usuario.idusuario= local.idlocal where idlocal= ${ id }`;
+                var params = {action: "RawQueryRet", query: query};
+
+                callAjaxBBDD(params, function (result) {
+
+                    var data = result.data[0];
+                    console.log(data);
+                    $("#input_local_nombre").val(data["nombre"]);
+                    $("#input_local_email").val(data["email"]);
+                    $("#input_local_ubicacion").val(data["ubicacion"]);
+                    $("#input_local_aforo").val(data["aforo"]);
+                });
+            }
+
+            function actualizarInfo() {
+//                alert('madrepol');
+                var nombre = $("#input_local_nombre").val();
+                var email = $("#input_local_email").val();
+                var ubicacion = $("#input_local_ubicacion").val();
+                var aforo = $("#input_local_aforo").val();
+
+                var query = `UPDATE usuario set nombre='${nombre}', email='${email}' WHERE idusuario='${Usuario.id}'`;
+
+                var params = {
+                    action: "RawQueryRet",
+                    query: query};
+
+                callAjaxBBDD(params, function (result) {
+
+                    console.log(result);
+                    if (success(result) || successRowsMatched(result)) {
+
+                        params["query"] = `UPDATE local set ubicacion = '${ubicacion}', aforo ='${aforo}' WHERE idlocal='${Usuario.id}'`;
+
+                        callAjaxBBDD(params, function (result) {
+                            console.log("update local ");
+
+                            console.log(result);
+
+                            if (success(result)) {
+                                console.log(result);
+                                console.log("Actualizado perfil!");
+                            }
+                        });
+                    }
+
+                    return false;
+                });
+
+                return false;
+            }
         </script>
     </body>
 </html>

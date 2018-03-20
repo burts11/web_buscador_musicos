@@ -175,17 +175,19 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
 
         function registrarLocal() {
 
-            console.log("Registrando local!");
+            console.log("Registrando localaaasasa!");
             var id_municipio_local = $("#municipio_local").val();
             var query = `select idciudad from comunidades where munucipio='${id_municipio_local}'`;
             var params = {
                 action: "RawQueryRet",
                 query: query};
             callAjaxBBDD(params, function (result) {
-
                 if (success(result)) {
+                                        console.log("succes local ");
 
+                    console.log(result);
                     var idmunicipio = result.data[0].idciudad;
+                    console.log(idmunicipio);
                     var form = $("#local_form").serialize();
                     form += "&action=RegistrarLocal&input_local_ciudad=" + idmunicipio;
                     callAjaxBBDD(form, function (result) {
@@ -193,6 +195,7 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
                         return false;
                     });
                 } else {
+                    console.log("Error al registrar el local");
                     console.log(result);
                 }
             });
