@@ -5,19 +5,30 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
         e.json.vparams.onDialogContentLoaded();
 
         inicializar();
-        cargarComunidades();
+        cargarFanComunidades();
+        cargarLocalComunidades();
+
 
         $("#comunidad_fan").change(function () {
 
-            cargarProvincias();
+            cargarFanProvincias();
         });
 
         $("#provincia_fan").change(function () {
 
-            cargarMunicipios();
+            cargarFanMunicipios();
+        });
+        $("#comunidad_local").change(function () {
+
+            cargarLocalProvincias();
         });
 
-        function cargarComunidades() {
+        $("#provincia_local").change(function () {
+
+            cargarLocalMunicipios();
+        });
+
+        function cargarFanComunidades() {
             var query = `select comunidad from comunidades group by comunidad`;
             var params = {
                 action: "RawQueryRet",
@@ -30,12 +41,12 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
                         $("#comunidad_fan").append("<option>" + item.comunidad + "</option>");
                     });
                     console.log(result);
-                    cargarProvincias();
+                    cargarFanProvincias();
                 }
             });
         }
 
-        function cargarProvincias() {
+        function cargarFanProvincias() {
             var comunidad = $("#comunidad_fan").val();
             var query = `select provincia from comunidades where comunidad='${comunidad}' group by provincia`;
             var params = {
@@ -50,12 +61,12 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
                         $("#provincia_fan").append("<option>" + item.provincia + "</option>");
                     });
                     console.log(result);
-                    cargarMunicipios();
+                    cargarFanMunicipios();
                 }
             });
         }
 
-        function cargarMunicipios()
+        function cargarFanMunicipios()
         {
             var provincia = $("#provincia_fan").val();
             var query = `select munucipio from comunidades where provincia='${provincia}'`;
@@ -99,35 +110,92 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
             });
             return false;
         }
+        function cargarLocalComunidades() {
+            var query = `select comunidad from comunidades group by comunidad`;
+            var params = {
+                action: "RawQueryRet",
+                query: query};
+            callAjaxBBDD(params, function (result) {
 
-        function Registrar() {
-            $("#registro_musico .registrarseBtn").click(function () {
+                if (success(result)) {
 
-//                    alert("hola");
-
-                var musico_nombre = $("#input_musico_nombre").val();
-                var musico_apellidos = $("#input_musico_apellidos").val();
-                var musico_telefono = $("#input_musico_telefono").val();
-                var musico_email = $("#input_musico_email").val();
-                var musico_web = $("#input_musico_web").val();
-                var musico_artistico = $("#input_musico_artistico").val();
-                var musico_componentes = $("#input_musico_componentes").val();
-                var musico_ausuario = $("#input_musico_ausuario").val();
-                var musico_pass = $("#input_musico_pass").val();
-                var json = {nombre: "Javi", email: "hola@hotmail.com", usuario: "Jeehvi", pass: "1234", tipo: "1", numerocomponentes: "4", genero: "Rock", apellidos: "Steven Marc", telefono: "673940549", web: "google.es", nombreartistico: "Lil PolMother"};
-                registrarMusico(json, {
-                    success: function (json) {
-                        console.log(json);
-                    },
-                    error: function (json) {
-                        console.log(json);
-                    }
-                });
+                    $.each(result.data, function (i, item) {
+                        $("#comunidad_local").append("<option>" + item.comunidad + "</option>");
+                    });
+                    console.log(result);
+                    cargarLocalProvincias();
+                }
             });
+        }
+
+        function cargarLocalProvincias() {
+            var comunidad = $("#comunidad_local").val();
+            var query = `select provincia from comunidades where comunidad='${comunidad}' group by provincia`;
+            var params = {
+                action: "RawQueryRet",
+                query: query};
+            callAjaxBBDD(params, function (result) {
+
+                if (success(result)) {
+
+                    $("#provincia_local").empty();
+                    $.each(result.data, function (i, item) {
+                        $("#provincia_local").append("<option>" + item.provincia + "</option>");
+                    });
+                    console.log(result);
+                    cargarLocalMunicipios();
+                }
+            });
+        }
+
+        function cargarLocalMunicipios()
+        {
+            var provincia = $("#provincia_local").val();
+            var query = `select munucipio from comunidades where provincia='${provincia}'`;
+            var params = {
+                action: "RawQueryRet",
+                query: query};
+            callAjaxBBDD(params, function (result) {
+
+                if (success(result)) {
+
+                    $("#municipio_local").empty();
+                    $.each(result.data, function (i, item) {
+                        $("#municipio_local").append("<option>" + item.munucipio + "</option>");
+                    });
+                }
+            });
+        }
+
+        function registrarLocal() {
+
+            console.log("Registrando local!");
+            var id_municipio_local = $("#municipio_local").val();
+            var query = `select idciudad from comunidades where munucipio='${id_municipio_local}'`;
+            var params = {
+                action: "RawQueryRet",
+                query: query};
+            callAjaxBBDD(params, function (result) {
+
+                if (success(result)) {
+
+                    var idmunicipio = result.data[0].idciudad;
+                    var form = $("#local_form").serialize();
+                    form += "&action=RegistrarLocal&input_local_ciudad=" + idmunicipio;
+                    callAjaxBBDD(form, function (result) {
+                        console.log(result);
+                        return false;
+                    });
+                } else {
+                    console.log(result);
+                }
+            });
+            return false;
         }
 
         function inicializar() {
             $("#registrarFan").click(registrarFan);
+            $("#registrarLocal").click(registrarLocal);
             inicializarJValidator();
         }
 
@@ -158,6 +226,29 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
                         minlength: "<label class='jqueryValidatorMessage'>La contraseña tiene que tener 5 carácteres como mínimo</label>"
                     },
                     input_fan_email: "<label class='jqueryValidatorMessage'>Introduce un email válido</label>"
+                }
+            });
+            $("#local_form").validate({
+                rules: {
+                    input_local_nombre: "required",
+                    input_local_usuario: "required",
+                    input_local_email: {
+                        required: true,
+                        email: true
+                    },
+                    input_local_pass: {
+                        required: true,
+                        minlength: 5
+                    }
+                },
+                messages: {
+                    input_local_nombre: "<label class='jqueryValidatorMessage'>Escribe tu nombre</label>",
+                    input_local_usuario: "<label class='jqueryValidatorMessage'>Usuario requerido</label>",
+                    input_local_pass: {
+                        required: "<label class='jqueryValidatorMessage'>Contraseña requerida</label>",
+                        minlength: "<label class='jqueryValidatorMessage'>La contraseña tiene que tener 5 carácteres como mínimo</label>"
+                    },
+                    input_local_email: "<label class='jqueryValidatorMessage'>Introduce un email válido</label>"
                 }
             });
         }
