@@ -19,7 +19,6 @@
         .top {
 
             width: 100%;
-            height: 5%;
             /*background-color: orange;*/
             position: relative;
             display: block;
@@ -32,7 +31,6 @@
             width: 100%;
             /*background-color: blue;*/
             min-height: 20em;
-            top: 5%;
         }
 
         ._registroMenu{
@@ -42,6 +40,7 @@
             margin-bottom: 10px;
             display: block;
             top: 0;
+            width: 40%;
             color: var(--textColorPrimary);  
         }
 
@@ -57,6 +56,7 @@
             text-align: center;
             /*box-shadow: 0 0px 4px rgba(36,37,38,0.2);*/
             margin-left: 0.5em;
+            border-radius: 0.5em;
         }
 
         .registroMenuBtn:hover {
@@ -81,6 +81,7 @@
             /*background-color: red;*/
             padding : 20px; 
             text-align: center;
+            border-radius: 0.5em;
             box-shadow: 0 0px 10px rgba(36,37,38,0.2);
         }
 
@@ -109,19 +110,28 @@
 
             margin-left: 3em;
         }
+        
+        .jqueryValidatorMessage{
+            
+            position: relative;
+            margin-left: 1em;
+            font-size: 0.8em;
+            color: var(--textColorPrimaryShine);
+            display: inline-block;
+        }
     </style>
     <body>
-        <div class="_childContainer divPadding10">
+        <div class="_childContainer">
             <div class="registroContainer">
                 <div class="top">
-                    <div class="_registroMenu">
-                        <div class="registroMenuBtn registroMenuBtn_selected clickableElement" data-regid="registro_musico">
+                    <div class="_registroMenu centeredElementHorizontal">
+                        <div class="registroMenuBtn registroMenuBtn_selected clickableElement" data-regid="registro_musico" data-formid="" >
                             <label class="clickableElement">Músico</label>
                         </div>
-                        <div class="registroMenuBtn clickableElement" data-regid="registro_local">
+                        <div class="registroMenuBtn clickableElement" data-regid="registro_local" data-formid="">
                             <label class="clickableElement">Local</label>
                         </div>
-                        <div class="registroMenuBtn clickableElement" data-regid="registro_fan">
+                        <div class="registroMenuBtn clickableElement" data-regid="registro_fan" data-formid="#fan_form">
                             <label class="clickableElement">Fan</label>
                         </div>
                     </div>
@@ -176,7 +186,7 @@
                         <form id="fan_form">
                             <div class="form-container">
                                 <div class="form-control">
-                                    <label class="form-control-label">Nombre</label> <input name="input_fan_nombre"  class="form-control-textfield" type="text" id="input_fan_nombre" value="">
+                                    <label class="form-control-label">Nombre</label> <input name="input_fan_nombre"  class="form-control-textfield"  type="text" id="input_fan_nombre" value="">
                                 </div>
                                 <div class="form-control">
                                     <label class="form-control-label">Apellidos</label> <input name="input_fan_apellidos" class="form-control-textfield" type="text" id="input_fan_apellidos" value="">
@@ -249,138 +259,5 @@
                 </div>
             </div>
         </div>
-        <script>
-            var query = `select comunidad from comunidades group by comunidad`;
-            var params = {
-                action: "RawQueryRet",
-                query: query};
-
-            callAjaxBBDD(params, function (result) {
-
-                if (success(result)) {
-
-
-                    $.each(result.data, function (i, item) {
-                        $("#comunidad_fan").append("<option>" + item.comunidad + "</option>");
-                    });
-
-                }
-            });
-
-            $("#comunidad_fan").change(function () {
-
-                var comunidad = $(this).val();
-                var query = `select provincia from comunidades where comunidad='${comunidad}' group by provincia`;
-                var params = {
-                    action: "RawQueryRet",
-                    query: query};
-
-                callAjaxBBDD(params, function (result) {
-
-                    if (success(result)) {
-
-                        $("#provincia_fan").empty();
-
-                        $.each(result.data, function (i, item) {
-                            $("#provincia_fan").append("<option>" + item.provincia + "</option>");
-                        });
-
-                    }
-                });
-            });
-
-            $("#provincia_fan").change(function () {
-
-                var provincia = $(this).val();
-                var query = `select munucipio from comunidades where provincia='${provincia}'`;
-                var params = {
-                    action: "RawQueryRet",
-                    query: query};
-
-                callAjaxBBDD(params, function (result) {
-
-                    if (success(result)) {
-
-                        $("#municipio_fan").empty();
-
-                        $.each(result.data, function (i, item) {
-                            $("#municipio_fan").append("<option>" + item.munucipio + "</option>");
-
-                        });
-
-                    }
-                });
-            });
-            $("#registrarFan").click(registrarFan);
-            function registrarFan() {
-                var id_municipio_fan = $("#municipio_fan").val();
-                var query = `select idciudad from comunidades where munucipio='${id_municipio_fan}'`;
-
-                var params = {
-                    action: "RawQueryRet",
-                    query: query};
-                callAjaxBBDD(params, function (result) {
-
-                    if (success(result)) {
-
-//                        var id = result.data;
-
-                        var idmunicipio = result.data[0].idciudad;
-
-                        var form = $("#fan_form").serialize();
-                        form += "&action=RegistrarFan&input_fan_ciudad=" + idmunicipio;
-                        console.log(form);
-                        callAjaxBBDD(form, function (result) {
-                            console.log(result);
-                            return false;
-                        });
-                    }
-                });
-
-                console.log(query);
-
-                return false;
-            }
-
-
-            function Registrar() {
-                $("#registro_musico .registrarseBtn").click(function () {
-
-//                    alert("hola");
-
-                    var musico_nombre = $("#input_musico_nombre").val();
-                    var musico_apellidos = $("#input_musico_apellidos").val();
-                    var musico_telefono = $("#input_musico_telefono").val();
-                    var musico_email = $("#input_musico_email").val();
-                    var musico_web = $("#input_musico_web").val();
-                    var musico_artistico = $("#input_musico_artistico").val();
-                    var musico_componentes = $("#input_musico_componentes").val();
-                    var musico_ausuario = $("#input_musico_ausuario").val();
-                    var musico_pass = $("#input_musico_pass").val();
-                    var json = {nombre: "Javi", email: "hola@hotmail.com", usuario: "Jeehvi", pass: "1234", tipo: "1", numerocomponentes: "4", genero: "Rock", apellidos: "Steven Marc", telefono: "673940549", web: "google.es", nombreartistico: "Lil PolMother"};
-                    registrarMusico(json, {
-                        success: function (json) {
-                            console.log(json);
-                        },
-                        error: function (json) {
-                            console.log(json);
-                        }
-                    });
-                });
-            }
-
-            $("._registroMenu .registroMenuBtn").click(function (e) {
-                $(".registro-div-active").hide().removeClass("registro-div-active");
-
-                var id = $(this).attr("data-regid");
-
-                $("._registroMenu .registroMenuBtn").not(this).removeClass("registroMenuBtn_selected");
-                $(this).addClass("registroMenuBtn_selected");
-
-                $("#" + id).fadeIn();
-                $("#" + id).addClass("registro-div-active");
-                console.log(e);
-            });
-        </script>
     </body>
 </html>
