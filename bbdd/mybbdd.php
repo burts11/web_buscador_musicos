@@ -126,6 +126,7 @@ function onAction($action) {
                         "action" => "RawQueryRet",
                         "lastQuery" => $dataBase->getLastQuery(),
                         "mensaje" => "El query ha sido ejecutado con éxito!",
+                        "queryStr" => $query,
                         "queryInfo" => $dataBase->mysqli()->info
                     );
 
@@ -136,6 +137,7 @@ function onAction($action) {
                         "action" => "RawQueryRet",
                         "lastQuery" => $dataBase->getLastQuery(),
                         "mensaje" => $dataBase->getLastError(),
+                        "queryStr" => $query,
                         "queryInfo" => $dataBase->mysqli()->info
                     );
                     echo jsonEncode($result);
@@ -147,6 +149,7 @@ function onAction($action) {
                     "action" => "RawQueryRet",
                     "lastQuery" => $dataBase->getLastQuery(),
                     "mensaje" => $dataBase->getLastError(),
+                    "queryStr" => $query,
                     "queryInfo" => $dataBase->mysqli()->info
                 );
                 echo jsonEncode($result);
