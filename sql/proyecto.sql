@@ -1,8 +1,10 @@
--- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
+CREATE DATABASE  IF NOT EXISTS `proyecto` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `proyecto`;
+-- MySQL dump 10.13  Distrib 5.6.17, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: proyecto
 -- ------------------------------------------------------
--- Server version	5.5.5-10.1.28-MariaDB
+-- Server version	5.5.5-10.1.26-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -48,10 +50,11 @@ DROP TABLE IF EXISTS `comunidades`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `comunidades` (
-  `﻿idciudad` int(11) DEFAULT NULL,
+  `idciudad` int(11) NOT NULL,
   `munucipio` text,
   `provincia` text,
-  `comunidad` text
+  `comunidad` text,
+  PRIMARY KEY (`idciudad`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -125,7 +128,7 @@ CREATE TABLE `fan` (
 
 LOCK TABLES `fan` WRITE;
 /*!40000 ALTER TABLE `fan` DISABLE KEYS */;
-INSERT INTO `fan` VALUES (3,'Dom',0,'Barcelonag','sss');
+INSERT INTO `fan` VALUES (3,'Dom',0,'Barcelona','sss'),(15,'nicolai',2147483647,'srghdrthtd',''),(16,'ballus',46357457,'tiana',''),(21,'ballus',46357457,'tiana','');
 /*!40000 ALTER TABLE `fan` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -204,7 +207,7 @@ CREATE TABLE `local` (
 
 LOCK TABLES `local` WRITE;
 /*!40000 ALTER TABLE `local` DISABLE KEYS */;
-INSERT INTO `local` VALUES (7,'Barcelona',1000,'');
+INSERT INTO `local` VALUES (7,'Barcelona',1000,''),(25,'Tiana',76,''),(26,'JavaLand',75362,'');
 /*!40000 ALTER TABLE `local` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -217,7 +220,6 @@ DROP TABLE IF EXISTS `musico`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `musico` (
   `idmusico` int(11) NOT NULL,
-  `genero` varchar(30) NOT NULL,
   `apellidos` varchar(40) NOT NULL,
   `telefono` int(9) NOT NULL,
   `web` varchar(60) NOT NULL,
@@ -237,7 +239,7 @@ CREATE TABLE `musico` (
 
 LOCK TABLES `musico` WRITE;
 /*!40000 ALTER TABLE `musico` DISABLE KEYS */;
-INSERT INTO `musico` VALUES (2,'Rock','',0,'','Muse',3,1),(4,'Balada','Ferri Llopis',0,'','Nino Bravo',1,2),(5,'Epic','On Titan',0,'','SHINGEKI',0,3),(6,'Rock','',0,'','Coldplay',4,1),(8,'Epic','Hell',0,'','Two Steps From Hell',0,3),(10,'Electronica','Musico',12345678,'google.com','El Musico',1,1);
+INSERT INTO `musico` VALUES (2,'',0,'','Muse',3,1),(4,'Ferri Llopis',0,'','Nino Bravo',1,2),(5,'On Titan',0,'','SHINGEKI',0,3),(6,'',0,'','Coldplay',4,1),(8,'Hell',0,'','Two Steps From Hell',0,3),(10,'Musico',12345678,'google.com','El Musico',1,1),(31,'linares calvo',453456457,'afegka','Calvicious',1,1);
 /*!40000 ALTER TABLE `musico` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -255,13 +257,13 @@ CREATE TABLE `usuario` (
   `usuario` varchar(30) NOT NULL,
   `pass` varchar(255) NOT NULL,
   `tipo` int(1) NOT NULL,
-  `ciudad` int(11) DEFAULT NULL,
+  `municipio` int(11) DEFAULT NULL,
   PRIMARY KEY (`idusuario`),
   UNIQUE KEY `usuario_UNIQUE` (`usuario`),
   UNIQUE KEY `email_UNIQUE` (`email`),
-  KEY `fk_ciudad_idx` (`ciudad`),
-  CONSTRAINT `fk_ciudad` FOREIGN KEY (`ciudad`) REFERENCES `ciudad` (`idciudad`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+  KEY `fk_mu_idx` (`municipio`),
+  CONSTRAINT `fk_mu` FOREIGN KEY (`municipio`) REFERENCES `comunidades` (`idciudad`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -270,7 +272,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'Steven','test@gmail.com','steven','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',0,NULL),(2,'Muse','wtwr','muse','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',1,NULL),(3,'Fan','tesgtg@gmail.com','fan','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',3,NULL),(4,'Luis','wrtrwt','nino','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',1,NULL),(5,'Attack','htrhdth','attack','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',1,NULL),(6,'Coldplay','laihf','coldplay','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',1,NULL),(7,'Local','local@gmail.com','local','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',2,1),(8,'TSFH','tsfh@gmail.com','tsfh','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',1,1),(10,'Musico','musico@gmail.com','musico','$2y$10$Op7S8si.BYj02kca880LAe35iiPVxzKOBYAuHO1Z3c/TukjwBXhRm',1,1);
+INSERT INTO `usuario` VALUES (1,'Steven','test@gmail.com','steven','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',0,NULL),(2,'Muse','wtwr','muse','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',1,NULL),(3,'Fan','tesgtg@gmail.com','fan','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',3,NULL),(4,'Luis','wrtrwt','nino','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',1,NULL),(5,'Attack','htrhdth','attack','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',1,NULL),(6,'Coldplay','laihf','coldplay','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',1,NULL),(7,'Local','local@gmail.com','local','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',2,NULL),(8,'TSFH','tsfh@gmail.com','tsfh','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',1,NULL),(10,'Musico','musico@gmail.com','musico','$2y$10$Op7S8si.BYj02kca880LAe35iiPVxzKOBYAuHO1Z3c/TukjwBXhRm',1,NULL),(15,'nico','sdfsrgsr','niccoooo','1234',3,1815),(16,'marc','marcbs@gmail.com','mdahsfh','12345',3,1142),(21,'marc','mafgss@gmail.com','marrrc','12345',3,1142),(24,'balluusss sl','safkhf@adifd.com','maarc','12345',2,156),(25,'BALLUS S.L','ballus@gmail.com','BallusCompany','12345',2,1142),(26,'STEVEN SL','steven@company.com','Hacker','12345',2,1021),(27,'','','','',1,280),(29,'alex','hola@gos.com','Calvo04','12345',1,280),(31,'Alex','hola@gie.com','Calvo05','12345',1,280);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -336,4 +338,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-20 17:22:42
+-- Dump completed on 2018-03-20 19:43:42
