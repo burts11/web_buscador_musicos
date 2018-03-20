@@ -50,7 +50,7 @@
                 <img id="perfil_info_logo">
             </div>
             <div class="perfil_info_detalles divPadding10">
-                <form id="form_musico">
+                <form id="form_local">
                     <div class="form-container">
                         <div class="form-control">
                             <label lang="es" data-lang-token="Perfil_Local_Nombre" class="form-control-label">Nombre</label> <input class="form-control-textfield" type="text" id="input_local_nombre" value="">
