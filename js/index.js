@@ -137,10 +137,13 @@ var Main = {
     seleccionarBotonMenu: function (e) {
 
         if (!success(e)) {
-            cambiarHash("pagina_principal");
-//            cambiarHash("musico_info_v2");
+            //            cambiarHash("musico_info_v2");
 //            cambiarPagina("musico_info_v2");
-            console.log("not success");
+            cambiarHash("pagina_principal");
+            if ($("#_contentDiv").children().length === 0)
+            {
+                cambiarPagina("pagina_principal");
+            }
         }
 
 //        var url = window.location.href;
@@ -266,7 +269,7 @@ onJqueryReady(function () {
         window.location.reload();
     });
 
-    $("#_registrarContainer").click(function (e) {
+    $("#_registrarContainer").unbind("click").bind("click", function (e) {
 
         VModal.show("registro", "#_registrarContainer", {
             modalEffect: "vModalFadeIn-show",
@@ -275,12 +278,14 @@ onJqueryReady(function () {
             modalWidth: "98%",
             modalHeight: "95%",
             CustomPadding: "true",
-            padding: "0px"
+            padding: "0px",
+            ContentPadding: "0px"
         }, {
             onDialogShow: function (ev) {
 
-                console.log(ev);
-                ev.vparams.onDialogContentLoaded();
+//                console.log(ev);
+//                ev.vparams.onDialogContentLoaded();
+                callJqueryWindowEvent(VInfo.REGISTRAR_INFO, ev);
             },
             onDialogClose: function (ev) {
             }
@@ -314,7 +319,7 @@ onJqueryReady(function () {
         }, {
             onDialogShow: function (ev) {
 
-                console.log(ev);
+//                console.log(ev);
                 ev.vparams.onDialogContentLoaded();
             },
             onDialogClose: function (ev) {
