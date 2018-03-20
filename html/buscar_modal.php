@@ -211,7 +211,7 @@
                                 $(container).find(".bmSearchResultBody img").prop("src", Main.obtenerUserDataPath(item["usuario"]) + "img/album_art.jpg");
                                 $(container).find(".bmSearchName").text(item["nombreartistico"]);
                                 $(container).find(".bmSearchResultBody").click(function () {
-                                    
+
                                     cambiarHash("musico_info_v2");
                                     queueEvent(VInfo.MUSICO_INFO_V2, {data: item});
                                     VModal.closeWithId("buscar_modal");
