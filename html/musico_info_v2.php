@@ -16,7 +16,7 @@
             position: relative;
             display: inline-block;
             width: 100%;
-            height: 20em;
+            height: 30em;
             overflow: hidden;
         }
 
