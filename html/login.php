@@ -34,7 +34,7 @@
                     <label lang='es' data-lang-token='DialogLogin_Usuario' class="form-control-label" for="input_username">Usuario</label> <input class="form-control-textfield" type="text" id="input_username" value="" required>
                 </div>
                 <div class="form-control">
-                    <label lang='es' data-lang-token='DialogLogin_Pass' class="form-control-label" for="input_userpass">Contraseña</label> <input class="form-control-textfield" type="text" id="input_userpass" value="" required>
+                    <label lang='es' data-lang-token='DialogLogin_Pass' class="form-control-label" for="input_userpass">Contraseña</label> <input class="form-control-textfield" type="password" id="input_userpass" value="" required>
                 </div>
             </div>
             <div class="centeredElementHorizontal" id="l_loginDiv">
