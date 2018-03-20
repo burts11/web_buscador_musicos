@@ -4,12 +4,13 @@ onJqueryWindowCallbackEventOne(VInfo.PERFIL_INFO, {
         switch (e.json["TipoUsuario"]) {
 
             case "Fan":
-                cargarFan(e);
+                cargarHtml("perfil_fan", e);
                 break;
             case "Musico":
-                cargarMusico(e);
+                cargarHtml("perfil_musico", e);
                 break;
             case "Local":
+                cargarHtml("perfil_local", e);
                 break;
         }
 
@@ -17,21 +18,9 @@ onJqueryWindowCallbackEventOne(VInfo.PERFIL_INFO, {
     }
 });
 
-function cargarMusico(e) {
-    loadPage("perfil_musico", {
+function cargarHtml(id, e) {
 
-        success: function (result) {
-            var rootPerfil = $('<div class="__root_perfil">').html(result);
-            $("#perfil_info_container").append(rootPerfil);
-        },
-        error: function (result) {
-            console.log(result);
-        }
-    });
-}
-
-function cargarFan(e) {
-    loadPage("perfil_fan", {
+    loadPage(id, {
 
         success: function (result) {
             var rootPerfil = $('<div class="__root_perfil">').html(result);
