@@ -53,22 +53,22 @@
                 <form id="form_musico">
                     <div class="form-container">
                         <div class="form-control">
-                            <label lang="es" data-lang-token="Perfil_Musico_Nombre" class="form-control-label">Nombre</label> <input  class="form-control-textfield" type="text" id="input_fan_nombre" value="">
+                            <label lang="es" data-lang-token="Perfil_Musico_Nombre" class="form-control-label">Nombre</label> <input  class="form-control-textfield" type="text" id="input_musico_nombre" value="">
                         </div>
                         <div class="form-control">
-                            <label lang="es" data-lang-token="Perfil_Musico_NombreArtistico" class="form-control-label">Nombre artístico</label> <input  class="form-control-textfield" type="text" id="input_fan_nombre" value="">
+                            <label lang="es" data-lang-token="Perfil_Musico_NombreArtistico" class="form-control-label">Nombre artístico</label> <input  class="form-control-textfield" type="text" id="input_musico_artistico" value="">
                         </div>
                         <div class="form-control">
-                            <label lang="es" data-lang-token="Perfil_Musico_Apellidos" class="form-control-label">Apellidos</label> <input class="form-control-textfield" type="text" id="input_fan_apellidos" value="">
+                            <label lang="es" data-lang-token="Perfil_Musico_Apellidos" class="form-control-label">Apellidos</label> <input class="form-control-textfield" type="text" id="input_musico_apellidos" value="">
                         </div>
                         <div class="form-control">
-                            <label lang="es" data-lang-token="Perfil_Musico_Email" class="form-control-label">Email </label> <input class="form-control-textfield" type="text" id="input_fan_email" value="">
+                            <label lang="es" data-lang-token="Perfil_Musico_Email" class="form-control-label">Email </label> <input class="form-control-textfield" type="text" id="input_musico_email" value="">
                         </div>
                         <div class="form-control">
-                            <label lang="es" data-lang-token="Perfil_Musico_Web" class="form-control-label">Web </label> <input class="form-control-textfield" type="text" id="input_fan_email" value="">
+                            <label lang="es" data-lang-token="Perfil_Musico_Web" class="form-control-label">Web </label> <input class="form-control-textfield" type="text" id="input_musico_web" value="">
                         </div>
                         <div class="form-control">
-                            <label lang="es" data-lang-token="Perfil_Musico_Telefono" class="form-control-label">Teléfono </label> <input class="form-control-textfield" type="text" id="input_fan_email" value="">
+                            <label lang="es" data-lang-token="Perfil_Musico_Telefono" class="form-control-label">Teléfono </label> <input class="form-control-textfield" type="text" id="input_musico_telefono" value="">
                         </div>
                         <div class="form-control">
                             <button class="form-control-btn" id="btnActualizarMusico">Actualizar</label> 
@@ -77,7 +77,73 @@
             </div>
         </div>
         <script>
+            cargarInfo();
 
+            $("#btnActualizarMusico").click(function () {
+
+                actualizarInfo();
+//                VModal.closeWithId(modalId);
+                return false;
+            });
+
+            function cargarInfo() {
+
+                var id = Usuario.id;
+                var query = `SELECT * from musico inner join usuario on usuario.idusuario= musico.idmusico where idmusico= ${ id }`;
+                var params = {action: "RawQueryRet", query: query};
+
+                callAjaxBBDD(params, function (result) {
+
+                    var data = result.data[0];
+                    console.log(data);
+                    $("#input_musico_nombre").val(data["nombre"]);
+                    $("#input_musico_artistico").val(data["nombreartistico"]);
+                    $("#input_musico_apellidos").val(data["apellidos"]);
+                    $("#input_musico_email").val(data["email"]);
+                    $("#input_musico_web").val(data["web"]);
+                    $("#input_fan_telefono").val(data["telefono"]);
+                });
+            }
+
+            function actualizarInfo() {
+//                alert('madrepol');
+                var nombre = $("#input_musico_nombre").val();
+                var apellidos = $("#input_musico_apellidos").val();
+                var web = $("#input_musico_web").val();
+                var telefono = $("#input_musico_telefono").val();
+                var email = $("#input_musico_email").val();
+                var artistico = $("#input_musico_artistico").val();
+
+                var query = `UPDATE usuario set nombre='${nombre}', email='${email}' WHERE idusuario='${Usuario.id}'`;
+
+                var params = {
+                    action: "RawQueryRet",
+                    query: query};
+
+                callAjaxBBDD(params, function (result) {
+
+                    console.log(result);
+                    if (success(result) || successRowsMatched(result)) {
+
+                        params["query"] = `UPDATE musico set apellidos ='${apellidos}', nombreartistico ='${artistico}', telefono ='${telefono}', web ='${web}' WHERE idmusico='${Usuario.id}'`;
+
+                        callAjaxBBDD(params, function (result) {
+                            console.log("update musico ");
+
+                            console.log(result);
+
+                            if (success(result)) {
+                                console.log(result);
+                                console.log("Actualizado perfil!");
+                            }
+                        });
+                    }
+
+                    return false;
+                });
+
+                return false;
+            }
 //            $("#perfil_info_logo").prop("src", e.json.logo).fadeIn();
         </script>
     </body>
