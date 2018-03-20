@@ -91,20 +91,18 @@
                     var data = result.data[0];
                     console.log(data);
                     $("#input_local_nombre").val(data["nombre"]);
-                    $("#input_local_artistico").val(data["nombreartistico"]);
-                    $("#input_local_apellidos").val(data["apellidos"]);
                     $("#input_local_email").val(data["email"]);
+                    $("#input_local_ubicacion").val(data["ubicacion"]);
+                    $("#input_local_aforo").val(data["aforo"]);
                 });
             }
 
             function actualizarInfo() {
 //                alert('madrepol');
-                var nombre = $("#input_musico_nombre").val();
-                var apellidos = $("#input_musico_apellidos").val();
-                var web = $("#input_musico_web").val();
-                var telefono = $("#input_musico_telefono").val();
-                var email = $("#input_musico_email").val();
-                var artistico = $("#input_musico_artistico").val();
+                var nombre = $("#input_local_nombre").val();
+                var email = $("#input_local_email").val();
+                var ubicacion = $("#input_local_ubicacion").val();
+                var aforo = $("#input_local_aforo").val();
 
                 var query = `UPDATE usuario set nombre='${nombre}', email='${email}' WHERE idusuario='${Usuario.id}'`;
 
@@ -117,10 +115,10 @@
                     console.log(result);
                     if (success(result) || successRowsMatched(result)) {
 
-                        params["query"] = `UPDATE musico set apellidos ='${apellidos}', nombreartistico ='${artistico}', telefono ='${telefono}', web ='${web}' WHERE idmusico='${Usuario.id}'`;
+                        params["query"] = `UPDATE local set ubicacion = '${ubicacion}', aforo ='${aforo}' WHERE idlocal='${Usuario.id}'`;
 
                         callAjaxBBDD(params, function (result) {
-                            console.log("update musico ");
+                            console.log("update local ");
 
                             console.log(result);
 
