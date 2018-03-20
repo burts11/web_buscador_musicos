@@ -48,10 +48,11 @@ DROP TABLE IF EXISTS `comunidades`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `comunidades` (
-  `﻿idciudad` int(11) DEFAULT NULL,
+  `idciudad` int(11) NOT NULL,
   `munucipio` text,
   `provincia` text,
-  `comunidad` text
+  `comunidad` text,
+  PRIMARY KEY (`idciudad`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -204,7 +205,7 @@ CREATE TABLE `local` (
 
 LOCK TABLES `local` WRITE;
 /*!40000 ALTER TABLE `local` DISABLE KEYS */;
-INSERT INTO `local` VALUES (7,'Barcelona',1000,'');
+INSERT INTO `local` VALUES (7,'Barcelona',1000,''),(12,'555',555,'');
 /*!40000 ALTER TABLE `local` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -260,8 +261,8 @@ CREATE TABLE `usuario` (
   UNIQUE KEY `usuario_UNIQUE` (`usuario`),
   UNIQUE KEY `email_UNIQUE` (`email`),
   KEY `fk_ciudad_idx` (`ciudad`),
-  CONSTRAINT `fk_ciudad` FOREIGN KEY (`ciudad`) REFERENCES `ciudad` (`idciudad`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+  CONSTRAINT `fk_ciudad` FOREIGN KEY (`ciudad`) REFERENCES `comunidades` (`idciudad`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -270,7 +271,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'Steven','test@gmail.com','steven','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',0,NULL),(2,'Muse','wtwr','muse','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',1,NULL),(3,'Fan','tesgtg@gmail.com','fan','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',3,NULL),(4,'Luis','wrtrwt','nino','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',1,NULL),(5,'Attack','htrhdth','attack','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',1,NULL),(6,'Coldplay','laihf','coldplay','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',1,NULL),(7,'Local','local@gmail.com','local','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',2,1),(8,'TSFH','tsfh@gmail.com','tsfh','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',1,1),(10,'Musico','musico@gmail.com','musico','$2y$10$Op7S8si.BYj02kca880LAe35iiPVxzKOBYAuHO1Z3c/TukjwBXhRm',1,1);
+INSERT INTO `usuario` VALUES (1,'Steven','test@gmail.com','steven','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',0,NULL),(2,'Muse','wtwr','muse','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',1,NULL),(3,'Fan','tesgtg@gmail.com','fan','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',3,NULL),(4,'Luis','wrtrwt','nino','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',1,NULL),(5,'Attack','htrhdth','attack','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',1,NULL),(6,'Coldplay','laihf','coldplay','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',1,NULL),(7,'Local','local@gmail.com','local','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',2,1),(8,'TSFH','tsfh@gmail.com','tsfh','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',1,1),(10,'Musico','musico@gmail.com','musico','$2y$10$Op7S8si.BYj02kca880LAe35iiPVxzKOBYAuHO1Z3c/TukjwBXhRm',1,1),(12,'stevenlocal','stevenlocal@gmail.com','stevenlocal','12345',2,280);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -336,4 +337,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-20 17:22:42
+-- Dump completed on 2018-03-20 19:06:52
