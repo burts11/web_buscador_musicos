@@ -176,9 +176,7 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
                 action: "RawQueryRet",
                 query: query};
             callAjaxBBDD(params, function (result) {
-
                 if (success(result)) {
-
                     var idmunicipio = result.data[0].idciudad;
                     var form = $("#local_form").serialize();
                     form += "&action=RegistrarLocal&input_local_ciudad=" + idmunicipio;
@@ -187,6 +185,7 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
                         return false;
                     });
                 } else {
+                    console.log("Error al registrar el local");
                     console.log(result);
                 }
             });
