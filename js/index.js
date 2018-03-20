@@ -142,7 +142,7 @@ var Main = {
             cambiarHash("pagina_principal");
             if ($("#_contentDiv").children().length === 0)
             {
-                cambiarPagina("pagina_principal");
+//                cambiarPagina("pagina_principal");
             }
         }
 
