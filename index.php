@@ -202,11 +202,11 @@ session_start();
             </div>
         </div>
         <div class="vPopupMenuContainer" id="popupPerfil"  style="margin-right: 1em; width: auto">
-            <div class="vPopupMenuItem" id="drop_editar_perfil" data-modal='_editar_perfil_modal'>
-                <label>Editar Perfil</label>
+            <div class="vPopupMenuItem" id="drop_editar_perfil"   data-modal='_editar_perfil_modal'>
+                <label lang="es"  data-lang-token="Menu_Editar_Perfil">Editar Perfil</label>
             </div>
             <div class="vPopupMenuItem" id="drop_cerrar_sesion">
-                <label>Cerrar Sesión</label>
+                <label lang="es"  data-lang-token="Menu_Cerrar_Sesion">Cerrar Sesión</label>
             </div>
         </div>
         <script src="js/vmodal.js" type="text/javascript"></script>
