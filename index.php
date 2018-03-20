@@ -6,7 +6,7 @@ session_start();
     <head>
         <title></title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-        <meta http-equiv="X-UA-Compa    tible" content="IE=edge,chrome=1"> 
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
         <meta charset="UTF-8">  
         <link href="css/slick.css" rel="stylesheet" type="text/css"/>
         <link href="css/slick-theme.css" rel="stylesheet" type="text/css"/>
@@ -15,6 +15,7 @@ session_start();
         <link href="css/vpopupmenu.css" rel="stylesheet" type="text/css"/>
         <link href="css/header.css" rel="stylesheet" type="text/css"/>
         <link href="css/jaudio.css" rel="stylesheet" type="text/css"/>
+        <link href="css/toast.style.css" rel="stylesheet" type="text/css"/>
         <link href="css/jquery-filestyle.css" rel="stylesheet" type="text/css"/>
         <script src="js/jquery-3.3.1.min.js" type="text/javascript"></script>
         <script src="js/keys.js" type="text/javascript"></script>
@@ -34,6 +35,9 @@ session_start();
         <script src="js/jquery.slides.min.js" type="text/javascript"></script>
         <script src="js/dynamically_page.js" type="text/javascript"></script>
         <script src="js/homepage.js" type="text/javascript"></script>
+        <script src="js/jquery.validate.min.js" type="text/javascript"></script>
+        <script src="js/additional-methods.min.js" type="text/javascript"></script>
+        <script src="js/toast.script.js" type="text/javascript"></script>
     </head>
     <style>
         .hrSeparator {
