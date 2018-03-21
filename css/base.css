@@ -70,6 +70,18 @@ div{
     /*--backgroundColorPrimary : #181818;*/
 }
 
+@-webkit-keyframes autofill {
+    to {
+        color: var(--textColorPrimary);
+        background: var(--backgroundControlPrimary);
+    }
+}
+
+input:-webkit-autofill {
+    -webkit-animation-name: autofill;
+    -webkit-animation-fill-mode: both;
+}
+
 .slick_boton_atras{
     outline: 0;
     border: 0;
@@ -403,6 +415,22 @@ label{
     background-color: transparent;
     /*overflow: scroll;*/
 }
+
+._childDialogContainer{
+
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    /*overflow: scroll;*/
+}
+
+._childContainerScroll{
+
+    overflow: scroll !important;
+}
+
 
 /*::-webkit-scrollbar {
     width: 20px;
