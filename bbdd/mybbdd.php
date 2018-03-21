@@ -39,7 +39,10 @@ function onAction($action) {
             $telefono = $_POST["input_fan_telefono"];
             $direccion = $_POST["input_fan_direccion"];
             $tipo = 3;
-            $dataBase->rawQuery("INSERT INTO usuario values (default,'$nombre','$email','$usuario','$pass',$tipo,'$ciudad')");
+
+            $passCifrada = password_hash($pass, PASSWORD_DEFAULT);
+
+            $dataBase->rawQuery("INSERT INTO usuario values (default,'$nombre','$email','$usuario','$passCifrada',$tipo,'$ciudad')");
 
             if ($dataBase->querySucceeded()) {
                 $id = $dataBase->rawQueryValue("select idusuario from usuario where usuario = '$usuario' limit 1");
@@ -48,7 +51,7 @@ function onAction($action) {
                     if ($dataBase->querySucceeded()) {
                         $result = Array(
                             "resultado" => "Success",
-                            "mensaje" => "Fan registrado correctamente!"
+                            "mensaje" => "Se ha registrado al fan '$usuario' correctamente!"
                         );
                     } else {
                         $result = Array(
@@ -74,7 +77,10 @@ function onAction($action) {
             $aforo = $_POST["input_local_aforo"];
             $tipo = 2;
             $ciudad = $_POST["input_local_ciudad"];
-            $dataBase->rawQuery("INSERT INTO usuario values (default,'$nombre','$email','$usuario','$pass','$tipo','$ciudad')");
+
+            $passCifrada = password_hash($pass, PASSWORD_DEFAULT);
+
+            $dataBase->rawQuery("INSERT INTO usuario values (default,'$nombre','$email','$usuario','$passCifrada','$tipo','$ciudad')");
             if ($dataBase->querySucceeded()) {
                 $id = $dataBase->rawQueryValue("select idusuario from usuario where usuario = '$usuario' limit 1");
                 if ($dataBase->querySucceeded()) {
@@ -82,7 +88,7 @@ function onAction($action) {
                     if ($dataBase->querySucceeded()) {
                         $result = Array(
                             "resultado" => "Success",
-                            "mensaje" => "Local registrado correctamente!"
+                            "mensaje" => "Se ha registrado al local '$usuario' correctamente!"
                         );
                     } else {
                         $result = Array(
@@ -111,9 +117,11 @@ function onAction($action) {
             $pass = $_POST["input_musico_pass"];
             $generoid = $_POST["input_musico_genero"];
             $tipo = 1;
-            
             $ciudad = $_POST["input_musico_ciudad"];
-            $dataBase->rawQuery("INSERT INTO usuario values (default,'$nombre','$email','$usuario','$pass','$tipo','$ciudad')");
+
+            $passCifrada = password_hash($pass, PASSWORD_DEFAULT);
+
+            $dataBase->rawQuery("INSERT INTO usuario values (default,'$nombre','$email','$usuario','$passCifrada','$tipo','$ciudad')");
             if ($dataBase->querySucceeded()) {
                 $id = $dataBase->rawQueryValue("select idusuario from usuario where usuario = '$usuario' limit 1");
                 if ($dataBase->querySucceeded()) {
@@ -121,7 +129,7 @@ function onAction($action) {
                     if ($dataBase->querySucceeded()) {
                         $result = Array(
                             "resultado" => "Success",
-                            "mensaje" => "Local registrado correctamente!"
+                            "mensaje" => "Se ha registrado al músico '$usuario' correctamente!"
                         );
                     } else {
                         $result = Array(
