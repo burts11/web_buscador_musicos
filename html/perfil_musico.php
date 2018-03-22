@@ -77,74 +77,81 @@
             </div>
         </div>
         <script>
-            cargarInfo();
+            onJqueryWindowCallbackEventOne(VInfo.PERFIL_INFO_UNKNOWN, {
 
-            $("#btnActualizarMusico").click(function () {
+                callback: function (e) {
 
-                actualizarInfo();
-//                VModal.closeWithId(modalId);
-                return false;
-            });
+                    console.log("Perfil musico");
+                    console.log(e);
 
-            function cargarInfo() {
+                    cargarInfo();
 
-                var id = Usuario.id;
-                var query = `SELECT * from musico inner join usuario on usuario.idusuario= musico.idmusico where idmusico= ${ id }`;
-                var params = {action: "RawQueryRet", query: query};
+                    var modalId = e.json.vparams.VModalId;
 
-                callAjaxBBDD(params, function (result) {
+                    $("#btnActualizarMusico").click(function () {
 
-                    var data = result.data[0];
-                    console.log(data);
-                    $("#input_musico_nombre").val(data["nombre"]);
-                    $("#input_musico_artistico").val(data["nombreartistico"]);
-                    $("#input_musico_apellidos").val(data["apellidos"]);
-                    $("#input_musico_email").val(data["email"]);
-                    $("#input_musico_web").val(data["web"]);
-                    $("#input_fan_telefono").val(data["telefono"]);
-                });
-            }
+                        actualizarInfo();
+                        VModal.closeWithId(modalId);
+                        return false;
+                    });
 
-            function actualizarInfo() {
-//                alert('madrepol');
-                var nombre = $("#input_musico_nombre").val();
-                var apellidos = $("#input_musico_apellidos").val();
-                var web = $("#input_musico_web").val();
-                var telefono = $("#input_musico_telefono").val();
-                var email = $("#input_musico_email").val();
-                var artistico = $("#input_musico_artistico").val();
+                    function cargarInfo() {
 
-                var query = `UPDATE usuario set nombre='${nombre}', email='${email}' WHERE idusuario='${Usuario.id}'`;
-
-                var params = {
-                    action: "RawQueryRet",
-                    query: query};
-
-                callAjaxBBDD(params, function (result) {
-
-                    console.log(result);
-                    if (success(result) || successRowsMatched(result)) {
-
-                        params["query"] = `UPDATE musico set apellidos ='${apellidos}', nombreartistico ='${artistico}', telefono ='${telefono}', web ='${web}' WHERE idmusico='${Usuario.id}'`;
+                        var id = Usuario.id;
+                        var query = `SELECT * from musico inner join usuario on usuario.idusuario= musico.idmusico where idmusico= ${ id }`;
+                        var params = {action: "RawQueryRet", query: query};
 
                         callAjaxBBDD(params, function (result) {
-                            console.log("update musico ");
 
-                            console.log(result);
-
-                            if (success(result)) {
-                                console.log(result);
-                                console.log("Actualizado perfil!");
-                            }
+                            var data = result.data[0];
+                            console.log(data);
+                            $("#input_musico_nombre").val(data["nombre"]);
+                            $("#input_musico_artistico").val(data["nombreartistico"]);
+                            $("#input_musico_apellidos").val(data["apellidos"]);
+                            $("#input_musico_email").val(data["email"]);
+                            $("#input_musico_web").val(data["web"]);
+                            $("#input_fan_telefono").val(data["telefono"]);
                         });
                     }
 
-                    return false;
-                });
+                    function actualizarInfo() {
+//                alert('madrepol');
+                        var nombre = $("#input_musico_nombre").val();
+                        var apellidos = $("#input_musico_apellidos").val();
+                        var web = $("#input_musico_web").val();
+                        var telefono = $("#input_musico_telefono").val();
+                        var email = $("#input_musico_email").val();
+                        var artistico = $("#input_musico_artistico").val();
 
-                return false;
-            }
-//            $("#perfil_info_logo").prop("src", e.json.logo).fadeIn();
+                        var query = `UPDATE usuario set nombre='${nombre}', email='${email}' WHERE idusuario='${Usuario.id}'`;
+
+                        var params = {
+                            action: "RawQueryRet",
+                            query: query};
+
+                        callAjaxBBDD(params, function (result) {
+                            if (successRowsMatched(result)) {
+
+                                params["query"] = `UPDATE musico set apellidos ='${apellidos}', nombreartistico ='${artistico}', telefono ='${telefono}', web ='${web}' WHERE idmusico='${Usuario.id}'`;
+
+                                callAjaxBBDD(params, function (result) {
+
+                                    if (successRowsMatched(result)) {
+                                        VToast.mostrarMensaje("Perfil actualizado!");
+                                    } else
+                                    {
+                                        VToast.mostrarError("Error al actualizar el perfil");
+                                    }
+                                });
+                            }
+
+                            return false;
+                        });
+
+                        return false;
+                    }
+                }
+            });
         </script>
     </body>
 </html>

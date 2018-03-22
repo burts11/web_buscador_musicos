@@ -74,101 +74,106 @@
             </div>
         </div>
         <script>
-            
-            $('#loadUserPic').jfilestyle('theme', 'black');
+            onJqueryWindowCallbackEventOne(VInfo.PERFIL_INFO_UNKNOWN, {
 
-            var modalId = $("#form_fan").parents(".__root_modal_content").first().attr("data-vModalId");
+                callback: function (e) {
+                    $('#loadUserPic').jfilestyle('theme', 'black');
 
-            $("#loadUserPic").on("change", function () {
+                    var modalId = e.json.vparams.VModalId;
 
-                var url = $(this).prop("files")[0];
-                var tempUrl = URL.createObjectURL(url);
-                $("#perfil_fan_info_logo").prop("src", tempUrl);
-                console.log(url);
-                console.log(tempUrl);
-            });
+                    $("#loadUserPic").on("change", function () {
 
-            $(".perfil_info_logo_container").click(function () {
+                        var url = $(this).prop("files")[0];
+                        var tempUrl = URL.createObjectURL(url);
+                        $("#perfil_fan_info_logo").prop("src", tempUrl);
+                        console.log(url);
+                        console.log(tempUrl);
+                    });
 
-                $("#loadUserPic").click();
-            });
+                    $(".perfil_info_logo_container").click(function () {
 
-            cargarInfo();
+                        $("#loadUserPic").click();
+                    });
 
-            $("#btnActualizarFan").click(function () {
+                    cargarInfo();
 
-                actualizarInfo();
-                VModal.closeWithId(modalId);
-                return false;
-            });
+                    $("#btnActualizarFan").click(function () {
 
-            function cargarInfo() {
+                        actualizarInfo();
+                        VModal.closeWithId(modalId);
+                        return false;
+                    });
 
-                var id = Usuario.id;
-                var query = `SELECT * from fan inner join usuario on usuario.idusuario= fan.idfan where idfan= ${ id }`;
-                var params = {action: "RawQueryRet", query: query};
+                    function cargarInfo() {
 
-                callAjaxBBDD(params, function (result) {
-
-                    var data = result.data[0];
-
-                    $("#input_fan_nombre").val(data["nombre"]);
-                    $("#input_fan_apellidos").val(data["apellidos"]);
-                    $("#input_fan_direccion").val(data["direccion"]);
-                    $("#input_fan_telefono").val(data["telefono"]);
-                });
-            }
-
-            function actualizarInfo() {
-
-                var nombre = $("#input_fan_nombre").val();
-                var apellidos = $("#input_fan_apellidos").val();
-                var direccion = $("#input_fan_direccion").val();
-                var telefono = $("#input_fan_telefono").val();
-
-                var query = `UPDATE usuario set nombre='${nombre}' WHERE idusuario='${Usuario.id}'`;
-
-                var params = {
-                    action: "RawQueryRet",
-                    query: query};
-
-                callAjaxBBDD(params, function (result) {
-
-                    if (success(result) || successRowsMatched(result)) {
-
-                        params["query"] = `UPDATE fan set apellidos='${nombre}', apellidos ='${apellidos}', direccion ='${direccion}', telefono ='${telefono}' WHERE idfan='${Usuario.id}'`;
+                        var id = Usuario.id;
+                        var query = `SELECT * from fan inner join usuario on usuario.idusuario= fan.idfan where idfan= ${ id }`;
+                        var params = {action: "RawQueryRet", query: query};
 
                         callAjaxBBDD(params, function (result) {
 
-                            if (successRowsMatched(result)) {
-                                console.log(result);
-                                console.log("Actualizado perfil!");
+                            var data = result.data[0];
+
+                            $("#input_fan_nombre").val(data["nombre"]);
+                            $("#input_fan_apellidos").val(data["apellidos"]);
+                            $("#input_fan_direccion").val(data["direccion"]);
+                            $("#input_fan_telefono").val(data["telefono"]);
+                        });
+                    }
+
+                    function actualizarInfo() {
+
+                        var nombre = $("#input_fan_nombre").val();
+                        var apellidos = $("#input_fan_apellidos").val();
+                        var direccion = $("#input_fan_direccion").val();
+                        var telefono = $("#input_fan_telefono").val();
+
+                        var query = `UPDATE usuario set nombre='${nombre}' WHERE idusuario='${Usuario.id}'`;
+
+                        var params = {
+                            action: "RawQueryRet",
+                            query: query};
+
+                        callAjaxBBDD(params, function (result) {
+
+                            if (success(result) || successRowsMatched(result)) {
+
+                                params["query"] = `UPDATE fan set apellidos ='${apellidos}', direccion ='${direccion}', telefono ='${telefono}' WHERE idfan='${Usuario.id}'`;
+
+                                callAjaxBBDD(params, function (result) {
+
+                                    if (successRowsMatched(result)) {
+                                        VToast.mostrarMensaje("Perfil actualizado!");
+                                    } else {
+                                        VToast.mostrarError("Error al actualizar el perfil");
+                                        console.log(result);
+                                        console.log("not matched");
+                                    }
+                                });
                             }
                         });
                     }
-                });
-            }
 
-            function callAjaxTest(dataJSON, func) {
+                    function callAjaxTest(dataJSON, func) {
 
-                $.ajax({
-                    type: METHOD.POST,
-                    url: "bbdd/mybbdd.php",
-                    dataType: "text",
-                    data: dataJSON,
-                    cache: false,
-                    success: function (rawJson) {
+                        $.ajax({
+                            type: METHOD.POST,
+                            url: "bbdd/mybbdd.php",
+                            dataType: "text",
+                            data: dataJSON,
+                            cache: false,
+                            success: function (rawJson) {
 
-                        func(rawJson);
-                    },
-                    error: function (err) {
-                        func(err);
+                                func(rawJson);
+                            },
+                            error: function (err) {
+                                func(err);
+                            }
+                        }
+                        );
                     }
                 }
-                );
-            }
-
-//            $("#perfil_info_logo").prop("src", e.json.logo).fadeIn();
+            });
         </script>
     </body>
 </html>
