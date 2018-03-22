@@ -311,10 +311,12 @@ onJqueryReady(function () {
             modalEffect: "md-effect-15",
             VModalId: "buscar_modal",
             CustomSize: "true",
-            modalWidth: "98%",
-            modalHeight: "95%",
+            modalWidth: "100%",
+            modalHeight: "100%",
             CustomPadding: "true",
-            padding: "0px"
+            padding: "0px",
+            CustomMargin: "0px",
+            BackgroundColor : "rgba(47, 47, 47, 0.85)"
         }, {
             onDialogShow: function (ev) {
 
