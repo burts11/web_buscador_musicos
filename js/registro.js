@@ -243,7 +243,7 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
                     },
                     input_fan_pass: {
                         required: true,
-                        minlength: 4
+                        minlength: 3
                     }
                 },
                 messages: {
@@ -251,7 +251,7 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
                     input_fan_usuario: "<label class='jqueryValidatorMessage'>Usuario requerido</label>",
                     input_fan_pass: {
                         required: "<label class='jqueryValidatorMessage'>Contraseña requerida</label>",
-                        minlength: "<label class='jqueryValidatorMessage'>La contraseña tiene que tener 4 carácteres como mínimo</label>"
+                        minlength: "<label class='jqueryValidatorMessage'>La contraseña tiene que tener 3 carácteres como mínimo</label>"
                     },
                     input_fan_email: "<label class='jqueryValidatorMessage'>Introduce un email válido</label>"
                 }
@@ -267,7 +267,7 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
                     },
                     input_local_pass: {
                         required: true,
-                        minlength: 4
+                        minlength: 3
                     }
                 },
                 messages: {
@@ -276,7 +276,7 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
                     input_local_aforo: "<label class='jqueryValidatorMessage'>Escribe el aforo máximo</label>",
                     input_local_pass: {
                         required: "<label class='jqueryValidatorMessage'>Contraseña requerida</label>",
-                        minlength: "<label class='jqueryValidatorMessage'>La contraseña tiene que tener 4 carácteres como mínimo</label>"
+                        minlength: "<label class='jqueryValidatorMessage'>La contraseña tiene que tener 3 carácteres como mínimo</label>"
                     },
                     input_local_email: "<label class='jqueryValidatorMessage'>Introduce un email válido</label>"
                 }
@@ -293,7 +293,7 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
                     },
                     input_musico_pass: {
                         required: true,
-                        minlength: 4
+                        minlength: 3
                     }
                 },
                 messages: {
@@ -303,7 +303,7 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
                     input_musico_usuario: "<label class='jqueryValidatorMessage'>Usuario requerido</label>",
                     input_musico_pass: {
                         required: "<label class='jqueryValidatorMessage'>Contraseña requerida</label>",
-                        minlength: "<label class='jqueryValidatorMessage'>La contraseña tiene que tener 4 carácteres como mínimo</label>"
+                        minlength: "<label class='jqueryValidatorMessage'>La contraseña tiene que tener 3 carácteres como mínimo</label>"
                     },
                     input_musico_email: "<label class='jqueryValidatorMessage'>Introduce un email válido</label>"
                 }
