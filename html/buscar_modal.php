@@ -75,7 +75,7 @@
         #bm_results{
 
             width: 98%;
-            margin-top: 0.5em;
+            margin-top: 1em;
             margin-left: 1em;
             /*background-color: rgba(0,0,0,0.5);*/
         }
@@ -190,7 +190,7 @@
                 {
                     searchTimer = setTimeout(function () {
 
-                        var query = `select * from musico inner join usuario on usuario.idusuario = musico.idmusico where nombreartistico like "%${val}%"`;
+                        var query = `select musico.idmusico, usuario.email, musico.apellidos, usuario.nombre, usuario.ciudad, musico.web, musico.telefono, usuario.idusuario, usuario.usuario, musico.nombreartistico, musico.generoID, musico.numerocomponentes from musico inner join usuario on usuario.idusuario = musico.idmusico where nombreartistico like "%${val}%"`;
 
                         callAjaxBBDD(
                                 {
