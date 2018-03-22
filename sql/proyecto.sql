@@ -149,7 +149,7 @@ CREATE TABLE `genero` (
 
 LOCK TABLES `genero` WRITE;
 /*!40000 ALTER TABLE `genero` DISABLE KEYS */;
-INSERT INTO `genero` VALUES (1,'Rock'),(2,'Balada'),(3,'Epic'),(4,'Country');
+INSERT INTO `genero` VALUES (1,'Rock'),(2,'Balada'),(3,'Epic'),(4,'Country'),(5,'Electrónica');
 /*!40000 ALTER TABLE `genero` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -217,7 +217,6 @@ DROP TABLE IF EXISTS `musico`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `musico` (
   `idmusico` int(11) NOT NULL,
-  `genero` varchar(30) NOT NULL,
   `apellidos` varchar(40) NOT NULL,
   `telefono` int(9) NOT NULL,
   `web` varchar(60) NOT NULL,
@@ -237,7 +236,7 @@ CREATE TABLE `musico` (
 
 LOCK TABLES `musico` WRITE;
 /*!40000 ALTER TABLE `musico` DISABLE KEYS */;
-INSERT INTO `musico` VALUES (2,'Rock','',0,'','Muse',3,1),(4,'Balada','Ferri Llopis',0,'nino.com','Nino Bravo',1,2),(5,'Epic','On Titan',0,'','SHINGEKI',0,3),(6,'Rock','',0,'','Coldplay',4,1),(8,'Epic','Hell',0,'','Two Steps From Hell',0,3),(10,'Electronica','Musico',12345678,'google.com','El Musico',1,1);
+INSERT INTO `musico` VALUES (2,'',0,'','Muse',3,1),(4,'Ferri Llopis',0,'nino.com','Nino Bravo',1,2),(5,'On Titan',0,'','SHINGEKI',0,3),(6,'',0,'','Coldplay',4,1),(8,'Hell',0,'','Two Steps From Hell',0,3),(66,'',0,'','nocopyright',0,5),(67,'',0,'','El Musico',1,1);
 /*!40000 ALTER TABLE `musico` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -261,7 +260,7 @@ CREATE TABLE `usuario` (
   UNIQUE KEY `email_UNIQUE` (`email`),
   KEY `fk_ciudad_idx` (`ciudad`),
   CONSTRAINT `fk_ciudad` FOREIGN KEY (`ciudad`) REFERENCES `comunidades` (`idciudad`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -270,7 +269,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'Steven','test@gmail.com','steven','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',0,NULL),(2,'Muse','wtwr','muse','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',1,NULL),(4,'Luis ','nino@gmai.com','nino','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',1,NULL),(5,'Attack','htrhdth','attack','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',1,NULL),(6,'Coldplay','laihf','coldplay','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',1,NULL),(8,'TSFH','tsfh@gmail.com','tsfh','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',1,1),(10,'Musico','musico@gmail.com','musico','$2y$10$Op7S8si.BYj02kca880LAe35iiPVxzKOBYAuHO1Z3c/TukjwBXhRm',1,1),(55,'localprueba1','localprueba1@gmail.com','localprueba1','$2y$10$aBwRZmLqinxORQc.QCKmw.p0lKCnOw.b2AteYVyDYujmoDF0mdn9.',2,280),(56,'localprueba3','localprueba3@gmail.com','localprueba3','$2y$10$j9DptasBPGP2owSZOE6kj.HRwYQIfcDLGpRZMWDaCO9laQFB1tNwi',2,280),(57,'fan','fan@gmail.com','fan','$2y$10$sAt3I12k.eCLSq3RX8qjOu6jD4/p34SYN8ZS/hW42KwBNRp4bvTyG',3,861),(58,'local','local@gmail.com','local','$2y$10$tOcl4RbCnPkTRCO65jFc.OnGn4vhf7igqfFdY3byBapqJKDXF4Z0q',2,280);
+INSERT INTO `usuario` VALUES (1,'Steven','test@gmail.com','steven','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',0,NULL),(2,'Muse','wtwr','muse','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',1,NULL),(4,'Luis ','nino@gmai.com','nino','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',1,NULL),(5,'Attack','htrhdth','attack','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',1,NULL),(6,'Coldplay','laihf','coldplay','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',1,NULL),(8,'TSFH','tsfh@gmail.com','tsfh','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',1,1),(55,'localprueba1','localprueba1@gmail.com','localprueba1','$2y$10$aBwRZmLqinxORQc.QCKmw.p0lKCnOw.b2AteYVyDYujmoDF0mdn9.',2,280),(56,'localprueba3','localprueba3@gmail.com','localprueba3','$2y$10$j9DptasBPGP2owSZOE6kj.HRwYQIfcDLGpRZMWDaCO9laQFB1tNwi',2,280),(57,'fan','fan@gmail.com','fan','$2y$10$sAt3I12k.eCLSq3RX8qjOu6jD4/p34SYN8ZS/hW42KwBNRp4bvTyG',3,861),(58,'local','local@gmail.com','local','$2y$10$tOcl4RbCnPkTRCO65jFc.OnGn4vhf7igqfFdY3byBapqJKDXF4Z0q',2,280),(66,'nocopyright','nocopyright@gmail.com','nocopyright','$2y$10$mwo2exJRnwsJ4nLvBH5t3e/0xndOGfdx1I6G2pTpP4NhXQuAOOzCK',1,861),(67,'El Musico','elMusico@gmail.com','musico','$2y$10$rJsKjlLk2fnqbvwUudyWPuJnqqL5kuwGHfgT9EPBn/SWVqc9U1086',1,861);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -336,4 +335,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-22 18:50:51
+-- Dump completed on 2018-03-22 23:34:02
