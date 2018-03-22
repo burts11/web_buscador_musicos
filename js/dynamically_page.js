@@ -1,12 +1,12 @@
 var queueEvents = [];
 
-var default_content = "";
+var default_content = "<h1>Bug?</h1>";
 var lastURL = "";
 
 var paginasPublicas = ["pagina_principal", "musico_info_v2"];
-var paginasFan = ["pagina_principal", "pagina_fan", "musico_info_v2"];
-var paginasMusico = ["pagina_principal", "pagina_musico", "musico_info_v2"];
-var paginasLocal = ["pagina_principal", "pagina_local", "musico_info_v2"];
+var paginasFan = ["pagina_principal", "pagina_fan"];
+var paginasMusico = ["pagina_principal", "pagina_musico"];
+var paginasLocal = ["pagina_principal", "pagina_local"];
 
 $(document).ready(function () {
 
@@ -39,9 +39,6 @@ function cambiarPagina(hash)
 {
     callAjaxBBDD({action: "UsuarioLogueado"}, function (result) {
         var count = 0;
-        console.log(result);
-        console.log(hash);
-
         if (!success(result)) {
 
             if (paginasPublicas.contains(hash)) {
@@ -51,6 +48,11 @@ function cambiarPagina(hash)
         }
 
         if (success(result)) {
+
+            if (paginasPublicas.contains(hash)) {
+                _cambiarPagina(hash);
+                return;
+            }
 
             var privilegioGlobal = Usuario.privilegio;
 
@@ -96,7 +98,6 @@ function _cambiarPagina(hash) {
     if (hash !== lastURL)
     {
         lasturl = hash;
-
         if (hash === "") {
             $('#_divMainContent').html(default_content);
         } else {
@@ -114,7 +115,7 @@ function loadHashPage(url) {
 
     loadPage(url, {
         success: function (data) {
-            
+
             callJqueryWindowEvent("ContentChanging", {action: "yes"});
 
             $('#_divMainContent').fadeOut();
@@ -166,9 +167,9 @@ function loadHashPage(url) {
         },
         error: function (err) {
 
-            VToast.logS("Load has page error");
+            VToast.logS("Load hash page error");
             VToast.log(err);
-            VToast.logF("Load has page error");
+            VToast.logF("Load hash page error");
         }
     });
 }
