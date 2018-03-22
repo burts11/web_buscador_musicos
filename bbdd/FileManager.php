@@ -28,7 +28,7 @@ function onAction($action) {
                 $result = Array("resultado" => "Error", "mensaje" => "Error al crear la/s carpeta/s. Alguna carpeta ya existe?", "ruta" => $ruta);
             }
 
-            echo json_encode($result);
+            echo jsonEncode($result);
             break;
         case "CopiarArchivo":
 
