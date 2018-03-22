@@ -134,7 +134,7 @@ function cargarLocales() {
     $("#pp_divLocales").empty();
     $("#pp_divLocales").append("<h2 class='colorPrimary padding10' style='margin-left: 0.5em'>Locales</h2>");
 
-    var selectGeneros = 'SELECT usuario.idusuario, usuario.nombre, usuario.tipo, local.aforo, local.imagen, usuario.email from usuario inner join local on local.idlocal = usuario.idusuario order by usuario.nombre;';
+    var selectGeneros = 'SELECT usuario.idusuario, usuario.nombre, usuario.tipo, local.aforo, local.imagen, usuario.email, comunidades.munucipio from usuario inner join local on local.idlocal = usuario.idusuario inner join comunidades on comunidades.idciudad = usuario.ciudad order by comunidades.munucipio;';
 
     callAjaxBBDD(
             {
@@ -142,10 +142,10 @@ function cargarLocales() {
                 query: selectGeneros
             }, function (result) {
         $.each(result.data, function (i, item) {
-
+            console.log(item);
             var template = "<div class='localWrapperContainer'>";
             template += "<div class='localWrapperImage'> <img class='localImage' > </div>";
-            template += `<div class='localWrapperInfo'> <label class='blockLabel colorPrimary centeredElement'> ${ item.nombre} </label></div>`;
+            template += `<div class='localWrapperInfo'> <label class='blockLabel colorPrimary'>${ item.nombre}</label><label class=''>Lugar: ${item.munucipio}</label></div>`;
             template += "</div>";
 
             $("#pp_divLocales").append(template);
