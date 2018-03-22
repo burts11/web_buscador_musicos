@@ -101,7 +101,7 @@
             position: relative;
             width: 100%;
             height: auto;
-            padding: 10px;
+            padding: 1em;
             margin-top: 1em;
             background-color: rgba(255,255,55,0.02);
             display: inline-block;
@@ -114,7 +114,50 @@
             width: auto;
             height: auto;
             padding: 0.5em;
-            margin-top: 0.5em;
+        }
+
+        #pp_divLocales{
+
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            height: auto;
+            background-color: rgba(255,255,55,0.02);
+        }
+
+        .localWrapperContainer{
+
+            position: relative;
+            display: inline-block;
+            width: 20em;
+            height: 14em;
+            border-radius: 2px;
+            /*box-shadow: 0 0px 10px rgba(36,37,38,0.2);*/
+            /*background-color: rgba(0,0,0,0.6);*/
+            padding: 0.5em;
+        }
+
+        .localWrapperImage{
+
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            height: 80%;
+            overflow: hidden;
+        }
+
+        .localImage{
+            width: 100%;
+            height: 100%;
+        }
+
+        .localWrapperInfo{
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            height: 20%;
+            text-align: center;
+            background-color: rgba(0,0,0,0.2);
         }
 
         .musicoGeneroWrapperContainer {
@@ -125,8 +168,8 @@
             height: 14em;
             border-radius: 2px;
             box-shadow: 0 0px 10px rgba(36,37,38,0.2);
-            padding-top: 0.2em;
-            padding-bottom: 0.2em;
+            /*padding-top: 0.2em;*/
+            /*padding-bottom: 0.2em;*/
         }
 
         .musicoGeneroWrapperImage {
@@ -134,7 +177,7 @@
             position: relative;
             display: inline-block;
             width: 100%;
-            height: 81%;
+            height: 80%;
         }
 
         .musicoGeneroWrapperInfo {
@@ -142,7 +185,7 @@
             position: relative;
             display: inline-block;
             width: 100%;
-            height: 19%;
+            height: 20%;
             margin-top: -1%;
             text-align: center;
             background-color: rgba(0,0,0,0.2);
@@ -159,12 +202,14 @@
                 <div class="slickConciertos" id="divConciertosNovedad">
                 </div> 
             </div>
-            <div id="divGeneros">
+            <div id="pp_divLocales">
             </div>
-            <div id="divMusicos">
+            <div id="pp_divGeneros">
+            </div>
+            <div id="pp_divMusicos">
 
             </div>
-            <!--            <div class="right">
+            <!--            <div class="right"> 
                                             <div id="divBuscador">
                                                 <h1 class="tituloH1 tituloH1-Grey">Buscar</h1>
                                                 <div class="Input" style="width:100%; height: 40%;">
