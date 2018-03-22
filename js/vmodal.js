@@ -165,6 +165,12 @@ var VModal = {
                             params["onDialogContentLoaded"] = function () {
 
                                 $("body").addClass("disabledScroll");
+
+                                if (params.hasOwnProperty("enableScrollBar")) {
+
+                                    $($modalId).find("._childContainer").addClass("_childContainerScroll");
+                                }
+
                                 console.log("< - Modal Id: " + modalId + " ->");
 
                                 $("#" + modalId + " .md-content_v2").css({height: "auto"});
