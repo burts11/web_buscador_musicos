@@ -4,41 +4,42 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
 
         e.json.vparams.onDialogContentLoaded();
 
+        var musicoSelects = {comunidad: "#comunidad_musico", provincia: "#provincia_musico", municipio: "#municipio_musico"};
+        var localSelects = {comunidad: "#comunidad_local", provincia: "#provincia_local", municipio: "#municipio_local"};
+        var fanSelects = {comunidad: "#comunidad_fan", provincia: "#provincia_fan", municipio: "#municipio_fan"};
+
         inicializar();
-        cargarFanComunidades();
-        cargarLocalComunidades();
-        cargarMusicoComunidades();
+        cargarComunidades(musicoSelects);
+        cargarComunidades(localSelects);
+        cargarComunidades(fanSelects);
+
         cargarGeneros();
 
         $("#comunidad_fan").change(function () {
 
-            cargarFanProvincias();
+            cargarProvincias(fanSelects);
         });
-
         $("#provincia_fan").change(function () {
 
-            cargarFanMunicipios();
+            cargarMunicipios(fanSelects);
         });
         $("#comunidad_local").change(function () {
 
-            cargarLocalProvincias();
+            cargarProvincias(localSelects);
         });
-
         $("#provincia_local").change(function () {
-
-            cargarLocalMunicipios();
+            cargarMunicipios(localSelects);
         });
+
         $("#comunidad_musico").change(function () {
-
-            cargarMusicoProvincias();
+            cargarProvincias(musicoSelects);
         });
-
         $("#provincia_musico").change(function () {
-
-            cargarMusicoMunicipios();
+            cargarMunicipios(musicoSelects);
         });
 
-        function cargarFanComunidades() {
+        function cargarComunidades(targetParams) {
+
             var query = `select comunidad from comunidades group by comunidad`;
             var params = {
                 action: "RawQueryRet",
@@ -48,55 +49,59 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
                 if (success(result)) {
 
                     $.each(result.data, function (i, item) {
-                        $("#comunidad_fan").append("<option>" + item.comunidad + "</option>");
+                        $(targetParams.comunidad).append("<option>" + item.comunidad + "</option>");
                     });
-                    cargarFanProvincias();
+                    cargarProvincias(targetParams);
                 }
             });
         }
 
-        function cargarFanProvincias() {
-            var comunidad = $("#comunidad_fan").val();
+        function cargarProvincias(targetParams) {
+
+            var comunidad = $(targetParams.comunidad).val();
             var query = `select provincia from comunidades where comunidad='${comunidad}' group by provincia`;
             var params = {
                 action: "RawQueryRet",
                 query: query};
             callAjaxBBDD(params, function (result) {
-
+                console.log(result);
                 if (success(result)) {
 
-                    $("#provincia_fan").empty();
+                    $(targetParams.provincia).empty();
                     $.each(result.data, function (i, item) {
-                        $("#provincia_fan").append("<option>" + item.provincia + "</option>");
+                        $(targetParams.provincia).append("<option>" + item.provincia + "</option>");
                     });
-                    cargarFanMunicipios();
+                    cargarMunicipios(targetParams);
                 }
             });
         }
 
-        function cargarFanMunicipios()
+        function cargarMunicipios(targetParams)
         {
-            var provincia = $("#provincia_fan").val();
+            var provincia = $(targetParams.provincia).val();
+
             var query = `select munucipio from comunidades where provincia='${provincia}'`;
             var params = {
                 action: "RawQueryRet",
                 query: query};
             callAjaxBBDD(params, function (result) {
-
+                console.log(result);
                 if (success(result)) {
-
-                    $("#municipio_fan").empty();
+                    $(targetParams.municipio).empty();
                     $.each(result.data, function (i, item) {
-                        $("#municipio_fan").append("<option>" + item.munucipio + "</option>");
+                        $(targetParams.municipio).append("<option>" + item.munucipio + "</option>");
                     });
                 }
             });
         }
 
         function registrarFan() {
+            if (!$("#fan_form").valid()) {
+                VToast.mostrarError("Faltan campos por rellenar o no se cumplen los requisitos!");
+                return;
+            }
 
-            console.log("Registrando fan!");
-            var id_municipio_fan = $("#municipio_fan").val();
+            var id_municipio_fan = $(fanSelects.municipio).val();
             var query = `select idciudad from comunidades where munucipio='${id_municipio_fan}'`;
             var params = {
                 action: "RawQueryRet",
@@ -109,157 +114,62 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
                     var form = $("#fan_form").serialize();
                     form += "&action=RegistrarFan&input_fan_ciudad=" + idmunicipio;
                     callAjaxBBDD(form, function (result) {
-                        console.log(result);
+                        if (success(result)) {
+
+                            VToast.mostrarMensaje(result.mensaje);
+                        } else {
+                            VToast.mostrarError(`Error al registrar el fan -> ${result.mensaje}`);
+                        }
                         return false;
                     });
                 } else {
-                    console.log(result);
+                    VToast.mostrarError(`Error al registrar el fan -> ${result.mensaje}`);
                 }
             });
             return false;
         }
-        function cargarLocalComunidades() {
-            var query = `select comunidad from comunidades group by comunidad`;
-            var params = {
-                action: "RawQueryRet",
-                query: query};
-            callAjaxBBDD(params, function (result) {
-
-                if (success(result)) {
-
-                    $.each(result.data, function (i, item) {
-                        $("#comunidad_local").append("<option>" + item.comunidad + "</option>");
-                    });
-                    cargarLocalProvincias();
-                }
-            });
-        }
-
-        function cargarLocalProvincias() {
-            var comunidad = $("#comunidad_local").val();
-            var query = `select provincia from comunidades where comunidad='${comunidad}' group by provincia`;
-            var params = {
-                action: "RawQueryRet",
-                query: query};
-            callAjaxBBDD(params, function (result) {
-
-                if (success(result)) {
-
-                    $("#provincia_local").empty();
-                    $.each(result.data, function (i, item) {
-                        $("#provincia_local").append("<option>" + item.provincia + "</option>");
-                    });
-                    cargarLocalMunicipios();
-                }
-            });
-        }
-
-        function cargarLocalMunicipios()
-        {
-            var provincia = $("#provincia_local").val();
-            var query = `select munucipio from comunidades where provincia='${provincia}'`;
-            var params = {
-                action: "RawQueryRet",
-                query: query};
-            callAjaxBBDD(params, function (result) {
-
-                if (success(result)) {
-
-                    $("#municipio_local").empty();
-                    $.each(result.data, function (i, item) {
-                        $("#municipio_local").append("<option>" + item.munucipio + "</option>");
-                    });
-                }
-            });
-        }
 
         function registrarLocal() {
 
-            console.log("Registrando localaaasasa!");
-            var id_municipio_local = $("#municipio_local").val();
+            if (!$("#local_form").valid()) {
+                VToast.mostrarError("Faltan campos por rellenar o no se cumplen los requisitos!");
+                return;
+            }
+
+            var id_municipio_local = $(musicoSelects.municipio).val();
             var query = `select idciudad from comunidades where munucipio='${id_municipio_local}'`;
             var params = {
                 action: "RawQueryRet",
                 query: query};
             callAjaxBBDD(params, function (result) {
                 if (success(result)) {
-                                        console.log("succes local ");
-
-                    console.log(result);
                     var idmunicipio = result.data[0].idciudad;
-                    console.log(idmunicipio);
                     var form = $("#local_form").serialize();
                     form += "&action=RegistrarLocal&input_local_ciudad=" + idmunicipio;
                     callAjaxBBDD(form, function (result) {
-                        console.log(result);
+                        if (success(result)) {
+
+                            VToast.mostrarMensaje(result.mensaje);
+                        } else {
+                            VToast.mostrarError(`Error al registrar el local -> ${result.mensaje}`);
+                        }
                         return false;
                     });
                 } else {
-                    console.log("Error al registrar el local");
-                    console.log(result);
+                    VToast.mostrarError(`Error al registrar el local -> ${result.mensaje}`);
                 }
             });
             return false;
         }
-        function cargarMusicoComunidades() {
-            var query = `select comunidad from comunidades group by comunidad`;
-            var params = {
-                action: "RawQueryRet",
-                query: query};
-            callAjaxBBDD(params, function (result) {
-
-                if (success(result)) {
-
-                    $.each(result.data, function (i, item) {
-                        $("#comunidad_musico").append("<option>" + item.comunidad + "</option>");
-                    });
-                    cargarMusicoProvincias();
-                }
-            });
-        }
-
-        function cargarMusicoProvincias() {
-            var comunidad = $("#comunidad_musico").val();
-            var query = `select provincia from comunidades where comunidad='${comunidad}' group by provincia`;
-            var params = {
-                action: "RawQueryRet",
-                query: query};
-            callAjaxBBDD(params, function (result) {
-
-                if (success(result)) {
-
-                    $("#provincia_musico").empty();
-                    $.each(result.data, function (i, item) {
-                        $("#provincia_musico").append("<option>" + item.provincia + "</option>");
-                    });
-                    console.log(result);
-                    cargarMusicoMunicipios();
-                }
-            });
-        }
-
-        function cargarMusicoMunicipios()
-        {
-            var provincia = $("#provincia_musico").val();
-            var query = `select munucipio from comunidades where provincia='${provincia}'`;
-            var params = {
-                action: "RawQueryRet",
-                query: query};
-            callAjaxBBDD(params, function (result) {
-
-                if (success(result)) {
-
-                    $("#municipio_musico").empty();
-                    $.each(result.data, function (i, item) {
-                        $("#municipio_musico").append("<option>" + item.munucipio + "</option>");
-                    });
-                }
-            });
-        }
 
         function registrarMusico() {
-            console.log("Registrando Musico!");
-            var id_municipio_musico = $("#municipio_musico").val();
+
+            if (!$("#musico_form").valid()) {
+                VToast.mostrarError("Faltan campos por rellenar o no se cumplen los requisitos!");
+                return;
+            }
+
+            var id_municipio_musico = $(musicoSelects.municipio).val();
             var query = `select idciudad from comunidades where munucipio='${id_municipio_musico}'`;
             var params = {
                 action: "RawQueryRet",
@@ -273,11 +183,18 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
                     var generoId = $("#genero option:selected").attr("data-musico-generoid");
                     form += "&action=RegistrarMusico&input_musico_ciudad=" + idmunicipio + "&input_musico_genero=" + generoId;
                     callAjaxBBDD(form, function (result) {
-                        console.log(result);
+
+                        if (success(result)) {
+
+                            VToast.mostrarMensaje(result.mensaje);
+                        } else {
+                            VToast.mostrarError(`Error al registrar el músico -> ${result.mensaje}`);
+                        }
+
                         return false;
                     });
                 } else {
-                    console.log(result);
+                    VToast.mostrarError(`Error al registrar el músico -> ${result.mensaje}`);
                 }
             });
             return false;
@@ -300,9 +217,6 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
                         $(option).attr("data-musico-generoId", item.idgenero);
                         $("#genero").append(option);
                     });
-
-                    registrarMusico();
-
                 }
             });
         }
@@ -319,7 +233,6 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
                 debug: true,
                 success: "valid"
             });
-
             $("#fan_form").validate({
                 rules: {
                     input_fan_nombre: "required",
@@ -330,7 +243,7 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
                     },
                     input_fan_pass: {
                         required: true,
-                        minlength: 5
+                        minlength: 4
                     }
                 },
                 messages: {
@@ -338,7 +251,7 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
                     input_fan_usuario: "<label class='jqueryValidatorMessage'>Usuario requerido</label>",
                     input_fan_pass: {
                         required: "<label class='jqueryValidatorMessage'>Contraseña requerida</label>",
-                        minlength: "<label class='jqueryValidatorMessage'>La contraseña tiene que tener 5 carácteres como mínimo</label>"
+                        minlength: "<label class='jqueryValidatorMessage'>La contraseña tiene que tener 4 carácteres como mínimo</label>"
                     },
                     input_fan_email: "<label class='jqueryValidatorMessage'>Introduce un email válido</label>"
                 }
@@ -347,21 +260,23 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
                 rules: {
                     input_local_nombre: "required",
                     input_local_usuario: "required",
+                    input_local_aforo: "required",
                     input_local_email: {
                         required: true,
                         email: true
                     },
                     input_local_pass: {
                         required: true,
-                        minlength: 5
+                        minlength: 4
                     }
                 },
                 messages: {
                     input_local_nombre: "<label class='jqueryValidatorMessage'>Escribe tu nombre</label>",
                     input_local_usuario: "<label class='jqueryValidatorMessage'>Usuario requerido</label>",
+                    input_local_aforo: "<label class='jqueryValidatorMessage'>Escribe el aforo máximo</label>",
                     input_local_pass: {
                         required: "<label class='jqueryValidatorMessage'>Contraseña requerida</label>",
-                        minlength: "<label class='jqueryValidatorMessage'>La contraseña tiene que tener 5 carácteres como mínimo</label>"
+                        minlength: "<label class='jqueryValidatorMessage'>La contraseña tiene que tener 4 carácteres como mínimo</label>"
                     },
                     input_local_email: "<label class='jqueryValidatorMessage'>Introduce un email válido</label>"
                 }
@@ -370,25 +285,36 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
                 rules: {
                     input_musico_nombre: "required",
                     input_musico_usuario: "required",
+                    input_musico_artistico: "required",
+                    input_musico_componentes: "required",
                     input_musico_email: {
                         required: true,
                         email: true
                     },
                     input_musico_pass: {
                         required: true,
-                        minlength: 5
+                        minlength: 4
                     }
                 },
                 messages: {
+                    input_musico_artistico: "<label class='jqueryValidatorMessage'>Escribe el nombre artístico</label>",
+                    input_musico_componentes: "<label class='jqueryValidatorMessage'>Escribe el número de componentes</label>",
                     input_musico_nombre: "<label class='jqueryValidatorMessage'>Escribe tu nombre</label>",
                     input_musico_usuario: "<label class='jqueryValidatorMessage'>Usuario requerido</label>",
                     input_musico_pass: {
                         required: "<label class='jqueryValidatorMessage'>Contraseña requerida</label>",
-                        minlength: "<label class='jqueryValidatorMessage'>La contraseña tiene que tener 5 carácteres como mínimo</label>"
+                        minlength: "<label class='jqueryValidatorMessage'>La contraseña tiene que tener 4 carácteres como mínimo</label>"
                     },
                     input_musico_email: "<label class='jqueryValidatorMessage'>Introduce un email válido</label>"
                 }
             });
+            $("#musico_form").valid();
+        }
+
+        function onTabChanged(formId) {
+            if (formId === "#musico_form") {
+                cargarGeneros();
+            }
         }
 
         $("._registroMenu .registroMenuBtn").click(function (e) {
@@ -396,13 +322,13 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
             var regId = $(this).attr("data-regid");
             $("._registroMenu .registroMenuBtn").not(this).removeClass("registroMenuBtn_selected");
             $(this).addClass("registroMenuBtn_selected");
+
             $("#" + regId).fadeIn();
             $("#" + regId).addClass("registro-div-active");
-
             var formId = $(this).attr("data-formid");
             $(formId).valid();
 
-            cargarGeneros();
+            onTabChanged(formId);
         });
     }
 });
