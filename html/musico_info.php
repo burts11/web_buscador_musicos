@@ -65,7 +65,7 @@
                 callback: function (e) {
 
                     var select =
-                            `SELECT usuario.usuario, usuario.nombre, musico.apellidos, musico.genero, musico.nombreartistico,
+                            `SELECT usuario.usuario, usuario.nombre, musico.apellidos, musico.nombreartistico,
                  musico.numerocomponentes FROM usuario INNER JOIN musico ON usuario.idusuario = musico.idmusico where musico.idmusico = ${e.json.usuarioId}`;
 
                     callAjaxBBDD(
