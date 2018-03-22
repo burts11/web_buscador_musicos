@@ -115,7 +115,7 @@
                 <section id="musicoMp3">
                     <div class="divPadding10 ">
                         <div class='jAudio'>
-                            <audio></audio>
+                            <audio id="jAudio_audio_control"></audio>
                             <div class='jAudio--ui'>
                                 <div class='jAudio--thumb'></div>
                                 <div class='jAudio--status-bar'>
@@ -156,8 +156,60 @@
             callback: function (e) {
 
                 var data = e.json.data;
+                var usuario = data["usuario"];
 
-                $("#miv2_musico_landscape_img").prop("src", Main.obtenerUserDataPath(data["usuario"]) + "img/album_art.jpg");
+                $('body').scrollTop(0);
+
+                callAjaxFileManager({action: "ListarArchivos", path: `${usuario}/audio/tracks`}, function (json) {
+
+                    if (success(json)) {
+                        var pList = {
+
+                            playlist: [
+                            ]
+                        };
+
+                        var tracks = Main.obtenerUserDataPath(usuario) + "audio/tracks/";
+                        var thumbs = Main.obtenerUserDataPath(usuario) + "audio/thumbs/";
+
+                        $.each(json.data, function (i, item) {
+
+                            var playListItem = {
+
+                                file: tracks + item,
+                                thumb: thumbs + item.beforeLastIndex(".") + ".jpg",
+                                trackName: item.beforeLastIndex("."),
+                                trackArtist: "",
+                                trackAlbum: ""
+                            };
+
+                            pList.playlist.push(playListItem);
+                        });
+
+                        var myAudio = document.getElementById("jAudio_audio_control");
+                        myAudio.volume = 1.0; 
+                        $(".jAudio").jAudio(pList);
+                    } else {
+
+                        $("#musicoMp3").hide();
+                    }
+                });
+
+                var headerTop = $("#_mainHeader").outerHeight();
+                $(".miv2_musico_menu_tituloWrapper").click(function (e) {
+
+                    e.preventDefault();
+
+                    var section = $(this).attr("data-section");
+                    var sectionOffset = $(section).offset().top;
+
+                    $('body, html').stop().animate({
+                        scrollTop: sectionOffset - headerTop
+                    }, 1000, function () {
+                    });
+                });
+
+                $("#miv2_musico_landscape_img").prop("src", Main.obtenerUserDataPath(usuario) + "img/album_art.jpg");
 
                 $("#miv2_musico_landscape_img").click(function () {
                     $(".miv2_musico_info").removeClass("fadeInMoveAnim").addClass("fadeOutMoveAnim");
@@ -173,50 +225,6 @@
                 Main.cambiarTitulo("Musico");
                 window.history.replaceState({}, '#', '#');
             }
-        });
-
-        $('body').scrollTop(0);
-
-        var t = {
-            playlist: [
-                {
-                    file: "tracks/01.mp3",
-                    thumb: "thumbs/01.jpg",
-                    trackName: "Dusk",
-                    trackArtist: "Tobu & Syndec",
-                    trackAlbum: "Single",
-                },
-                {
-                    file: "tracks/02.mp3",
-                    thumb: "thumbs/02.jpg",
-                    trackName: "Blank",
-                    trackArtist: "Disfigure",
-                    trackAlbum: "Single",
-                },
-                {
-                    file: "tracks/03.mp3",
-                    thumb: "thumbs/03.jpg",
-                    trackName: "Fade",
-                    trackArtist: "Alan Walker",
-                    trackAlbum: "Single"
-                }
-            ]
-        }
-
-        $(".jAudio").jAudio(t);
-
-        var headerTop = $("#_mainHeader").outerHeight();
-        $(".miv2_musico_menu_tituloWrapper").click(function (e) {
-
-            e.preventDefault();
-
-            var section = $(this).attr("data-section");
-            var sectionOffset = $(section).offset().top;
-
-            $('body, html').stop().animate({
-                scrollTop: sectionOffset - headerTop
-            }, 1000, function () {
-            });
         });
 //
 //        var data = {
