@@ -12,10 +12,45 @@ if (isset($_POST["action"]) && !empty($_POST["action"])) {
     echo jsonEncode($result);
 }
 
+function getUserDataPath() {
+    $dir = '../userdata/';
+    return $dir;
+}
+
 function onAction($action) {
 
     switch ($action) {
 
+        case "ListarArchivos":
+
+            $pathToList = $_POST["path"];
+            $realPath = getUserDataPath() . $pathToList;
+
+            try {
+                $listado = array();
+
+                foreach (new DirectoryIterator($realPath) as $file) {
+                    if ($file->isFile()) {
+
+                        array_push($listado, $file->getFilename());
+                    }
+                }
+
+                if (!empty($listado)) {
+
+                    $resultado = array("resultado" => "Success",
+                        "mensaje" => "Archivos listados correctamente!", "data" => $listado, "path" => $realPath);
+                } else {
+                    $resultado = array("resultado" => "Error",
+                        "mensaje" => "0 archivos listados",  "data" => $listado, "path" => $realPath);
+                }
+            } catch (Exception $exc) {
+                $resultado = array("resultado" => "Error",
+                    "mensaje" => "El directorio no existe?",  "data" => $listado, "path" => $realPath);
+            }
+
+            echo jsonEncode($resultado);
+            break;
         case "CrearCarpeta":
 
             $ruta = $_POST["ruta"];
@@ -69,5 +104,5 @@ function crearCarpeta($ruta) {
 
 function jsonEncode($array) {
 
-    return json_encode(json_encode($array));
+    return json_encode($array);
 }
