@@ -106,6 +106,22 @@ var VModal = {
                     appendCSSInline("minifyCustomPadding", minifyPadding, $modalObject);
                 }
 
+                if (params.hasOwnProperty("CustomMargin")) {
+
+                    var marginSettings = params["CustomMargin"];
+                    var minifyMargin = `${  $modalId } .md-content_v2 { margin: ${marginSettings } !important;}`;
+
+                    appendCSSInline("minifyCustomMargin", minifyMargin, $modalObject);
+                }
+
+                if (params.hasOwnProperty("BackgroundColor")) {
+
+                    var backgroundSettings = params["BackgroundColor"];
+                    var minifyBackground = `${  $modalId } .md-content { background-color: ${backgroundSettings } !important;}`;
+
+                    appendCSSInline("minifyCustomBackgroundColor", minifyBackground, $modalObject);
+                }
+
                 var modalCloseBtn = $("#" + modalId).find("#__modal_close_btn");
                 $(modalCloseBtn).unbind("click").bind("click", function (e) {
 
