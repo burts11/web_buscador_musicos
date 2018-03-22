@@ -1,5 +1,6 @@
 var currentUser = "";
 var currentUserType = "";
+var mainPageLoaded = false;
 var Usuario = {
 
     id: "",
@@ -113,8 +114,7 @@ var Main = {
         $("#menuBtnHome").attr("data-href", "pagina_principal");
         $("#menuBtnHome").attr("href", "#pagina_principal");
         $("#menuBtnUserHome").remove();
-//        cambiarPagina("pagina_principal");
-        cambiarHash("");
+        cambiarHash("pagina_principal");
         window.location.reload();
     },
     agregarMenuBtn: function (href, id, texto) {
@@ -137,13 +137,15 @@ var Main = {
     seleccionarBotonMenu: function (e) {
 
         if (!success(e)) {
-            //            cambiarHash("musico_info_v2");
-//            cambiarPagina("musico_info_v2");
-            cambiarHash("pagina_principal");
-            if ($("#_contentDiv").children().length === 0)
-            {
-//                cambiarPagina("pagina_principal");
+            if (!mainPageLoaded) {
+                cambiarPagina("pagina_principal");
+                mainPageLoaded = true;
+            } else {
+                cambiarHash("p");
+                cambiarHash("pagina_principal");
             }
+        } else {
+            onHashCambiado();
         }
 
 //        var url = window.location.href;
@@ -173,28 +175,24 @@ if (window.history && window.history.pushState) {
 
     $(window).on('popstate', function () {
 
-        var url = window.location.href;
-        if (url.indexOf('#') > -1)
-        {
-            var cur = url.substr(url.indexOf("#") + 1);
-            cambiarPagina(cur);
-            var menuBtn = $("#_mainMenu > div > a[data-href='" + cur + "']");
-            setActive(menuBtn);
-
-            Main.cambiarTitulo($(menuBtn).text());
-        } else {
-//            if (!success(e)) {
-//
-//                cambiarPagina("pagina_principal");
-//                var menuHome = $("#menuBtnHome");
-//                setActive(menuHome);
-//                return;
-//            }
-//
-//            var menuHome = $("#menuBtnHome");
-//            setActive(menuHome);
-        }
+        onHashCambiado();
     });
+}
+
+function onHashCambiado() {
+
+    $("#_divMainContent").empty();
+
+    var url = window.location.href;
+    if (url.indexOf('#') > -1)
+    {
+        var cur = url.substr(url.indexOf("#") + 1);
+        cambiarPagina(cur);
+        var menuBtn = $("#_mainMenu > div > a[data-href='" + cur + "']");
+        setActive(menuBtn);
+
+        Main.cambiarTitulo($(menuBtn).text());
+    }
 }
 
 onJqueryWindowCallbackEvent(VMessage.PAGINA_POPUP_MENU_ITEM_CLICKED, {
@@ -279,7 +277,8 @@ onJqueryReady(function () {
             modalHeight: "95%",
             CustomPadding: "true",
             padding: "0px",
-            ContentPadding: "0px"
+            ContentPadding: "0px",
+            enableScrollBar: "true"
         }, {
             onDialogShow: function (ev) {
 
