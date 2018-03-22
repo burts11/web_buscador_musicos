@@ -180,13 +180,19 @@ if (window.history && window.history.pushState) {
 }
 
 function onHashCambiado() {
-
-    $("#_divMainContent").empty();
-
+    var divMainContent = $("#_divMainContent");
+    $(divMainContent).empty();
     var url = window.location.href;
     if (url.indexOf('#') > -1)
     {
         var cur = url.substr(url.indexOf("#") + 1);
+        console.log("HASH CAMBIADO -> " + cur);
+        
+        if (cur === "" && $(divMainContent).children().length === 0) {
+            cambiarHash("pagina_principal");
+            return;
+        }
+
         cambiarPagina(cur);
         var menuBtn = $("#_mainMenu > div > a[data-href='" + cur + "']");
         setActive(menuBtn);
@@ -213,7 +219,6 @@ onJqueryWindowCallbackEvent(VMessage.PAGINA_POPUP_MENU_ITEM_CLICKED, {
                 JLang.cambiarIdioma("en");
                 break;
             case "drop_editar_perfil":
-//                console.log("drop_editar_perfil clicked");
                 var item = $("#" + "drop_editar_perfil");
                 VModal.show("perfil", item, {modalEffect: "md-effect-15", VModalId: "index_show_perfil"}, {
                     onDialogShow: function (ev) {
@@ -333,9 +338,38 @@ onJqueryReady(function () {
 
     function testFileManager() {
 
-        callAjaxPost("bbdd/FileManager.php",{ action: "CrearCarpeta", ruta: "userdata/test/img"}, function (result) {
+        callAjaxTest("bbdd/FileManager.php", "text", {action: "ListarArchivos", path: "nocopyright/audio/tracks"}, function (result) {
 
             console.log(result);
+        });
+//
+//        callAjaxPost("bbdd/FileManager.php",{ action: "CrearCarpeta", ruta: "userdata/test/img"}, function (result) {
+//
+//            console.log(result);
+//        });
+    }
+
+    function callAjaxTest(url, type, dataJSON, func) {
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            dataType: type,
+            data: dataJSON,
+            cache: false,
+            success: function (rawJson) {
+
+//                var json = $.parseJSON(rawJson);
+                func(rawJson);
+            },
+            error: function (err) {
+
+                var dataJSON = {
+                    resultado: "error",
+                    errorResponse: err
+                };
+                func(dataJSON);
+            }
         });
     }
 });
