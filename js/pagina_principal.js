@@ -1,11 +1,13 @@
 iniciar();
+cargarLocales();
 cargarConciertos();
 cargarPorGeneros();
 
 function iniciar() {
 
-    $("#divGeneros").empty();
-    $("#divMusicos").empty();
+    $("#pp_divGeneros").empty();
+    $("#pp_divMusicos").empty();
+    $("#pp_divLocales").empty();
     $(".slickConciertos").empty();
 }
 
@@ -23,7 +25,7 @@ function cargarPorGeneros() {
 
             var genero = item["nombre"];
             var generoSlide = $("<div>").addClass("musicoGeneroSlider");
-            var slider = $("#divGeneros .musicoGeneroSlider[data-generoNombre='" + genero + "']");
+            var slider = $("#pp_divGeneros .musicoGeneroSlider[data-generoNombre='" + genero + "']");
 
             if (slider.length > 0) {
 
@@ -73,7 +75,7 @@ function cargarPorGeneros() {
                 $(generoSlideContent).append(musico);
             });
 
-            $("#divGeneros").append(generoSlide);
+            $("#pp_divGeneros").append(generoSlide);
         });
 
 
@@ -127,8 +129,32 @@ function cargarConciertos()
     });
 }
 
-function inicializarSlickNovedades() {
+function cargarLocales() {
 
+    $("#pp_divLocales").empty();
+    $("#pp_divLocales").append("<h2 class='colorPrimary padding10' style='margin-left: 0.5em'>Locales</h2>");
+
+    var selectGeneros = 'SELECT usuario.idusuario, usuario.nombre, usuario.tipo, local.aforo, local.imagen, usuario.email from usuario inner join local on local.idlocal = usuario.idusuario order by usuario.nombre;';
+
+    callAjaxBBDD(
+            {
+                action: "RawQueryRet",
+                query: selectGeneros
+            }, function (result) {
+        $.each(result.data, function (i, item) {
+
+            var template = "<div class='localWrapperContainer'>";
+            template += "<div class='localWrapperImage'> <img class='localImage' > </div>";
+            template += `<div class='localWrapperInfo'> <label class='blockLabel colorPrimary centeredElement'> ${ item.nombre} </label></div>`;
+            template += "</div>";
+
+            $("#pp_divLocales").append(template);
+        });
+    });
+}
+
+function inicializarSlickNovedades() {
+    return;
     $('#divConciertosNovedad').slick({
         autoplay: true,
         autoplaySpeed: 1200,
