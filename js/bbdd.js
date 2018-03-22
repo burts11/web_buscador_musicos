@@ -140,6 +140,30 @@ function callAjaxPost(url, dataJSON, func) {
     );
 }
 
+function callAjaxFileManager(dataJSON, func) {
+
+    $.ajax({
+        type: METHOD.POST,
+        url: "bbdd/FileManager.php",
+        dataType: "json",
+        data: dataJSON,
+        cache: false,
+        success: function (rawJson) {
+
+            func(rawJson);
+        },
+        error: function (err) {
+
+            var dataJSON = {
+                resultado: "ERROR",
+                errorResponse: err
+            };
+            func(dataJSON);
+        }
+    }
+    );
+}
+
 function callAjaxBBDD(dataJSON, func) {
 
     $.ajax({
