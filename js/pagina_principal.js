@@ -154,9 +154,8 @@ function cargarLocales() {
 }
 
 function inicializarSlickNovedades() {
-    return;
     $('#divConciertosNovedad').slick({
-        autoplay: true,
+        autoplay: false,
         autoplaySpeed: 1200,
         dots: true,
         slidesToShow: 1,
