@@ -8,13 +8,11 @@ onJqueryReady(function () {
 
         $.each(result, function (i, item) {
 
-//            console.log(item);
-            
             var usuario = item;
             var usuarioId = usuario["idusuario"];
             var nombre = usuario ["nombre"];
             var nombreartistico = usuario ["nombreartistico"];
-            var genero = usuario ["genero"];
+            var genero = "";
 
             var div = $("<div>").addClass("musicoContainer");
 
