@@ -3,6 +3,7 @@ onJqueryWindowCallbackEventOne(VInfo.LOGIN_INFO, {
     callback: function (e) {
 
         e.json.vparams.onDialogContentLoaded();
+        inicializarJValidator();
 
         $("#input_username").on("keydown", function (event) {
             if (event.which === Key.ENTER) {
@@ -23,28 +24,38 @@ onJqueryWindowCallbackEventOne(VInfo.LOGIN_INFO, {
 
         function login() {
 
-            var user = $("#input_username").val();
-            var pass = $("#input_userpass").val();
-            if ((user === "" || pass === ""))
+            if (!$("#login_form").valid())
             {
-                console.log("No se han introducido un usuario o contraseña válido");
+                VToast.mostrarError("Debes escribir un usuario y una contraseña!");
                 return;
             }
+            
+            var user = $("#input_username").val();
+            var pass = $("#input_userpass").val();
 
             iniciarSesion(user, pass, {
 
                 success: function (json) {
-                    console.log("Login success -> ");
-                    console.log(json);
                     e.json.vparams.close();
                     Main.comprobarUsuarioLogueado();
                 },
                 error: function (json) {
 
-                    console.log("Login error -> ");
-                    console.log(json);
+                    VToast.mostrarError("El nombre de usuario o la contraseña es incorrecta!");
+                }
+            });
+        }
 
-                    e.json.vparams.close();
+        function inicializarJValidator() {
+            $.validator.messages.required = '';
+            $("#login_form").validate({
+                showErrors: function (errorMap, errorList) {
+                },
+                onfocusout: false,
+                onkeyup: false,
+                rules: {
+                    input_username: "required",
+                    input_userpass: "required"
                 }
             });
         }
