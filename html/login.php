@@ -30,12 +30,14 @@
             <h1 lang='es' data-lang-token='DialogLogin_Titulo' class="tituloH1 tituloH1-Grey">Iniciar Sesión</h1>
             <hr class="hrSeparator_dialog"> 
             <div class="form-container">
-                <div class="form-control">
-                    <label lang='es' data-lang-token='DialogLogin_Usuario' class="form-control-label" for="input_username">Usuario</label> <input class="form-control-textfield" type="text" id="input_username" value="" required>
-                </div>
-                <div class="form-control">
-                    <label lang='es' data-lang-token='DialogLogin_Pass' class="form-control-label" for="input_userpass">Contraseña</label> <input class="form-control-textfield" type="password" id="input_userpass" value="" required>
-                </div>
+                <form id="login_form">
+                    <div class="form-control">
+                        <label lang='es' data-lang-token='DialogLogin_Usuario' class="form-control-label" for="input_username">Usuario</label> <input class="form-control-textfield" type="text" id="input_username" name="input_username" value="" required>
+                    </div>
+                    <div class="form-control">
+                        <label lang='es' data-lang-token='DialogLogin_Pass' class="form-control-label" for="input_userpass">Contraseña</label> <input class="form-control-textfield" type="password" name="input_userpass" id="input_userpass" value="" required>
+                    </div>
+                </form>
             </div>
             <div class="centeredElementHorizontal" id="l_loginDiv">
                 <button lang='es' data-lang-token='DialogLogin_Submit' class="form-control-btn" id="input_login_btn">Entrar</button> 
