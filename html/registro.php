@@ -12,7 +12,7 @@
 
             position: relative;
             display: inline-block;
-            width: 99.2%;
+            width: 99.6%;
             height: 100%;
         }
 
