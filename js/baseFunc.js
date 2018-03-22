@@ -48,3 +48,7 @@ $.fn.popup = function () {
 function hide(target) {
     $(target).fadeOut();
 }
+
+String.prototype.beforeLastIndex = function (delimiter) {
+    return this.substr(0,this.lastIndexOf(delimiter)) || this + "";
+};
