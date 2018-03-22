@@ -258,13 +258,13 @@
                                     <label class="form-control-label">Usuario </label> <input name="input_local_usuario" class="form-control-textfield" type="text" id="input_local_usuario" value="">
                                 </div>
                                 <div class="form-control">
+                                    <label class="form-control-label">Contraseña </label> <input name="input_local_pass" class="form-control-textfield" type="text" id="input_local_pass" value="">
+                                </div>
+                                <div class="form-control">
                                     <label class="form-control-label">Nombre</label> <input name="input_local_nombre" class="form-control-textfield" type="text" id="input_local_nombre" value="">
                                 </div>
                                 <div class="form-control">
                                     <label class="form-control-label">Email </label> <input name="input_local_email" class="form-control-textfield" type="text" id="input_local_email" value="">
-                                </div>
-                                <div class="form-control">
-                                    <label class="form-control-label">Contraseña </label> <input name="input_local_pass" class="form-control-textfield" type="text" id="input_local_pass" value="">
                                 </div>
                                 <div class="form-control">
                                     <label class="form-control-label">Ubicacion </label> <input name="input_local_ubicacion" class="form-control-textfield" type="text" id="input_local_ubicacion" value="">
