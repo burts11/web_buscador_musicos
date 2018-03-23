@@ -193,7 +193,6 @@ function onHashCambiado() {
         console.log("HASH CAMBIADO -> " + cur);
 
         if (cur === "" && $(divMainContent).children().length === 0) {
-            alert("??");
             cambiarHash("pagina_principal");
             return;
         }
