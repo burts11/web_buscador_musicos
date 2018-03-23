@@ -148,6 +148,10 @@ var Main = {
             onHashCambiado();
         }
 
+//        cambiarHash("f");
+//        cambiarHash("uploadTest");
+
+
 //        var url = window.location.href;
 //        if (url.indexOf('#') > -1)
 //        {
@@ -187,8 +191,9 @@ function onHashCambiado() {
     {
         var cur = url.substr(url.indexOf("#") + 1);
         console.log("HASH CAMBIADO -> " + cur);
-        
+
         if (cur === "" && $(divMainContent).children().length === 0) {
+            alert("??");
             cambiarHash("pagina_principal");
             return;
         }
@@ -198,6 +203,8 @@ function onHashCambiado() {
         setActive(menuBtn);
 
         Main.cambiarTitulo($(menuBtn).text());
+    } else {
+        cambiarHash("pagina_principal");
     }
 }
 
