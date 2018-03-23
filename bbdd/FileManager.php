@@ -21,6 +21,30 @@ function onAction($action) {
 
     switch ($action) {
 
+        case "SubirArchivo":
+            $output_dir = "../test/";
+            if (isset($_FILES["myfile"])) {
+                $ret = array();
+
+                $error = $_FILES["myfile"]["error"];
+                
+                if (!is_array($_FILES["myfile"]["name"])) { //single file
+                    $fileName = $_FILES["myfile"]["name"];
+                    move_uploaded_file($_FILES["myfile"]["tmp_name"], $output_dir . $fileName);
+                    $ret[] = $fileName;
+                } else {  //Multiple files, file[]
+                    $fileCount = count($_FILES["myfile"]["name"]);
+                    for ($i = 0; $i < $fileCount; $i++) {
+                        $fileName = $_FILES["myfile"]["name"][$i];
+                        move_uploaded_file($_FILES["myfile"]["tmp_name"][$i], $output_dir . $fileName);
+                        $ret[] = $fileName;
+                    }
+                }
+                echo json_encode($ret);
+            }
+
+            echo "Test subir";
+            break;
         case "ListarArchivos":
 
             $pathToList = $_POST["path"];
@@ -42,11 +66,11 @@ function onAction($action) {
                         "mensaje" => "Archivos listados correctamente!", "data" => $listado, "path" => $realPath);
                 } else {
                     $resultado = array("resultado" => "Error",
-                        "mensaje" => "0 archivos listados",  "data" => $listado, "path" => $realPath);
+                        "mensaje" => "0 archivos listados", "data" => $listado, "path" => $realPath);
                 }
             } catch (Exception $exc) {
                 $resultado = array("resultado" => "Error",
-                    "mensaje" => "El directorio no existe?",  "data" => $listado, "path" => $realPath);
+                    "mensaje" => "El directorio no existe?", "data" => $listado, "path" => $realPath);
             }
 
             echo jsonEncode($resultado);
