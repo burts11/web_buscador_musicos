@@ -132,7 +132,7 @@ function cargarConciertos()
 function cargarLocales() {
 
     $("#pp_divLocales").empty();
-    $("#pp_divLocales").append("<h2 class='colorPrimary padding10' style='margin-left: 0.5em'>Locales</h2>");
+    $("#pp_divLocales").append("<label class='blockLabel colorPrimary padding10' style='margin-left: 0.5em'>Locales</label>");
 
     var selectGeneros = 'SELECT usuario.idusuario, usuario.nombre, usuario.tipo, local.aforo, local.imagen, usuario.email, comunidades.munucipio from usuario inner join local on local.idlocal = usuario.idusuario inner join comunidades on comunidades.idciudad = usuario.ciudad order by comunidades.munucipio;';
 

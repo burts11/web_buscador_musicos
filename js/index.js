@@ -77,7 +77,7 @@ var Main = {
 
             case "Administrador":
 //                cambiarPagina("pagina_principal");
-                cambiarHash("pagina_principal");
+//                cambiarHash("pagina_principal");
                 break;
             case "Fan":
                 Main.agregarMenuBtn("pagina_fan", "menuBtnUserHome", "Inicio");
@@ -332,7 +332,6 @@ onJqueryReady(function () {
             }
         });
     });
-
 
     $("#idiomaFlag").click(testFileManager);
 
