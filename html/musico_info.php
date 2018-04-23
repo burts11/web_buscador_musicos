@@ -2,7 +2,7 @@
 <html>
     <style>
         .musico_info_container {
-            width: auto;
+            width: 29em;
             height: auto;
             position: relative;
             display: block;

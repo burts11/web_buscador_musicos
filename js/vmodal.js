@@ -193,10 +193,10 @@ var VModal = {
                                 $("#" + modalId).addClass("md-show");
 
                                 if (params["modalEffect"] === "vModalFadeIn-show") {
-                                    $($modalId).css({opacity: 0, top: "-=20px"});
+                                    $($modalId).css({opacity: 0, top: "-=1%"});
 
                                     $($modalId).stop(true, true).animate({
-                                        top: "+=20px", opacity: 1
+                                        top: "+=1%", opacity: 1
                                     }, {
                                         duration: 450,
                                         complete: function () {

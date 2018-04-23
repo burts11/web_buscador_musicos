@@ -327,7 +327,7 @@ onJqueryReady(function () {
             CustomPadding: "true",
             padding: "0px",
             CustomMargin: "0px",
-            BackgroundColor: "rgba(47, 47, 47, 0.85)"
+            BackgroundColor: "rgba(47, 47, 47, 0.98)"
         }, {
             onDialogShow: function (ev) {
 

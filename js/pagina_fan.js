@@ -66,8 +66,7 @@ onJqueryReady(function () {
             $(musicoBody).unbind("click").bind("click", function () {
 
                 VModal.show("musico_info", item, {modalEffect: "vModalFadeIn-show", VModalId: generateUniqueId(),
-                    CustomPadding: "true",
-                    padding: "0px"}, {
+                    ContentPadding: "0px"}, {
                     onDialogShow: function (ev) {
 
                         ev["usuarioId"] = usuarioId;

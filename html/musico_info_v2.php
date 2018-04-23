@@ -158,8 +158,6 @@
                 var data = e.json.data;
                 var usuario = data["usuario"];
 
-                $('body').scrollTop(0);
-
                 callAjaxFileManager({action: "ListarArchivos", path: `${usuario}/audio/tracks`}, function (json) {
 
                     if (success(json)) {

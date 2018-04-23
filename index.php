@@ -139,7 +139,6 @@ session_start();
         .divConciertos {
             width: 100%;
         }
-
     </style>
     <body>
         <!--rgb(35, 35, 35) DIALOG COLOR --> 
@@ -149,7 +148,7 @@ session_start();
             <div class="headerContainer" id="_mainHeader">
                 <div class="headerDiv">
                     <div class="divLogo" id="_logoContainer">
-                        <img id="logoImg" class="clickableElement centeredElementVertical" src="img/logo.png">
+                        <a href=""><img id="logoImg" class="clickableElement centeredElementVertical" src="img/logo.png"> </a>
                     </div>
                     <div class="divIdiomas centeredElementVertical" id="_idiomasContainer">
                         <div class="idiomasContainer divPadding10 clickableElement vPopupTrigger" data-popup-container="popup1" >
