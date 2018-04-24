@@ -1,5 +1,7 @@
-CREATE DATABASE  IF NOT EXISTS `proyecto` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `proyecto`;
+CREATE DATABASE  IF NOT EXISTS `dam1tgrupo4_proyecto` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
+
+USE `dam1tgrupo4_proyecto`;
 -- MySQL dump 10.13  Distrib 5.6.17, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: proyecto

@@ -4,7 +4,7 @@ require_once 'MysqliDb.php';
 require_once 'util.php';
 
 function bbdd_inicializar() {
-    $db = new MysqliDb('localhost', 'root', '', 'proyecto');
+    $db = new MysqliDb('localhost', 'root', '', 'dam1tgrupo4_proyecto');
     return $db;
 }
 
