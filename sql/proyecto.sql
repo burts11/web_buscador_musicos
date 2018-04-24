@@ -1,8 +1,10 @@
--- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
+CREATE DATABASE  IF NOT EXISTS `proyecto` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `proyecto`;
+-- MySQL dump 10.13  Distrib 5.6.17, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: proyecto
 -- ------------------------------------------------------
--- Server version	5.5.5-10.1.28-MariaDB
+-- Server version	5.5.5-10.1.26-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -74,10 +76,10 @@ DROP TABLE IF EXISTS `concierto`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `concierto` (
-  `idconcierto` int(11) NOT NULL,
+  `idconcierto` int(11) NOT NULL AUTO_INCREMENT,
   `idlocal` int(11) NOT NULL,
   `fecha` date NOT NULL,
-  `hora` datetime NOT NULL,
+  `hora` time NOT NULL,
   `genero` int(11) NOT NULL,
   `valoreconomico` int(20) NOT NULL,
   `estado` int(11) NOT NULL,
@@ -87,9 +89,10 @@ CREATE TABLE `concierto` (
   KEY `idlocal` (`idlocal`),
   KEY `ciudad_fk_idx` (`genero`),
   KEY `ciudad_fk_idx1` (`ciudad`),
-  CONSTRAINT `ciudad_fk` FOREIGN KEY (`genero`) REFERENCES `genero` (`idgenero`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `local_fk` FOREIGN KEY (`idlocal`) REFERENCES `local` (`idlocal`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  KEY `musico_idx` (`idmusico`),
+  CONSTRAINT `local` FOREIGN KEY (`idlocal`) REFERENCES `local` (`idlocal`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `musico` FOREIGN KEY (`idmusico`) REFERENCES `musico` (`idmusico`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -98,6 +101,7 @@ CREATE TABLE `concierto` (
 
 LOCK TABLES `concierto` WRITE;
 /*!40000 ALTER TABLE `concierto` DISABLE KEYS */;
+INSERT INTO `concierto` VALUES (1,55,'2018-08-22','12:00:00',1,3000,0,5,4),(2,56,'2018-06-02','20:00:00',2,5000,0,6,6),(4,58,'2018-05-31','03:30:00',4,5666,0,4,NULL),(5,58,'2018-04-29','13:00:00',2,64646,0,3,NULL),(6,58,'2018-05-05','13:00:00',3,5000,0,12,NULL),(7,58,'2018-05-05','13:00:00',3,5000,0,12,NULL);
 /*!40000 ALTER TABLE `concierto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -166,9 +170,7 @@ CREATE TABLE `inscripcion` (
   `idconcierto` int(11) NOT NULL,
   PRIMARY KEY (`idmusico`,`idconcierto`),
   KEY `idmusico` (`idmusico`),
-  KEY `concierto_fk_idx` (`idconcierto`),
-  CONSTRAINT `concierto_fk` FOREIGN KEY (`idconcierto`) REFERENCES `concierto` (`idconcierto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `musico_ins_con_fk` FOREIGN KEY (`idmusico`) REFERENCES `musico` (`idmusico`)
+  KEY `concierto_fk_idx` (`idconcierto`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -285,7 +287,6 @@ CREATE TABLE `votacionconcierto` (
   `idfan` int(11) NOT NULL,
   PRIMARY KEY (`idconcierto`),
   KEY `idfan` (`idfan`),
-  CONSTRAINT `votacionconcierto_ibfk_1` FOREIGN KEY (`idconcierto`) REFERENCES `concierto` (`idconcierto`),
   CONSTRAINT `votacionconcierto_ibfk_2` FOREIGN KEY (`idfan`) REFERENCES `fan` (`idfan`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -335,4 +336,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-23 15:29:57
+-- Dump completed on 2018-04-24 17:32:34
