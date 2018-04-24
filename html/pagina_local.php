@@ -4,80 +4,27 @@
         <meta charset="UTF-8">
         <link href="../css/musico.css" rel="stylesheet" type="text/css"/>
     </head>
-    <style>
-        #conciertos{
-            color: white;
-        }
-
-        #formConciertoLocal{
-            color: white;
-        }
-
-
-    </style>
+    
     <body>
         <div class="_childContainer divPadding10">
-            <form action="" id="formConciertoLocal">
-                <button type="button" id="nuevoConcierto">Añade un concierto</button>
-                <div id="registroConcierto">
-<!--                    Nombre del local: <input type="text" id="nombreLocal" name="nombreLocal"><br>-->
-                    Fecha del concierto: <input type="date" id="fechaLocal" name="fechaLocal"> <br>
-                    Hora del concierto: <input type="time" id="horaLocal" name="horaLocal"> <br>
-                    Genero: <select id="generos">
+            
+                <button type="button" id="dialogoConciertos">añadee</button>
+              
 
-                    </select><br>
-                    Valor economico: <input type="number" id="economicoLocal" name="economicoLocal"><br>
-                    Municipio: <select id="municipios">
-
-                    </select><br>
-                </div>
-            </form>
             <script>
 
-                var selectGeneros = `select * from genero`
-                var params = {
-                    action: "RawQueryRet",
-                    query: selectGeneros};
-                callAjaxBBDD(params, function (result) {
-                    $.each(result.data, function (i, item) {
-                        var nombre = item.nombre;
-                        var option = $("<option>" + nombre + "</option>");
-                        $(option).attr("data-generoId", item.idgenero);
-                        $("#generos").append(option);
+                $("#dialogoConciertos").click(function () {
+
+                    VModal.show("Local_conciertos", "", {modalEffect: "vModalFadeIn-show", VModalId: "dialogo_dar_alta_concierto"}, {
+                        onDialogShow: function (ev) {
+
+                            callJqueryWindowEvent(VInfo.CONCIERTO_INFO, ev);
+                        },
+                        onDialogClose: function (ev) {
+                        }
                     });
                 });
-
-                var selectMunicipios = `select idciudad,munucipio from comunidades limit 100`
-                var params = {
-                    action: "RawQueryRet",
-                    query: selectMunicipios};
-                callAjaxBBDD(params, function (result) {
-                    $.each(result.data, function (i, item) {
-                        var nombre = item.munucipio;
-                        var option = $("<option>" + nombre + "</option>");
-                        $(option).attr("data-idciudad", item.idciudad);
-                        $("#municipios").append(option);
-                    });
-                });
-                $("#nuevoConcierto").click(insertConcierto);
-                function insertConcierto() {
-                    var fecha = $("#fechaLocal").val();
-                    var hora = $("#horaLocal").val();
-                    var generoId = $("#generos option:selected").attr("data-generoid");
-                    var valorEconomico = $("#economicoLocal").val();
-                    var estado = 0;
-                    var idlocal = Usuario.id;
-                    var municipioId = $("#municipios option:selected").attr("data-idciudad");
-
-                    var query = (`insert into concierto values(default,'${idlocal}','${fecha}','${hora}','${generoId}','${valorEconomico}','${estado}','${municipioId}',null)`);
-                    var params = {
-                        action: "RawQueryRet",
-                        query: query};
-                    callAjaxBBDD(params, function (result) {
-                        console.log(result);
-
-                    });
-                }
+              
             </script>            
             <br>
             <div id="conciertos">
@@ -107,17 +54,17 @@ join usuario on usuario.idusuario = concierto.idlocal where concierto.idlocal = 
 
                     }
                     var botonBaja = $("<button type='button'>Dar de baja el concierto</button>");
-                    
-                    $(botonBaja).click(function() {
+
+                    $(botonBaja).click(function () {
                         var id = item.idconcierto;
-                       var query = `delete from concierto where idconcierto = ${id}`;
-                       
-                         var params = {
-                action: "RawQueryRet",
-                query: query};
-                       callAjaxBBDD(params, function (result) {
-                           console.log(result);
-                       });
+                        var query = `delete from concierto where idconcierto = ${id}`;
+
+                        var params = {
+                            action: "RawQueryRet",
+                            query: query};
+                        callAjaxBBDD(params, function (result) {
+                            console.log(result);
+                        });
                     });
                     $(divpadre).append(botonBaja);
                     $(divpadre).append("<br></br>");
