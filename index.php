@@ -60,7 +60,6 @@ session_start();
         }
 
         #_userMenu{
-            /*background-color: #e5e5e5;*/
             display: inline-block;
             position: relative;
             width: 300px;
@@ -77,7 +76,6 @@ session_start();
         }
 
         .userMenuPic {
-
             width: 30%;
             height: 100%;
             position: relative;

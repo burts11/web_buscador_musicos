@@ -35,6 +35,7 @@
                     query: query};
                 callAjaxBBDD(params, function (result) {
                     console.log(result);
+                     $("#musico").empty();
                     $.each(result.data, function (i, item) {
                         var boton = $("<button type='button'>Inscribete</button>");
                         var divpadre = $("<div></div>");

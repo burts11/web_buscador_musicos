@@ -102,18 +102,7 @@ function successJSON(e) {
     return false;
 }
 
-function successRowsMatched(e) {
-    var queryInfo = e["queryInfo"];
-    var splittedQueryInfo = queryInfo.split(queryInfo.substring(queryInfo.indexOf(':') + 1)[0]);
-    var rowsChanged = parseInt(splittedQueryInfo[2]);
 
-    if (rowsChanged >= 1)
-    {
-        return true;
-    }
-
-    return false;
-}
 
 function callAjaxPost(url, dataJSON, func) {
 

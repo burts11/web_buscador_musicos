@@ -83,7 +83,6 @@
 
                     console.log("Perfil musico");
                     console.log(e);
-
                     cargarInfo();
 
                     var modalId = e.json.vparams.VModalId;
