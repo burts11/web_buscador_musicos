@@ -34,30 +34,54 @@
                     action: "RawQueryRet",
                     query: query};
                 callAjaxBBDD(params, function (result) {
+                    $("#musico").empty();
+
+                    console.log("Conciertos de musico");
                     console.log(result);
-                     $("#musico").empty();
+
                     $.each(result.data, function (i, item) {
-                        var boton = $("<button type='button'>Inscribete</button>");
                         var divpadre = $("<div></div>");
                         divpadre.addClass("musico");
                         $(divpadre).append("<label class='blockLabel'>Nombre del local: " + item.nombre + "</label>");
                         $(divpadre).append("<label class='blockLabel'>Fecha: " + item.fecha + "</label>");
                         $(divpadre).append("<label class='blockLabel'>Hora: " + item.hora + "</label>");
                         $(divpadre).append("<label class='blockLabel'>Valor Economico: " + item.valoreconomico + "</label>");
+                        var boton = $("<button type='button'>Inscribete</button>");
                         $(divpadre).append(boton);
-                        $("#musico").append(divpadre);
+
                         $(boton).click(function () {
-                            
-                            
                             var usuario = Usuario.id;
-                            var query = `insert into inscripcion values('${usuario}',0,'${item.idconcierto}')`;
+                            var query = `insert into inscripcion values('${usuario}',1,'${item.idconcierto}')`;
                             var params = {
                                 action: "RawQueryRet",
                                 query: query};
+
                             callAjaxBBDD(params, function (result) {
                                 console.log(result);
+
+                                $(boton).text("Pendiente");
+
                             });
                         });
+
+                        var query = `select estado from inscripcion  where idmusico  = ${idmusico} AND idconcierto = ${item.idconcierto};`;
+                        var params = {
+                            action: "RawQueryRet",
+                            query: query};
+
+                        callAjaxBBDD(params, function (result) {
+
+                            var estadoConcierto = parseInt(result.data[0].estado);
+                            if (estadoConcierto === 0) {
+
+                            } else if (estadoConcierto === 2) {
+                                $(boton).text("Aceptado");
+                            } else if (estadoConcierto === 1) {
+                                $(boton).text("Pendiente");
+                            }
+                        });
+
+                        $("#musico").append(divpadre);
                     });
 
                 });
