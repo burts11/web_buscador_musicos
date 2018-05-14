@@ -4,7 +4,15 @@
         <meta charset="UTF-8">
         <link href="../css/musico.css" rel="stylesheet" type="text/css"/>
     </head>
-
+    <style>
+        .div_concierto {
+            display: inline-block;
+            margin-right: 150px;
+        }
+        #insc {
+            color:white;
+        }
+    </style>
     <body>
         <div class="_childContainer divPadding10">
             <button type="button" id="dialogoConciertos">añadee</button>
@@ -25,6 +33,8 @@
             <br>
             <div id="conciertos">
             </div>
+
+            <div id="insc"></div>
         </div>
         <script>
 
@@ -38,12 +48,13 @@ join usuario on usuario.idusuario = concierto.idlocal where concierto.idlocal = 
                 action: "RawQueryRet",
                 query: query};
             callAjaxBBDD(params, function (result) {
-                console.log(result);
+
 
                 $("#conciertos").empty();
 
                 $.each(result.data, function (i, item) {
                     var divpadre = $("<div></div>");
+                    $(divpadre).addClass("div_concierto");
                     $(divpadre).append("<label  class='blockLabel'> Local: " + item.Local + "</label>");
                     $(divpadre).append("<label  class='blockLabel'> Fecha: " + item.fecha + "</label>");
                     $(divpadre).append("<label  class='blockLabel'> Hora: " + item.hora + "</label>");
@@ -54,7 +65,8 @@ join usuario on usuario.idusuario = concierto.idlocal where concierto.idlocal = 
                         $(divpadre).append("<label  class='blockLabel'> Estado: Ocupado</label>");
 
                     }
-                    var botonBaja = $("<button type='button'>Dar de baja el concierto</button>");
+
+                    var botonBaja = $("<button type='button' class='form-control-btn'>DAR DE BAJA</button>");
 
                     $(botonBaja).click(function () {
                         var id = item.idconcierto;
@@ -64,7 +76,7 @@ join usuario on usuario.idusuario = concierto.idlocal where concierto.idlocal = 
                             action: "RawQueryRet",
                             query: query};
                         callAjaxBBDD(params, function (result) {
-                            console.log(result);
+
                         });
                     });
                     $(divpadre).append(botonBaja);
@@ -75,6 +87,50 @@ join usuario on usuario.idusuario = concierto.idlocal where concierto.idlocal = 
 
 
             });
+        </script>
+
+
+        <script>
+            var usuario = Usuario.id;
+            var query = `select concierto.fecha,concierto.hora,genero.nombre as Genero,concierto.valoreconomico,concierto.idconcierto 
+from concierto 
+join genero on concierto.genero = genero.idgenero 
+join usuario on concierto.idlocal = usuario.idusuario
+join inscripcion on concierto.idconcierto = inscripcion.idconcierto where inscripcion.estado = 1 and concierto.idlocal = ${usuario} group by inscripcion.idconcierto`;
+
+            var params = {
+                action: "RawQueryRet",
+                query: query};
+            callAjaxBBDD(params, function (result) {
+                $("#insc").empty();
+                $("#insc").append("<h2>CONCIERTOS PENDIENTES</h2><br>");
+                $.each(result.data, function (i, item) {
+                    var ConsultarUsuarios = $("<button type='button' class='form-control-btn'>Consultar Inscritos</button>");
+                    var divpadre = $("<div></div>");
+                    $(divpadre).addClass("div_insc");
+                    $("#insc").append("<label class='blockLabel'>Fecha: " + item.fecha + "</label>");
+                    $("#insc").append("<label class='blockLabel'>Hora: " + item.hora + "</label>");
+                    $("#insc").append("<label class='blockLabel'>Genero: " + item.Genero + "</label>");
+                    $("#insc").append("<label class='blockLabel'>Valor Economico: " + item.valoreconomico + "</label>");
+                    $("#insc").append(ConsultarUsuarios);
+                    $(divpadre).append("<br></br>");
+                    $("#insc").append(divpadre);
+                    $(ConsultarUsuarios).click(function () {
+
+                        VModal.show("Consultar_Inscritos", "", {modalEffect: "vModalFadeIn-show", VModalId: "Consultar_Inscritos", CustomPadding: "true",
+                            padding: "0px", modalTop: "40%"}, {
+                            onDialogShow: function (ev) {
+                                ev["vparams"]["idconcierto"] = item.idconcierto;
+                                callJqueryWindowEvent(VInfo.CONSULTAR, ev);
+                            },
+                            onDialogClose: function (ev) {
+                            }
+                        });
+                    });
+                });
+            });
+
+//               
         </script>
     </body>
 </html>
