@@ -62,13 +62,21 @@ where inscripcion.idconcierto =${idconcierto}`;
                                     action: "RawQueryRet",
                                     query: query};
                                 callAjaxBBDD(params, function (result) {
+                                    var query = `update concierto set estado = 1,idmusico = ${item.idusuario} where idconcierto = ${idconcierto}`;
+                                    var params = {
+                                    action: "RawQueryRet",
+                                    query: query};
+                                callAjaxBBDD(params, function (result) {
                                     console.log(result);
+                                    VToast.mostrarMensaje("Musico aceptado");
+                                    console.log(result);
+                                    
+                                    e.json.vparams.close();
+                                });
                                 });
                             });
                         });
                     });
-
-
 
                     e.json.vparams.onDialogContentLoaded();
                 });

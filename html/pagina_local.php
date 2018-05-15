@@ -41,32 +41,44 @@
             $("#conciertos").empty();
 
             var idlocal = Usuario.id;
-            var query = `select concierto.idconcierto,usuario.nombre as Local,concierto.fecha,concierto.hora,genero.nombre as genero,concierto.estado
+            var query = `select concierto.idconcierto,usuario.nombre as Local,concierto.fecha,concierto.hora,genero.nombre as genero,concierto.estado,concierto.valoreconomico
 from concierto join genero on concierto.genero = genero.idgenero
 join usuario on usuario.idusuario = concierto.idlocal where concierto.idlocal = ${idlocal}`;
             var params = {
                 action: "RawQueryRet",
                 query: query};
             callAjaxBBDD(params, function (result) {
-
-
                 $("#conciertos").empty();
 
                 $.each(result.data, function (i, item) {
+                    
+                    var query = `select usuario.nombre from inscripcion join usuario on inscripcion.idmusico = usuario.idusuario where inscripcion.estado = 2 and idconcierto = ${item.idconcierto}`;
+                     var params = {
+                action: "RawQueryRet",
+                query: query};
+            callAjaxBBDD(params, function (result) {
+                
+                               console.log("inscripciomnnnnnn");
+
+                console.log(result);
+                    var ConsultarUsuarios = $("<button type='button' class='form-control-btn'>Consultar Inscritos</button>");
+
                     var divpadre = $("<div></div>");
                     $(divpadre).addClass("div_concierto");
                     $(divpadre).append("<label  class='blockLabel'> Local: " + item.Local + "</label>");
                     $(divpadre).append("<label  class='blockLabel'> Fecha: " + item.fecha + "</label>");
                     $(divpadre).append("<label  class='blockLabel'> Hora: " + item.hora + "</label>");
                     $(divpadre).append("<label  class='blockLabel'> Genero: " + item.genero + "</label>");
+                    $(divpadre).append("<label  class='blockLabel'> Valor Economico: " + item.valoreconomico + "</label>");
                     if (item.estado === 0) {
-                        $(divpadre).append("<label  class='blockLabel'> Estado: Libre</label>");
-                    } else {
-                        $(divpadre).append("<label  class='blockLabel'> Estado: Ocupado</label>");
+                        $(divpadre).append("<label  class='blockLabel'>Pendiente de selección</label>");
+                    } else if (item.estado === 1){
+                        $(divpadre).append("<label  class='blockLabel'>Musico aceptado: "+result.data[0].nombre+" </label>");
 
                     }
 
                     var botonBaja = $("<button type='button' class='form-control-btn'>DAR DE BAJA</button>");
+                  
 
                     $(botonBaja).click(function () {
                         var id = item.idconcierto;
@@ -76,46 +88,25 @@ join usuario on usuario.idusuario = concierto.idlocal where concierto.idlocal = 
                             action: "RawQueryRet",
                             query: query};
                         callAjaxBBDD(params, function (result) {
-
+                            var query = `delete from inscripcion where idconcierto = ${id}`;
+                              var params = {
+                            action: "RawQueryRet",
+                            query: query};
+                         callAjaxBBDD(params, function (result) {
+                             VToast.mostrarMensaje("Concierto dado de baja");
+                                    
+                                    e.json.vparams.close();
+                                });
                         });
+                        
                     });
-                    $(divpadre).append(botonBaja);
+                    
+                     $(divpadre).append(botonBaja);
+                     $(divpadre).append(ConsultarUsuarios);
                     $(divpadre).append("<br></br>");
                     $("#conciertos").append(divpadre);
 
-                });
-
-
-            });
-        </script>
-
-
-        <script>
-            var usuario = Usuario.id;
-            var query = `select concierto.fecha,concierto.hora,genero.nombre as Genero,concierto.valoreconomico,concierto.idconcierto 
-from concierto 
-join genero on concierto.genero = genero.idgenero 
-join usuario on concierto.idlocal = usuario.idusuario
-join inscripcion on concierto.idconcierto = inscripcion.idconcierto where inscripcion.estado = 1 and concierto.idlocal = ${usuario} group by inscripcion.idconcierto`;
-
-            var params = {
-                action: "RawQueryRet",
-                query: query};
-            callAjaxBBDD(params, function (result) {
-                $("#insc").empty();
-                $("#insc").append("<h2>CONCIERTOS PENDIENTES</h2><br>");
-                $.each(result.data, function (i, item) {
-                    var ConsultarUsuarios = $("<button type='button' class='form-control-btn'>Consultar Inscritos</button>");
-                    var divpadre = $("<div></div>");
-                    $(divpadre).addClass("div_insc");
-                    $("#insc").append("<label class='blockLabel'>Fecha: " + item.fecha + "</label>");
-                    $("#insc").append("<label class='blockLabel'>Hora: " + item.hora + "</label>");
-                    $("#insc").append("<label class='blockLabel'>Genero: " + item.Genero + "</label>");
-                    $("#insc").append("<label class='blockLabel'>Valor Economico: " + item.valoreconomico + "</label>");
-                    $("#insc").append(ConsultarUsuarios);
-                    $(divpadre).append("<br></br>");
-                    $("#insc").append(divpadre);
-                    $(ConsultarUsuarios).click(function () {
+                     $(ConsultarUsuarios).click(function () {
 
                         VModal.show("Consultar_Inscritos", "", {modalEffect: "vModalFadeIn-show", VModalId: "Consultar_Inscritos", CustomPadding: "true",
                             padding: "0px", modalTop: "40%"}, {
@@ -128,9 +119,14 @@ join inscripcion on concierto.idconcierto = inscripcion.idconcierto where inscri
                         });
                     });
                 });
-            });
+                   
+                });
 
-//               
+
+            });
         </script>
+
+
+        
     </body>
 </html>
