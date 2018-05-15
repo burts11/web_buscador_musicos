@@ -10,13 +10,28 @@
             display: inline-block;
             width: 100%;
             height: 100%;
-            background-color: orange;
+        }
+        #aceptados{
+            position: relative;
+            display: inline-block;
+        }
+        #titulo_aceptados{
+            position: relative;
+            display: inline-block;
+            color:  orange;   
+            
+            
         }
     </style>
     <body>
         <div class="_childContainer">
             <div id="musico">
 
+            </div>
+            <h1 id="titulo_aceptados">Conciertos aceptados</h1><br>
+            
+            <div id="aceptados">
+                
             </div>
         </div>
         <script>
@@ -46,8 +61,8 @@
                         $(divpadre).append("<label class='blockLabel'>Fecha: " + item.fecha + "</label>");
                         $(divpadre).append("<label class='blockLabel'>Hora: " + item.hora + "</label>");
                         $(divpadre).append("<label class='blockLabel'>Valor Economico: " + item.valoreconomico + "</label>");
-                        var boton = $("<button type='button'>Inscribete</button>");
-                        var boton_pendiente = $("<button type='button'>Pendiente</button>");
+                        var boton = $("<button type='button' class='form-control-btn'>Inscribete</button>");
+                        var boton_pendiente = $("<button type='button' class='form-control-btn'>Pendiente</button>");
                         $(divpadre).append(boton);
 
                         $(boton).click(function () {
@@ -83,7 +98,8 @@
                                 $(divpadre).append(boton_pendiente);
                                 $(boton_pendiente).text("Aceptado");
                                 $(boton).hide();
-                                 $(boton_pendiente).show();
+                                 $(boton_pendiente).hide();
+                                 $("#aceptados").append(divpadre);
                             } else if (estadoConcierto === 1) {
                                 $(divpadre).append(boton_pendiente);
 
