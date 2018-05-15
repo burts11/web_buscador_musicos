@@ -47,6 +47,7 @@
                         $(divpadre).append("<label class='blockLabel'>Hora: " + item.hora + "</label>");
                         $(divpadre).append("<label class='blockLabel'>Valor Economico: " + item.valoreconomico + "</label>");
                         var boton = $("<button type='button'>Inscribete</button>");
+                        var boton_pendiente = $("<button type='button'>Pendiente</button>");
                         $(divpadre).append(boton);
 
                         $(boton).click(function () {
@@ -59,12 +60,13 @@
                             callAjaxBBDD(params, function (result) {
                                 console.log(result);
 
-                                $(boton).text("Pendiente");
-
+                                $(boton).hide();
+                                $(boton_pendiente).show();
+                                $(divpadre).append(boton_pendiente);
                             });
                         });
 
-                        var query = `select estado from inscripcion  where idmusico  = ${idmusico} AND idconcierto = ${item.idconcierto};`;
+                        var query = `select estado, idconcierto from inscripcion  where idmusico  = ${idmusico} AND idconcierto = ${item.idconcierto}`;
                         var params = {
                             action: "RawQueryRet",
                             query: query};
@@ -73,11 +75,35 @@
 
                             var estadoConcierto = parseInt(result.data[0].estado);
                             if (estadoConcierto === 0) {
-
+                                $(divpadre).append(boton_pendiente);
+                                $(boton_pendiente).text("Denegado");
+                                $(boton).hide();
+                                 $(boton_pendiente).show();
                             } else if (estadoConcierto === 2) {
-                                $(boton).text("Aceptado");
+                                $(divpadre).append(boton_pendiente);
+                                $(boton_pendiente).text("Aceptado");
+                                $(boton).hide();
+                                 $(boton_pendiente).show();
                             } else if (estadoConcierto === 1) {
-                                $(boton).text("Pendiente");
+                                $(divpadre).append(boton_pendiente);
+
+                                $(boton_pendiente).text("Pendiente");
+                                $(boton).hide();
+                                 $(boton_pendiente).show();
+                                $(boton_pendiente).click(function () {
+                                    var usuario = Usuario.id;
+                                    var query = `delete from inscripcion where idmusico = ${usuario} and idconcierto = ${item.idconcierto}`;
+                                    var params = {
+                                        action: "RawQueryRet",
+                                        query: query};
+
+                                    callAjaxBBDD(params, function (result) {
+                                        console.log(result);
+                                        $(boton_pendiente).hide();
+                                        $(boton).show();
+
+                                    });
+                                });
                             }
                         });
 
