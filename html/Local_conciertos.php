@@ -18,7 +18,7 @@
                 </select><br>
             </div>
             <br>
-            <button type="button" id="nuevoConcierto">AÑADIR</button>
+            <button type="button" class="form-control-btn" id="nuevoConcierto">AÑADIR</button>
         </form>
         <script>
 
