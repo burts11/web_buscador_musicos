@@ -13,6 +13,21 @@
     background-color: rgba(255,255,255,0.05);
 }
 
+.conciertoContainer{
+
+    display: inline-block;
+    transition: box-shadow .3s;
+    position: relative;
+    border-radius: 0px;
+    box-shadow: 0 0px 10px rgba(36,37,38,0.2);
+    margin-bottom: 0.1em;
+    margin: 0.8em;
+    height: 12em;
+    width: 12em;
+    overflow: hidden;
+    background-color: rgba(255,255,255,0.05);
+}
+
 .musicoHeader{
 
     position: relative;
@@ -32,7 +47,7 @@
     box-shadow: 0 0px 1em rgba(36,37,38,0.4);
 }
 
-.musicoFooter{
+.musicoFooter, .conciertoFooter{
 
     background-color: transparent;
     position: relative;
@@ -51,6 +66,16 @@
     width: 20px;
     height: 20px;
     float: right;
+}
+
+.conciertoVoteContainer{
+    position: absolute;
+    /*background-color : orange;*/
+    width: 20px;
+    height: 20px;
+    float: right;
+    right: 1em;
+    bottom: 22px;
 }
 
 .musicoVoteBtn{
@@ -238,7 +263,7 @@
     height:100%;
 }
 
-.musicoInfo{
+.musicoInfo, .conciertoInfo{
 
     display: block;
     position: relative;
