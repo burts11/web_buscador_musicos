@@ -1,12 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `dam1tgrupo4_proyecto` /*!40100 DEFAULT CHARACTER SET latin1 */;
-
-
-USE `dam1tgrupo4_proyecto`;
--- MySQL dump 10.13  Distrib 5.6.17, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.6.24, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: proyecto
+-- Host: 127.0.0.1    Database: dam1tgrupo4_proyecto
 -- ------------------------------------------------------
--- Server version	5.5.5-10.1.26-MariaDB
+-- Server version	5.5.5-10.1.28-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -94,7 +90,7 @@ CREATE TABLE `concierto` (
   KEY `musico_idx` (`idmusico`),
   CONSTRAINT `local` FOREIGN KEY (`idlocal`) REFERENCES `local` (`idlocal`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `musico` FOREIGN KEY (`idmusico`) REFERENCES `musico` (`idmusico`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -103,7 +99,7 @@ CREATE TABLE `concierto` (
 
 LOCK TABLES `concierto` WRITE;
 /*!40000 ALTER TABLE `concierto` DISABLE KEYS */;
-INSERT INTO `concierto` VALUES (1,55,'2018-08-22','12:00:00',1,3000,0,5,4),(2,56,'2018-06-02','20:00:00',2,5000,0,6,6),(4,58,'2018-05-31','03:30:00',4,5666,0,4,NULL),(5,58,'2018-04-29','13:00:00',2,64646,0,3,NULL),(6,58,'2018-05-05','13:00:00',3,5000,0,12,NULL),(7,58,'2018-05-05','13:00:00',3,5000,0,12,NULL);
+INSERT INTO `concierto` VALUES (1,55,'2018-08-22','12:00:00',1,3000,0,5,NULL),(2,56,'2018-06-02','20:00:00',2,5000,0,6,NULL),(4,58,'2018-05-31','03:30:00',4,5666,0,4,NULL),(5,58,'2018-04-29','13:00:00',2,64646,0,3,NULL),(6,58,'2018-05-05','13:00:00',3,5000,0,12,NULL),(7,58,'2018-05-05','13:00:00',3,5000,0,12,NULL),(8,58,'2018-05-16','10:03:00',1,50000,0,18,NULL),(9,58,'2018-05-16','10:03:00',1,50000,0,18,NULL);
 /*!40000 ALTER TABLE `concierto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -172,7 +168,9 @@ CREATE TABLE `inscripcion` (
   `idconcierto` int(11) NOT NULL,
   PRIMARY KEY (`idmusico`,`idconcierto`),
   KEY `idmusico` (`idmusico`),
-  KEY `concierto_fk_idx` (`idconcierto`)
+  KEY `concierto_fk_idx` (`idconcierto`),
+  CONSTRAINT `fk_concierto` FOREIGN KEY (`idconcierto`) REFERENCES `concierto` (`idconcierto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_musico` FOREIGN KEY (`idmusico`) REFERENCES `musico` (`idmusico`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -182,6 +180,7 @@ CREATE TABLE `inscripcion` (
 
 LOCK TABLES `inscripcion` WRITE;
 /*!40000 ALTER TABLE `inscripcion` DISABLE KEYS */;
+INSERT INTO `inscripcion` VALUES (2,0,1),(67,2,1);
 /*!40000 ALTER TABLE `inscripcion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -325,7 +324,7 @@ CREATE TABLE `votacionmusico` (
 
 LOCK TABLES `votacionmusico` WRITE;
 /*!40000 ALTER TABLE `votacionmusico` DISABLE KEYS */;
-INSERT INTO `votacionmusico` VALUES (4,57),(5,57),(8,57);
+INSERT INTO `votacionmusico` VALUES (2,57),(4,57),(5,57),(8,57),(66,57);
 /*!40000 ALTER TABLE `votacionmusico` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -338,4 +337,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-24 17:32:34
+-- Dump completed on 2018-05-18 15:51:27
