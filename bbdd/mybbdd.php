@@ -12,7 +12,7 @@ if (is_ajax()) {
     if (isset($_POST["action"]) && !empty($_POST["action"])) {
         $action = $_POST["action"];
         onAction($action);
-    } else {
+    } else {    
         $result = Array(
             "resultado" => "Error",
             "mensaje" => "Action está vacía"
