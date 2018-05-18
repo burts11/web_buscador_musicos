@@ -1,4 +1,7 @@
-onJqueryReady(function () {
+cargarMusicos();
+cargarConciertos();
+
+function cargarMusicos() {
     callAjaxBBDD({
         action: "RawQuery",
         query: "SELECT * FROM usuario INNER JOIN musico ON usuario.idusuario = musico.idmusico;"
@@ -89,33 +92,27 @@ onJqueryReady(function () {
 
                     if (!jsonEmpty(json)) {
 
-                        VToast.mostrarError("Ya has votado a este músico");
-                        return;
-                    } else {
-                        VToast.log("Se puede votar a " + nombre);
-
                         callAjaxBBDD({
 
-                            action: "Insert",
-                            tabla: "votacionmusico",
-                            data: {
-                                idmusico: usuarioId,
-                                idfan: Usuario.id
-                            }
+                            action: "RawQueryRet",
+                            query: `DELETE FROM votacionmusico where idfan = ${Usuario.id} and idmusico = ${usuarioId}`
                         }, function (json) {
 
-//                            VToast.logS("Like");
+                            if (success(json)) {
+                                $(musicoFooter).find(".musicoVoteBtn").prop("src", "img/btn_vote.png");
+                            }
+                        });
+                    } else {
+                        callAjaxBBDD({
+
+                            action: "RawQueryRet",
+                            query: `INSERT INTO votacionmusico VALUES(${usuarioId}, ${Usuario.id})`
+                        }, function (json) {
 
                             if (success(json)) {
                                 VToast.log("Liked " + nombre);
                                 $(musicoFooter).find(".musicoVoteBtn").prop("src", "img/btn_liked.png");
-                            } else {
-                                VToast.log("Error al darle like a " + nombre);
                             }
-
-                            VToast.log(json);
-
-//                            VToast.logF("Like");
                         });
                     }
                 });
@@ -131,8 +128,6 @@ onJqueryReady(function () {
                 $(musicoBody).find(".musicoBodyOver").stop().animate({opacity: 0}, 200);
                 $(musicoBody).find(".musicoBodyOver").removeClass("fade-in-musico");
                 $(musicoBody).find(".musicoAlbumArtImg").removeClass("zoomMusicoIn").addClass("zoomMusicoOut");
-
-//                $(musicoBody).find(".musicoBodyOver").removeClass("musicoBodyOver_fadeIn").addClass("musicoBodyOver_fadeOut");
             });
 
             $("#divMusicosFan").append(div);
@@ -143,4 +138,126 @@ onJqueryReady(function () {
             }, 20);
         });
     });
-});
+}
+
+function cargarConciertos() {
+    callAjaxBBDD({
+        action: "RawQuery",
+        query: "SELECT concierto.idconcierto, concierto.fecha, usuario.usuario, usuario.nombre, genero.nombre as generoNombre FROM concierto INNER JOIN local on concierto.idlocal = local.idlocal INNER JOIN usuario on usuario.idusuario = concierto.idlocal INNER JOIN genero on genero.idgenero = concierto.genero;"
+    }, function (result) {
+
+        $("#divConciertosFan").empty();
+
+        $.each(result, function (i, item) {
+
+            var div = $("<div>").addClass("conciertoContainer");
+
+            var conciertoBody = $("<div>").addClass("conciertoBody clickableElement");
+            var conciertoFooter = $("<div>").addClass("conciertoFooter");
+
+            $(conciertoBody).append($("<div>").addClass("conciertoAlbumArtContainer"));
+            $(conciertoBody).append("<div class='conciertoBodyOver'>");
+
+            $(conciertoFooter).append($("<div>").addClass("conciertoInfo"));
+
+            $(div).append(conciertoBody);
+            $(div).append(conciertoFooter);
+
+            var usuario = item.usuario;
+            var nombre = item.nombre;
+            var fecha = item.fecha;
+            var genero = item.generoNombre;
+            var conciertoId = item.idconcierto;
+
+            var nombreLocalDiv = $("<div>").addClass("blockDiv");
+            var nombreLocalLang = $("<label lang='es' data-lang-token='Concierto_Info_Usuario'></>")
+                    .addClass("musicoInfoTexto").text("Nombre local: ");
+            var nombreLocalReal = $("<label>").addClass("musicoInfoTexto").text(usuario);
+
+            $(nombreLocalDiv).append(nombreLocalLang).append(nombreLocalReal);
+
+            var fechaDiv = $("<div>").addClass("blockDiv");
+            var fechaLang = $("<label lang='es' data-lang-token='Concierto_Info_Fecha'></>")
+                    .addClass("musicoInfoTexto").text("Fecha : ");
+            var fechaReal = $("<label>").addClass("musicoInfoTexto ").text(fecha);
+            $(fechaDiv).append(fechaLang).append(fechaReal);
+
+            var generoDiv = $("<div>").addClass("blockDiv");
+            var generoLang = $("<label lang='es' data-lang-token='Concierto_Info_Genero'></>")
+                    .addClass("musicoInfoTexto").text("Género : ");
+            var generoReal = $("<label>").addClass("musicoInfoTexto ").text(genero);
+            $(generoDiv).append(generoLang).append(generoReal);
+
+            $(conciertoBody).append(nombreLocalDiv);
+            $(conciertoBody).append(fechaDiv);
+            $(conciertoBody).append(generoDiv);
+
+            $(conciertoFooter).append($("<div>").addClass("conciertoVoteContainer clickableElement"));
+
+            $(conciertoFooter).find(".conciertoVoteContainer").append("<img>");
+            $(conciertoFooter).find("img").addClass("conciertoVoteBtn").prop("src", "img/btn_vote.png");
+
+            callAjaxBBDD(
+                    {
+                        action: "RawQueryRet", query: `select * from votacionconcierto where idfan = ${Usuario.id} and idconcierto = ${conciertoId} `
+                    }, function (json) {
+
+                if (!jsonEmpty(json.data)) {
+                    $(conciertoFooter).find(".conciertoVoteBtn").prop("src", "img/btn_liked.png");
+                }
+            });
+
+            $(conciertoFooter).find(".conciertoVoteContainer").unbind("click").bind("click", function () {
+
+                callAjaxBBDD(
+                        {
+                            action: "RawQueryRet", query: `select * from votacionconcierto where idfan = ${Usuario.id} and idconcierto = ${conciertoId} `
+                        }, function (json) {
+
+                    if (!jsonEmpty(json.data)) {
+
+                        callAjaxBBDD({
+
+                            action: "RawQueryRet",
+                            query: `DELETE FROM votacionconcierto where idfan = ${Usuario.id} and idconcierto = ${conciertoId} `
+                        }, function (json) {
+
+                            if (success(json)) {
+                                $(conciertoFooter).find(".conciertoVoteBtn").prop("src", "img/btn_vote.png");
+                            }
+                        });
+                    } else {
+                        VToast.log("Se puede votar al concierto del local -> " + nombre);
+
+                        callAjaxBBDD({
+
+                            action: "RawQueryRet",
+                            query: `INSERT INTO votacionconcierto VALUES(${conciertoId}, ${Usuario.id})`
+                        }, function (json) {
+
+//                            VToast.logS("Like");
+                            console.log(json);
+                            if (success(json)) {
+                                VToast.log("Liked " + nombre);
+                                $(conciertoFooter).find(".conciertoVoteBtn").prop("src", "img/btn_liked.png");
+                            } else {
+                                VToast.log("Error al darle like a " + nombre);
+                            }
+
+                            VToast.log(json);
+
+//                            VToast.logF("Like");
+                        });
+                    }
+                });
+            });
+
+            $("#divConciertosFan").append(div);
+            $(div).addClass("musicoAnimIn");
+            setTimeout(function () {
+
+                $(div).addClass("musicoAnimIn2");
+            }, 20);
+        });
+    });
+}
