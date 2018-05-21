@@ -117,10 +117,7 @@ function isFunctionDefined(func) {
 }
 
 function jsonEmpty(json) {
-    if (jQuery.isEmptyObject(json))
-    {
-        return true;
-    }
-    return false;
+    
+    return $.isEmptyObject(json);
 }
 
