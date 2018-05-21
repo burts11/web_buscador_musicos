@@ -29,7 +29,7 @@ onJqueryWindowCallbackEventOne(VInfo.LOGIN_INFO, {
                 VToast.mostrarError("Debes escribir un usuario y una contraseña!");
                 return;
             }
-            
+
             var user = $("#input_username").val();
             var pass = $("#input_userpass").val();
 
@@ -40,8 +40,10 @@ onJqueryWindowCallbackEventOne(VInfo.LOGIN_INFO, {
                     Main.comprobarUsuarioLogueado();
                 },
                 error: function (json) {
-
+                    VLog.logS("Login Error");
+                    VLog.log(json);
                     VToast.mostrarError("El nombre de usuario o la contraseña es incorrecta!");
+                    VLog.logF("Login Error");
                 }
             });
         }
