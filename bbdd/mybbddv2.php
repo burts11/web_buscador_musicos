@@ -3,22 +3,9 @@
 $lastQueryCount = 0;
 $lastQueryInfo = "";
 $lastQueryError = "";
+$lastQuery = "";
 
-if (is_ajax()) {
-    if (isset($_POST["action"]) && !empty($_POST["action"])) {
-        $action = $_POST["action"];
-        onAction($action);
-    } else {
-        $result = Array(
-            "resultado" => "Error",
-            "mensaje" => "Action está vacía"
-        );
-
-        echo jsonEncode($result);
-    }
-}
-
-function onAction($action) {
+function onAction2($action) {
 
     switch ($action) {
 
@@ -62,12 +49,18 @@ function rawQuery($query) {
 
     $c = bbdd_conectar();
     $result = mysqli_query($c, $query);
+    $GLOBALS['lastQuery'] = $query;
 
     if (mysqli_affected_rows($c) >= 1) {
 
-        $resultRet = mysqli_fetch_all($result, MYSQLI_ASSOC);
         $GLOBALS['lastQueryCount'] = 1;
         $GLOBALS['lastQueryInfo'] = mysqli_info($c);
+
+        if (!is_bool($result)) {
+            $resultRet = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        } else {
+            $resultRet = array();
+        }
     } else {
         $resultRet = array();
         $GLOBALS['lastQueryCount'] = 0;
@@ -83,6 +76,7 @@ function rawQuery($query) {
 function rawQueryOneRow($query) {
     $c = bbdd_conectar();
     $result = mysqli_query($c, $query);
+    $GLOBALS['lastQuery'] = $query;
 
     if (mysqli_affected_rows($c) >= 1) {
 
@@ -90,7 +84,7 @@ function rawQueryOneRow($query) {
         $GLOBALS['lastQueryCount'] = 1;
         $GLOBALS['lastQueryInfo'] = mysqli_info($c);
     } else {
-        $resultRet = array();
+        $resultRet = null;
         $GLOBALS['lastQueryCount'] = 0;
         $GLOBALS['lastQueryInfo'] = mysqli_info($c);
         $GLOBALS['lastQueryError'] = mysqli_error($c);
@@ -107,10 +101,12 @@ function rawQueryOneField($query) {
     $field = getStringBetween($query, '[', ']');
     $finalQuery = str_replace(Array("[", "]"), Array('', ''), $query);
     $result = mysqli_query($c, $finalQuery);
-
+    $GLOBALS['lastQuery'] = $finalQuery;
+    
     if (mysqli_affected_rows($c) >= 1) {
 
         $resultRet = mysqli_fetch_assoc($result);
+
         $GLOBALS['lastQueryCount'] = 1;
         $GLOBALS['lastQueryInfo'] = mysqli_info($c);
         bbdd_desconectar($c);
@@ -130,6 +126,11 @@ function getStringBetween($str, $from, $to) {
     return substr($sub, 0, strpos($sub, $to));
 }
 
+function getLastQuery() {
+
+    return $GLOBALS['lastQuery'];
+}
+
 function getQueryLastError() {
 
     return $GLOBALS["lastQueryError"];
@@ -143,17 +144,20 @@ function querySucceeded() {
     return $GLOBALS['lastQueryCount'] >= 1;
 }
 
-function jsonEncode($array) {
-
-    return json_encode($array);
-}
-
-function is_ajax() {
-    return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
-}
+//function jsonEncode($array) {
+//
+//    return json_encode($array);
+//}
+//
+//function is_ajax() {
+//    return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
+//}
 
 function bbdd_conectar() {
-    $conexion = mysqli_connect("localhost", "root", "", "proyecto");
+    $conexion = mysqli_connect("localhost", "root", "", "dam1tgrupo4_proyecto");
+    $GLOBALS['lastQueryCount'] = 0;
+    mysqli_set_charset($conexion, "utf8");
+
     if (!$conexion) {
         die("No se ha podido establecer la conexión con el servidor");
     }
