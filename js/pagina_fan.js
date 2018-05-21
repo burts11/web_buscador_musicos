@@ -3,13 +3,13 @@ cargarConciertos();
 
 function cargarMusicos() {
     callAjaxBBDD({
-        action: "RawQuery",
+        action: "RawQueryRet",
         query: "SELECT * FROM usuario INNER JOIN musico ON usuario.idusuario = musico.idmusico;"
     }, function (result) {
 
         $("#divMusicosFan").empty();
 
-        $.each(result, function (i, item) {
+        $.each(result.data, function (i, item) {
 
             var usuario = item;
             var usuarioId = usuario["idusuario"];
@@ -87,16 +87,18 @@ function cargarMusicos() {
 
                 callAjaxBBDD(
                         {
-                            action: "RawQueryOne", query: `select * from votacionmusico where idfan = ${Usuario.id} and idmusico = ${usuario["idusuario"]} `
+                            action: "RawQueryRet", query: `select * from votacionmusico where idfan = ${Usuario.id} and idmusico = ${usuario["idusuario"]} `
                         }, function (json) {
 
-                    if (!jsonEmpty(json)) {
+                    if (!jsonEmpty(json.data)) {
 
                         callAjaxBBDD({
 
                             action: "RawQueryRet",
                             query: `DELETE FROM votacionmusico where idfan = ${Usuario.id} and idmusico = ${usuarioId}`
                         }, function (json) {
+
+                            VToast.log("Unliked " + nombre);
 
                             if (success(json)) {
                                 $(musicoFooter).find(".musicoVoteBtn").prop("src", "img/btn_vote.png");
@@ -142,13 +144,13 @@ function cargarMusicos() {
 
 function cargarConciertos() {
     callAjaxBBDD({
-        action: "RawQuery",
+        action: "RawQueryRet",
         query: "SELECT concierto.idconcierto, concierto.fecha, usuario.usuario, usuario.nombre, genero.nombre as generoNombre FROM concierto INNER JOIN local on concierto.idlocal = local.idlocal INNER JOIN usuario on usuario.idusuario = concierto.idlocal INNER JOIN genero on genero.idgenero = concierto.genero;"
     }, function (result) {
 
         $("#divConciertosFan").empty();
 
-        $.each(result, function (i, item) {
+        $.each(result.data, function (i, item) {
 
             var div = $("<div>").addClass("conciertoContainer");
 
@@ -213,7 +215,6 @@ function cargarConciertos() {
                         {
                             action: "RawQueryRet", query: `select * from votacionconcierto where idfan = ${Usuario.id} and idconcierto = ${conciertoId} `
                         }, function (json) {
-
                     if (!jsonEmpty(json.data)) {
 
                         callAjaxBBDD({
@@ -222,12 +223,12 @@ function cargarConciertos() {
                             query: `DELETE FROM votacionconcierto where idfan = ${Usuario.id} and idconcierto = ${conciertoId} `
                         }, function (json) {
 
+                            VToast.log("Unliked " + nombre);
                             if (success(json)) {
                                 $(conciertoFooter).find(".conciertoVoteBtn").prop("src", "img/btn_vote.png");
                             }
                         });
                     } else {
-                        VToast.log("Se puede votar al concierto del local -> " + nombre);
 
                         callAjaxBBDD({
 
@@ -235,18 +236,12 @@ function cargarConciertos() {
                             query: `INSERT INTO votacionconcierto VALUES(${conciertoId}, ${Usuario.id})`
                         }, function (json) {
 
-//                            VToast.logS("Like");
-                            console.log(json);
                             if (success(json)) {
                                 VToast.log("Liked " + nombre);
                                 $(conciertoFooter).find(".conciertoVoteBtn").prop("src", "img/btn_liked.png");
                             } else {
                                 VToast.log("Error al darle like a " + nombre);
                             }
-
-                            VToast.log(json);
-
-//                            VToast.logF("Like");
                         });
                     }
                 });
