@@ -5,20 +5,20 @@
     </head>
     <body>
         <form action="" id="formConciertoLocal">
-            
+
             <div id="registroConcierto">
-                Fecha del concierto: <input type="date" id="fechaLocal" name="fechaLocal"> <br>
-                Hora del concierto: <input type="time" id="horaLocal" name="horaLocal"> <br>
-                Genero: <select id="generos">
+                <p> Fecha del concierto: <input type="date" id="fechaLocal"class="form-control-textfield-black" name="fechaLocal"> </p>
+                <p> Hora del concierto: <input type="time" id="horaLocal" class="form-control-textfield-black" name="horaLocal"></p>
+                <p>   Genero: <select id="generos">
 
-                </select><br>
-                Valor economico: <input type="number" id="economicoLocal" name="economicoLocal"><br>
-                Municipio: <select id="municipios">
+                    </select></p>
+                <p>   Valor economico: <input type="number" id="economicoLocal" class="form-control-textfield-black" name="economicoLocal"></p>
+                <p>  Municipio: <select id="municipios"></p>
 
-                </select><br>
+                </select>
             </div>
             <br>
-            <button type="button" class="form-control-btn" id="nuevoConcierto">AÑADIR</button>
+            <button type="button" class="form-control-btn" id="nuevoConcierto">Añadir</button>
         </form>
         <script>
 
@@ -30,31 +30,31 @@
 
                 }
             });
-              var selectGeneros = `select * from genero`;
-                var params = {
-                    action: "RawQueryRet",
-                    query: selectGeneros};
-                callAjaxBBDD(params, function (result) {
-                    $.each(result.data, function (i, item) {
-                        var nombre = item.nombre;
-                        var option = $("<option>" + nombre + "</option>");
-                        $(option).attr("data-generoId", item.idgenero);
-                        $("#generos").append(option);
-                    });
+            var selectGeneros = `select * from genero`;
+            var params = {
+                action: "RawQueryRet",
+                query: selectGeneros};
+            callAjaxBBDD(params, function (result) {
+                $.each(result.data, function (i, item) {
+                    var nombre = item.nombre;
+                    var option = $("<option>" + nombre + "</option>");
+                    $(option).attr("data-generoId", item.idgenero);
+                    $("#generos").append(option);
                 });
+            });
 
-                var selectMunicipios = `select idciudad,munucipio from comunidades limit 100`
-                var params = {
-                    action: "RawQueryRet",
-                    query: selectMunicipios};
-                callAjaxBBDD(params, function (result) {
-                    $.each(result.data, function (i, item) {
-                        var nombre = item.munucipio;
-                        var option = $("<option>" + nombre + "</option>");
-                        $(option).attr("data-idciudad", item.idciudad);
-                        $("#municipios").append(option);
-                    });
+            var selectMunicipios = `select idciudad,munucipio from comunidades limit 100`
+            var params = {
+                action: "RawQueryRet",
+                query: selectMunicipios};
+            callAjaxBBDD(params, function (result) {
+                $.each(result.data, function (i, item) {
+                    var nombre = item.munucipio;
+                    var option = $("<option>" + nombre + "</option>");
+                    $(option).attr("data-idciudad", item.idciudad);
+                    $("#municipios").append(option);
                 });
+            });
             $("#nuevoConcierto").click(insertConcierto);
             function insertConcierto() {
                 var fecha = $("#fechaLocal").val();
