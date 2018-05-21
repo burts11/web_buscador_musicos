@@ -2,17 +2,18 @@
 
 require_once 'MysqliDb.php';
 require_once 'util.php';
+require_once 'mybbddv2.php';
 
-function bbdd_inicializar() {
-    $db = new MysqliDb('localhost', 'root', '', 'dam1tgrupo4_proyecto');
-    return $db;
-}
+//function bbdd_inicializar() {
+//    $db = new MysqliDb('localhost', 'root', '', 'dam1tgrupo4_proyecto');
+//    return $db;
+//}
 
 if (is_ajax()) {
     if (isset($_POST["action"]) && !empty($_POST["action"])) {
         $action = $_POST["action"];
         onAction($action);
-    } else {    
+    } else {
         $result = Array(
             "resultado" => "Error",
             "mensaje" => "Action está vacía"
@@ -24,8 +25,8 @@ if (is_ajax()) {
 
 function onAction($action) {
 
-    bbdd_inicializar();
-    $dataBase = MysqliDb::getInstance();
+//    bbdd_inicializar();
+//    $dataBase = MysqliDb::getInstance();
 
     switch ($action) {
 
@@ -42,13 +43,13 @@ function onAction($action) {
 
             $passCifrada = password_hash($pass, PASSWORD_DEFAULT);
 
-            $dataBase->rawQuery("INSERT INTO usuario values (default,'$nombre','$email','$usuario','$passCifrada',$tipo,'$ciudad')");
+            rawQuery("INSERT INTO usuario values (default,'$nombre','$email','$usuario','$passCifrada',$tipo,'$ciudad')");
 
-            if ($dataBase->querySucceeded()) {
-                $id = $dataBase->rawQueryValue("select idusuario from usuario where usuario = '$usuario' limit 1");
-                if ($dataBase->querySucceeded()) {
-                    $dataBase->rawQuery("INSERT INTO fan values ('$id','$apellidos','$telefono','$direccion','')");
-                    if ($dataBase->querySucceeded()) {
+            if (querySucceeded()) {
+                $id = rawQueryOneField("select [idusuario] from usuario where usuario = '$usuario' limit 1");
+                if (querySucceeded()) {
+                    rawQuery("INSERT INTO fan values ('$id','$apellidos','$telefono','$direccion','')");
+                    if (querySucceeded()) {
                         $result = Array(
                             "resultado" => "Success",
                             "mensaje" => "Se ha registrado al fan '$usuario' correctamente!"
@@ -56,14 +57,14 @@ function onAction($action) {
                     } else {
                         $result = Array(
                             "resultado" => "error",
-                            "mensaje" => $dataBase->getLastError()
+                            "mensaje" => getQueryLastError()
                         );
                     }
                 }
             } else {
                 $result = Array(
                     "resultado" => "error",
-                    "mensaje" => $dataBase->getLastError()
+                    "mensaje" => getQueryLastError()
                 );
             }
             echo jsonEncode($result);
@@ -80,12 +81,12 @@ function onAction($action) {
 
             $passCifrada = password_hash($pass, PASSWORD_DEFAULT);
 
-            $dataBase->rawQuery("INSERT INTO usuario values (default,'$nombre','$email','$usuario','$passCifrada','$tipo','$ciudad')");
-            if ($dataBase->querySucceeded()) {
-                $id = $dataBase->rawQueryValue("select idusuario from usuario where usuario = '$usuario' limit 1");
-                if ($dataBase->querySucceeded()) {
-                    $dataBase->rawQuery("INSERT INTO local values ('$id','$ubicacion','$aforo','')");
-                    if ($dataBase->querySucceeded()) {
+            rawQuery("INSERT INTO usuario values (default,'$nombre','$email','$usuario','$passCifrada','$tipo','$ciudad')");
+            if (querySucceeded()) {
+                $id = rawQueryOneField("select [idusuario] from usuario where usuario = '$usuario' limit 1");
+                if (querySucceeded()) {
+                    rawQuery("INSERT INTO local values ('$id','$ubicacion','$aforo','')");
+                    if (querySucceeded()) {
                         $result = Array(
                             "resultado" => "Success",
                             "mensaje" => "Se ha registrado al local '$usuario' correctamente!"
@@ -93,14 +94,14 @@ function onAction($action) {
                     } else {
                         $result = Array(
                             "resultado" => "error",
-                            "mensaje" => $dataBase->getLastError()
+                            "mensaje" => getQueryLastError()
                         );
                     }
                 }
             } else {
                 $result = Array(
                     "resultado" => "error",
-                    "mensaje" => $dataBase->getLastError()
+                    "mensaje" => getQueryLastError()
                 );
             }
             echo jsonEncode($result);
@@ -121,12 +122,13 @@ function onAction($action) {
 
             $passCifrada = password_hash($pass, PASSWORD_DEFAULT);
 
-            $dataBase->rawQuery("INSERT INTO usuario values (default,'$nombre','$email','$usuario','$passCifrada','$tipo','$ciudad')");
-            if ($dataBase->querySucceeded()) {
-                $id = $dataBase->rawQueryValue("select idusuario from usuario where usuario = '$usuario' limit 1");
-                if ($dataBase->querySucceeded()) {
-                    $dataBase->rawQuery("INSERT INTO musico values ('$id','$apellidos','$telefono','$web','$nombreartistico','$componentes','$generoid')");
-                    if ($dataBase->querySucceeded()) {
+            rawQuery("INSERT INTO usuario values (default,'$nombre','$email','$usuario','$passCifrada','$tipo','$ciudad')");
+            if (querySucceeded()) {
+                $id = rawQueryOneField("select [idusuario] from usuario where usuario = '$usuario' limit 1");
+
+                if (querySucceeded()) {
+                    rawQuery("INSERT INTO musico values ('$id','$apellidos','$telefono','$web','$nombreartistico','$componentes','$generoid')");
+                    if (querySucceeded()) {
                         $result = Array(
                             "resultado" => "Success",
                             "mensaje" => "Se ha registrado al músico '$usuario' correctamente!"
@@ -134,14 +136,14 @@ function onAction($action) {
                     } else {
                         $result = Array(
                             "resultado" => "error",
-                            "mensaje" => $dataBase->getLastError()
+                            "mensaje" => getQueryLastError()
                         );
                     }
                 }
             } else {
                 $result = Array(
                     "resultado" => "error",
-                    "mensaje" => $dataBase->getLastError()
+                    "mensaje" => getQueryLastError()
                 );
             }
             echo jsonEncode($result);
@@ -155,7 +157,7 @@ function onAction($action) {
             $query = $_POST["query"];
 
             try {
-                $result = $dataBase->rawQuery($query);
+                $resultQuery = rawQuery($query);
 
 //                echo "<p><- Filas afectadas -></p>";
 //                echo "<p><Count -> " . $dataBase->count . "</p>";
@@ -165,16 +167,16 @@ function onAction($action) {
 //                print_array($result);
 //                echo "<p><- Resultado -/></p>";
 
-                if ($dataBase->querySucceeded()) {
+                if (querySucceeded()) {
 
                     $result = Array(
                         "resultado" => "Success",
-                        "data" => $result,
+                        "data" => $resultQuery,
                         "action" => "RawQueryRet",
-                        "lastQuery" => $dataBase->getLastQuery(),
+                        "lastQuery" => getLastQuery(),
                         "mensaje" => "El query ha sido ejecutado con éxito!",
                         "queryStr" => $query,
-                        "queryInfo" => $dataBase->mysqli()->info
+                        "queryInfo" => getQueryInfo()
                     );
 
                     echo jsonEncode($result);
@@ -182,10 +184,10 @@ function onAction($action) {
                     $result = Array(
                         "resultado" => "Error",
                         "action" => "RawQueryRet",
-                        "lastQuery" => $dataBase->getLastQuery(),
-                        "mensaje" => $dataBase->getLastError(),
+                        "lastQuery" => getLastQuery(),
+                        "mensaje" => getQueryLastError(),
                         "queryStr" => $query,
-                        "queryInfo" => $dataBase->mysqli()->info
+                        "queryInfo" => getQueryInfo()
                     );
                     echo jsonEncode($result);
                 }
@@ -194,10 +196,10 @@ function onAction($action) {
                 $result = Array(
                     "resultado" => "Error",
                     "action" => "RawQueryRet",
-                    "lastQuery" => $dataBase->getLastQuery(),
-                    "mensaje" => $dataBase->getLastError(),
+                    "lastQuery" => getLastQuery(),
+                    "mensaje" => getQueryLastError(),
                     "queryStr" => $query,
-                    "queryInfo" => $dataBase->mysqli()->info
+                    "queryInfo" => getQueryInfo()
                 );
                 echo jsonEncode($result);
             }
@@ -251,8 +253,8 @@ function onAction($action) {
                 $result = Array(
                     "resultado" => "error",
                     "action" => "RawQuery",
-                    "lastQuery" => $dataBase->getLastQuery(),
-                    "mensaje" => $dataBase->getLastError()
+                    "lastQuery" => getLastQuery(),
+                    "mensaje" => getQueryLastError()
                 );
 
                 echo jsonEncode($result);
@@ -262,14 +264,14 @@ function onAction($action) {
             $query = $_POST["query"];
 
             try {
-                $array = $dataBase->rawQueryOne($query);
+                $array = rawQueryOneRow($query);
                 echo jsonEncode($array);
             } catch (Exception $e) {
 
                 $result = Array(
                     "resultado" => "error",
                     "action" => "RawQueryOne",
-                    "mensaje" => $dataBase->getLastError()
+                    "mensaje" => getQueryLastError()
                 );
 
                 echo jsonEncode($result);
@@ -309,15 +311,19 @@ function onAction($action) {
             $numerocomponentes = $_POST["numerocomponentes"];
             $ciudad = $_POST["ciudad"];
 
-            $resultado = $dataBase->rawQuery("INSERT INTO usuario VALUES (default, '$nombre','$email','$usuario','$pass','$tipo', '$ciudad')");
+//            $resultado = $dataBase->rawQuery("INSERT INTO usuario VALUES (default, '$nombre','$email','$usuario','$pass','$tipo', '$ciudad')");
+            $resultado = rawQuery("INSERT INTO usuario VALUES (default, '$nombre','$email','$usuario','$pass','$tipo', '$ciudad')");
 
-            if ($dataBase->querySucceeded()) {
+            if (querySucceeded()) {
 
-                $idGenero = $dataBase->rawQueryValue("select idgenero from genero where nombre = '$genero' limit 1");
-                $idUsuario = $dataBase->rawQueryValue("Select idusuario from usuario where usuario = '$usuario' limit 1");
-                $resultInsertMusico = $dataBase->rawQuery("INSERT INTO musico VALUES ('$idUsuario','$genero','$apellidos','$telefono','$web','$nombreartistico','$numerocomponentes', '$idGenero')");
+                $idGenero = rawQueryOneField("select [idgenero] from genero where nombre = '$genero' limit 1");
+                $idUsuario = rawQueryOneField("Select [idusuario] from usuario where usuario = '$usuario' limit 1");
 
-                if ($dataBase->querySucceeded()) {
+//                $idGenero = $dataBase->rawQueryValue("select idgenero from genero where nombre = '$genero' limit 1");
+//                $idUsuario = $dataBase->rawQueryValue("Select idusuario from usuario where usuario = '$usuario' limit 1");
+                $resultInsertMusico = rawQuery("INSERT INTO musico VALUES ('$idUsuario','$genero','$apellidos','$telefono','$web','$nombreartistico','$numerocomponentes', '$idGenero')");
+
+                if (querySucceeded()) {
 
                     $result = Array(
                         "resultado" => "Success",
@@ -328,7 +334,7 @@ function onAction($action) {
 
                 $result = Array(
                     "resultado" => "Error",
-                    "mensaje" => $dataBase->getLastError()
+                    "mensaje" => getQueryLastError()
                 );
             }
 
@@ -377,14 +383,13 @@ function onAction($action) {
             $dataBase->where("usuario", $user);
             if ($dataBase->has("usuario")) {
 
-                $passCifrada = $dataBase->rawQueryValue("select pass from usuario where usuario = '$user' limit 1");
+                $passCifrada = rawQueryOneField("select [pass] from usuario where usuario = '$user'");
 
                 if (password_verify($pass, $passCifrada)) {
-
-                    $userMatriz = $dataBase->rawQueryOne("SELECT CASE WHEN tipo = 0 THEN 'Administrador'
+                    $userMatriz = rawQueryOneRow("SELECT CASE WHEN tipo = 0 THEN 'Administrador'
                 WHEN tipo = 1 THEN 'Musico'
                 WHEN tipo = 2 THEN 'Local'
-                WHEN tipo = 3 THEN 'Fan' END as Privilegio, idusuario, nombre FROM usuario where usuario = ? AND pass = ?", Array($user, $passCifrada));
+                WHEN tipo = 3 THEN 'Fan' END as Privilegio, idusuario, nombre FROM usuario where usuario = '$user' AND pass = '$passCifrada'");
 
                     $privilegio = $userMatriz["Privilegio"];
 
