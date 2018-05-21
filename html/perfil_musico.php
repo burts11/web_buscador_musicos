@@ -129,20 +129,13 @@
                             query: query};
 
                         callAjaxBBDD(params, function (result) {
-                            if (successRowsMatched(result)) {
 
-                                params["query"] = `UPDATE musico set apellidos ='${apellidos}', nombreartistico ='${artistico}', telefono ='${telefono}', web ='${web}' WHERE idmusico='${Usuario.id}'`;
+                            params["query"] = `UPDATE musico set apellidos ='${apellidos}', nombreartistico ='${artistico}', telefono ='${telefono}', web ='${web}' WHERE idmusico='${Usuario.id}'`;
 
-                                callAjaxBBDD(params, function (result) {
+                            callAjaxBBDD(params, function (result) {
 
-                                    if (successRowsMatched(result)) {
-                                        VToast.mostrarMensaje("Perfil actualizado!");
-                                    } else
-                                    {
-                                        VToast.mostrarError("Error al actualizar el perfil");
-                                    }
-                                });
-                            }
+                                VToast.mostrarMensaje("Perfil actualizado!");
+                            });
 
                             return false;
                         });

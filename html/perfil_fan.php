@@ -135,22 +135,11 @@
                             query: query};
 
                         callAjaxBBDD(params, function (result) {
+                            params["query"] = `UPDATE fan set apellidos ='${apellidos}', direccion ='${direccion}', telefono ='${telefono}' WHERE idfan='${Usuario.id}'`;
 
-                            if (success(result) || successRowsMatched(result)) {
-
-                                params["query"] = `UPDATE fan set apellidos ='${apellidos}', direccion ='${direccion}', telefono ='${telefono}' WHERE idfan='${Usuario.id}'`;
-
-                                callAjaxBBDD(params, function (result) {
-
-                                    if (successRowsMatched(result)) {
-                                        VToast.mostrarMensaje("Perfil actualizado!");
-                                    } else {
-                                        VToast.mostrarError("Error al actualizar el perfil");
-                                        console.log(result);
-                                        console.log("not matched");
-                                    }
-                                });
-                            }
+                            callAjaxBBDD(params, function (result) {
+                                VToast.mostrarMensaje("Perfil actualizado!");
+                            });
                         });
                     }
 

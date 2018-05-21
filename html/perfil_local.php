@@ -115,21 +115,11 @@
 
                         callAjaxBBDD(params, function (result) {
 
-                            console.log(result);
-                            if (success(result) || successRowsMatched(result)) {
+                            params["query"] = `UPDATE local set ubicacion = '${ubicacion}', aforo ='${aforo}' WHERE idlocal='${Usuario.id}'`;
 
-                                params["query"] = `UPDATE local set ubicacion = '${ubicacion}', aforo ='${aforo}' WHERE idlocal='${Usuario.id}'`;
-
-                                callAjaxBBDD(params, function (result) {
-                                    if (successRowsMatched(result)) {
-                                        VToast.mostrarMensaje("Perfil actualizado!");
-                                    } else
-                                    {
-                                        VToast.mostrarError("Error al actualizar el perfil");
-                                    }
-                                });
-                            }
-
+                            callAjaxBBDD(params, function (result) {
+                                VToast.mostrarMensaje("Perfil actualizado!");
+                            });
                             return false;
                         });
 
