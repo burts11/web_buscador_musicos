@@ -15,7 +15,7 @@
     </style>
     <body>
         <div class="_childContainer divPadding10">
-            <button type="button" id="dialogoConciertos">añadee</button>
+            <p><button type="button" id="dialogoConciertos" class="form-control-btn">Añadir conciertos</button></p>
             <script>
 
                 $("#dialogoConciertos").click(function () {
