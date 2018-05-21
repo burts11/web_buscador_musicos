@@ -92,7 +92,6 @@ function cargarConciertos()
                 action: "RawQueryRet",
                 query: selectNovedades
             }, function (result) {
-
         $.each(result.data, function (i, item) {
 
             var usuario = item;
