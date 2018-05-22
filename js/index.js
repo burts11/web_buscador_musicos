@@ -81,26 +81,22 @@ var Main = {
                 break;
             case "Fan":
                 Main.agregarMenuBtn("pagina_fan", "menuBtnUserHome", "Inicio");
-//                cambiarPagina("pagina_fan");
                 cambiarHash("pagina_fan");
                 $("#menuBtnHome").show();
                 break;
             case "Musico":
                 Main.agregarMenuBtn("pagina_musico", "menuBtnUserHome", "Inicio");
-//                cambiarPagina("pagina_musico");
                 cambiarHash("pagina_musico");
                 $("#menuBtnHome").show();
                 break;
             case "Local":
                 Main.agregarMenuBtn("pagina_local", "menuBtnUserHome", "Inicio");
-//                cambiarPagina("pagina_local");
                 cambiarHash("pagina_local");
                 $("#menuBtnHome").show();
                 break;
             default:
 
                 $("#menuBtnHome").fadeOut();
-//                cambiarPagina("pagina_principal");
                 cambiarHash("pagina_principal");
                 break;
         }
@@ -211,7 +207,6 @@ onJqueryWindowCallbackEvent(VMessage.PAGINA_POPUP_MENU_ITEM_CLICKED, {
 
     callback: function (e) {
 
-        console.log(e);
         switch (e.json.id) {
             case "drop_idioma_es":
                 var img = $("#" + e.json.id + " > img").attr("src");
@@ -316,8 +311,6 @@ onJqueryReady(function () {
         });
     });
     
-    
-
     $("#_searchDiv").click(function () {
 
         VModal.show("buscar_modal", "#searchDiv", {

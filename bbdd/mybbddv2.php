@@ -154,7 +154,9 @@ function querySucceeded() {
 //}
 
 function bbdd_conectar() {
-    $conexion = mysqli_connect("localhost", "root", "", "dam1tgrupo4_proyecto");
+        $conexion = mysqli_connect("localhost", "root", "", "dam1tgrupo4_proyecto");
+
+//    $conexion = mysqli_connect("localhost", "grupo4", "grupo4", "dam1tgrupo4_proyecto");
     $GLOBALS['lastQueryCount'] = 0;
     mysqli_set_charset($conexion, "utf8");
 

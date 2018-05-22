@@ -246,7 +246,7 @@ function onAction($action) {
             $query = $_POST["query"];
 
             try {
-                $array = $dataBase->rawQuery($query);
+                $array = rawQuery($query);
                 echo jsonEncode($array);
             } catch (Exception $e) {
 
@@ -380,9 +380,9 @@ function onAction($action) {
             $user = $_POST["user"];
             $pass = $_POST["pass"];
 
-            $dataBase->where("usuario", $user);
-            if ($dataBase->has("usuario")) {
+            $usuarioNombre = rawQueryOneField("select [usuario] from usuario where usuario = '$user'");
 
+            if (querySucceeded()) {
                 $passCifrada = rawQueryOneField("select [pass] from usuario where usuario = '$user'");
 
                 if (password_verify($pass, $passCifrada)) {
@@ -409,8 +409,6 @@ function onAction($action) {
                         "pass" => $pass,
                         "privilegio" => $privilegio,
                     );
-                } else {
-                    $result = Array("resultado" => "Error", "mensaje" => "Wrong user/password");
                 }
             } else {
                 $result = Array("resultado" => "Error", "mensaje" => "Wrong user/password");
