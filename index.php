@@ -210,19 +210,5 @@ session_start();
         <script src="js/vpopupmenu.js" type="text/javascript"></script>
         <script src="js/index.js" type="text/javascript"></script>
         <!--<script src="js/pagina_principal.js" type="text/javascript"></script>-->
-        <script>
-            $("#euroBtn").click(function () {
-
-                VModal.show("euromillones", "#euroBtn", {modalEffect: "md-effect-10", VModalId: "euromillones_modal", FullSize: "true"}, {
-                    onDialogShow: function (ev) {
-
-                        console.log(ev);
-                        ev.vparams.onDialogContentLoaded();
-                    },
-                    onDialogClose: function (ev) {
-                    }
-                });
-            });
-        </script>
     </body>
 </html>
