@@ -40,7 +40,7 @@
         </div>
         <script>
 
-            $("#conciertos").empty();
+            
 
             var idlocal = Usuario.id;
             var query = `select concierto.idconcierto,usuario.nombre as Local,concierto.fecha,concierto.hora,genero.nombre as genero,concierto.estado,concierto.valoreconomico

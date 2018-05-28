@@ -2,15 +2,38 @@ iniciar();
 cargarLocales();
 cargarConciertos();
 cargarPorGeneros();
-
+masVotados();
 function iniciar() {
 
+    $("#pp_masVotados").empty();
     $("#pp_divGeneros").empty();
     $("#pp_divMusicos").empty();
     $("#pp_divLocales").empty();
     $(".slickConciertos").empty();
 }
 
+function masVotados() {
+    var query = `select usuario.usuario,musico.nombreartistico,genero.nombre,count(votacionmusico.idmusico) as votos from musico 
+join votacionmusico on votacionmusico.idmusico = musico.idmusico join usuario on musico.idmusico = usuario.idusuario join genero on musico.generoID = genero.idgenero  group by votacionmusico.idmusico order by votos desc limit 10`;
+
+    $("#pp_masVotados").append("<label class='blockLabel colorPrimary padding10' style='margin-left: 0.5em'>Musicos mas votados</label>");
+
+    callAjaxBBDD(
+            {
+                action: "RawQueryRet",
+                query: query
+            }, function (result) {
+
+        $.each(result.data, function (i, item) {
+            var template = "<div class='votosWrapperContainer'>";
+            template += "<div class='votosWrapperImage'> <img class='votosImage' src='" + Main.obtenerUserDataPath(item.usuario) + "img/album_art.jpg" + "' > </div>";
+            template += `<div class='votosWrapperInfo'> <label class='blockLabel colorPrimary'>${item.nombreartistico}</label><label class='blockLabel colorPrimary'>Genero: ${item.nombre}</label><label class=''>Numero de votos: ${item.votos}</label></div>`;
+            template += "</div>";
+
+            $("#pp_masVotados").append(template);
+        });
+    });
+}
 function cargarPorGeneros() {
 
     var selectGeneros = 'SELECT musico.idmusico, musico.generoId, genero.nombre, musico.nombreartistico from musico inner join genero on genero.idgenero = musico.generoId order by genero.nombre;';

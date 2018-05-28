@@ -159,6 +159,40 @@
             text-align: center;
             background-color: rgba(0,0,0,0.2);
         }
+        .votosWrapperContainer{
+
+            position: relative;
+            display: inline-block;
+            width: 20em;
+            height: 14em;
+            border-radius: 2px;
+            /*box-shadow: 0 0px 10px rgba(36,37,38,0.2);*/
+            /*background-color: rgba(0,0,0,0.6);*/
+            padding: 0.5em;
+        }
+
+        .votosWrapperImage{
+
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            height: 68%;
+            overflow: hidden;
+        }
+
+        .votosImage{
+            width: 100%;
+            height: 100%;
+        }
+
+        .votosWrapperInfo{
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            height: 32%;
+            text-align: center;
+            background-color: rgba(0,0,0,0.2);
+        }
 
         .musicoGeneroWrapperContainer {
 
@@ -195,12 +229,19 @@
 
             margin-left: 1em;
         }
+        #pp_masVotados {
+            color:white;
+        }
     </style>
     <body>
         <div class="_childContainer">
             <div class="divConciertosContainer centeredElementHorizontal">
                 <div class="slickConciertos" id="divConciertosNovedad">
                 </div> 
+            </div>
+            <div id="pp_masVotados">
+                
+                
             </div>
             <div id="pp_divLocales">
             </div>
