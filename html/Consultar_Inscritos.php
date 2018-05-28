@@ -19,6 +19,8 @@ and open the template in the editor.
     </style>
     <body>
         <h3>Inscritos en este concierto</h3>
+        <h4 id="msg">No hay ningun musico inscrito</h4>
+
 
         <div id="musicos"></div>
 
@@ -28,7 +30,7 @@ and open the template in the editor.
         onJqueryWindowCallbackEventOne(VInfo.CONSULTAR, {
 
             callback: function (e) {
-
+ $("#msg").hide();
                 var idconcierto = e.json.vparams.idconcierto;
                 var query = `select usuario.idusuario,usuario.nombre,comunidades.provincia,comunidades.munucipio from inscripcion 
 join concierto on inscripcion.idconcierto = concierto.idconcierto 
@@ -40,6 +42,7 @@ where inscripcion.idconcierto =${idconcierto}`;
                     query: query};
                 callAjaxBBDD(params, function (result) {
                     console.log(result);
+                   
                     $.each(result.data, function (i, item) {
                         var aceptar = $("<button type='button' class='form-control-btn'>ACEPTAR</button>");
                         var divpadre = $("<div></div>");
@@ -64,15 +67,15 @@ where inscripcion.idconcierto =${idconcierto}`;
                                 callAjaxBBDD(params, function (result) {
                                     var query = `update concierto set estado = 1,idmusico = ${item.idusuario} where idconcierto = ${idconcierto}`;
                                     var params = {
-                                    action: "RawQueryRet",
-                                    query: query};
-                                callAjaxBBDD(params, function (result) {
-                                    console.log(result);
-                                    VToast.mostrarMensaje("Musico aceptado");
-                                    console.log(result);
-                                    
-                                    e.json.vparams.close();
-                                });
+                                        action: "RawQueryRet",
+                                        query: query};
+                                    callAjaxBBDD(params, function (result) {
+                                        console.log(result);
+                                        VToast.mostrarMensaje("Musico aceptado");
+                                        console.log(result);
+
+                                        e.json.vparams.close();
+                                    });
                                 });
                             });
                         });
