@@ -121,6 +121,17 @@ input:-webkit-autofill {
     height: auto;
 }
 
+.divBorderRadiusOrange {
+
+    display: inline-block;
+    margin-right: 20px;
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 20px;
+    border: 2px solid #ff8952;
+    background-color: rgba(0,0,0,0.1);
+} 
+
 .md-modal-full-size{
 
     width: auto !important;
