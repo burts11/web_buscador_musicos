@@ -28,6 +28,7 @@ function onAction2($action) {
                 $result = Array(
                     "resultado" => "Error",
                     "action" => "RawQueryRet",
+                    "data" => $resultRet,
                     "lastQuery" => $query,
                     "mensaje" => getQueryLastError(),
                     "queryStr" => $query,
@@ -102,7 +103,7 @@ function rawQueryOneField($query) {
     $finalQuery = str_replace(Array("[", "]"), Array('', ''), $query);
     $result = mysqli_query($c, $finalQuery);
     $GLOBALS['lastQuery'] = $finalQuery;
-    
+
     if (mysqli_affected_rows($c) >= 1) {
 
         $resultRet = mysqli_fetch_assoc($result);
@@ -154,7 +155,7 @@ function querySucceeded() {
 //}
 
 function bbdd_conectar() {
-        $conexion = mysqli_connect("localhost", "root", "", "dam1tgrupo4_proyecto");
+    $conexion = mysqli_connect("localhost", "root", "", "dam1tgrupo4_proyecto");
 
 //    $conexion = mysqli_connect("localhost", "grupo4", "grupo4", "dam1tgrupo4_proyecto");
     $GLOBALS['lastQueryCount'] = 0;

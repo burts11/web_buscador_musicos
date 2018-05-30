@@ -184,6 +184,7 @@ function onAction($action) {
                     $result = Array(
                         "resultado" => "Error",
                         "action" => "RawQueryRet",
+                        "data" => $resultQuery,
                         "lastQuery" => getLastQuery(),
                         "mensaje" => getQueryLastError(),
                         "queryStr" => $query,

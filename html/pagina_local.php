@@ -9,10 +9,7 @@
             display: inline-block;
             margin-right: 150px;
         }
-        .div_aceptados {
-            display: inline-block;
-            margin-right: 150px;
-        }
+       
         #aceptados {
             color:white;
         }
@@ -61,7 +58,7 @@ join usuario on usuario.idusuario = concierto.idlocal where concierto.idlocal = 
 
                     var ConsultarUsuarios = $("<button type='button' class='form-control-btn'>Consultar Inscritos</button>");
                     var divpadre = $("<div></div>");
-                    $(divpadre).addClass("div_concierto");
+                    $(divpadre).addClass("divBorderRadiusOrange");
                     $(divpadre).append("<label  class='blockLabel'> Local: " + item.Local + "</label>");
                     $(divpadre).append("<label  class='blockLabel'> Fecha: " + item.fecha + "</label>");
                     $(divpadre).append("<label  class='blockLabel'> Hora: " + item.hora + "</label>");
@@ -121,7 +118,7 @@ join comunidades on concierto.ciudad = comunidades.idciudad where concierto.esta
                 $("#aceptados").append("<h2>CONCIERTOS ACEPTADOS</h2>");
                 $.each(result.data, function (i, item) {
                     var divpadre = $("<div></div>");
-                    $(divpadre).addClass("div_aceptados");
+                    $(divpadre).addClass("divBorderRadiusOrange");
                     $(divpadre).append("<label  class='blockLabel'> Musico/Grupo: " + item.nombre + "</label>");
                     $(divpadre).append("<label  class='blockLabel'> Fecha: " + item.fecha + "</label>");
                     $(divpadre).append("<label  class='blockLabel'> Hora: " + item.hora + "</label>");

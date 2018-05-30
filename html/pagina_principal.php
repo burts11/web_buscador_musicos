@@ -229,8 +229,30 @@
 
             margin-left: 1em;
         }
+        table {
+            margin-left: 0.5em;
+        }
+        table, tr, th {
+            border: 1px solid black;
+            border-collapse: collapse;
+            border-color: white;
+        }
+        th, td {
+            
+            padding: 10px;
+            text-align: left;
+        }
+        #btnSiguienteConcierto {
+            display: inline-block;
+        }
+        #btnAnteriorConcierto {
+            display: inline-block;
+        }
         #pp_masVotados {
             color:white;
+        }
+        #pp_conciertosPaginados {
+            color: white;
         }
     </style>
     <body>
@@ -239,9 +261,9 @@
                 <div class="slickConciertos" id="divConciertosNovedad">
                 </div> 
             </div>
+            <div id="pp_conciertosPaginados" numero="5">
+            </div>
             <div id="pp_masVotados">
-                
-                
             </div>
             <div id="pp_divLocales">
             </div>

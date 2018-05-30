@@ -30,7 +30,6 @@ and open the template in the editor.
         onJqueryWindowCallbackEventOne(VInfo.CONSULTAR, {
 
             callback: function (e) {
- $("#msg").hide();
                 var idconcierto = e.json.vparams.idconcierto;
                 var query = `select usuario.idusuario,usuario.nombre,comunidades.provincia,comunidades.munucipio from inscripcion 
 join concierto on inscripcion.idconcierto = concierto.idconcierto 
@@ -42,7 +41,10 @@ where inscripcion.idconcierto =${idconcierto}`;
                     query: query};
                 callAjaxBBDD(params, function (result) {
                     console.log(result);
-                   
+//                    $("#msg").hide();
+                    if (result.data.length != 0) {
+                        $("#msg").hide();
+                    }
                     $.each(result.data, function (i, item) {
                         var aceptar = $("<button type='button' class='form-control-btn'>ACEPTAR</button>");
                         var divpadre = $("<div></div>");
