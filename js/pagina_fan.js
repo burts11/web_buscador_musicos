@@ -1,6 +1,23 @@
 cargarMusicos();
 cargarConciertos();
+agregarBotones();
 
+function agregarBotones() {
+    var Siguiente = $("<button type='button' id='btnSiguienteConcierto' class='form-control-btn' onclick='Siguiente()'>Siguiente</button>");
+    var Anterior = $("<button type='button' id='btnAnteriorConcierto' class='form-control-btn' onclick='Anterior()'>Anterior</button>");
+    $("#botones").empty();
+    $("#botones").append(Siguiente);
+    $("#botones").append(Anterior);
+}
+
+recargarConciertos(function (result) {
+    var cuenta = result.data[0].todos;
+    filasTotal = cuenta;
+
+    if (paginaContador <= 0) {
+        $("#btnAnteriorConcierto").hide();
+    }
+});
 function cargarMusicos() {
     callAjaxBBDD({
         action: "RawQueryRet",
@@ -142,10 +159,14 @@ function cargarMusicos() {
     });
 }
 
+var paginaContador = 0;
+var filasPorPagina = 5;
+var filasTotal = 0;
+
 function cargarConciertos() {
     callAjaxBBDD({
         action: "RawQueryRet",
-        query: "SELECT concierto.idconcierto, concierto.fecha, usuario.usuario, usuario.nombre, genero.nombre as generoNombre FROM concierto INNER JOIN local on concierto.idlocal = local.idlocal INNER JOIN usuario on usuario.idusuario = concierto.idlocal INNER JOIN genero on genero.idgenero = concierto.genero;"
+        query: `SELECT concierto.idconcierto, concierto.fecha, usuario.usuario, usuario.nombre, genero.nombre as generoNombre FROM concierto INNER JOIN local on concierto.idlocal = local.idlocal INNER JOIN usuario on usuario.idusuario = concierto.idlocal INNER JOIN genero on genero.idgenero = concierto.genero where concierto.estado = 1 limit ${paginaContador},${filasPorPagina};`
     }, function (result) {
 
         $("#divConciertosFan").empty();
@@ -254,5 +275,73 @@ function cargarConciertos() {
                 $(div).addClass("musicoAnimIn2");
             }, 20);
         });
+    });
+}
+
+
+function recargarConciertos(eventCallback) {
+
+    var query = `select count(*) as todos from concierto where estado = 1`;
+    callAjaxBBDD(
+            {
+                action: "RawQueryRet",
+                query: query
+            }, function (result) {
+
+        eventCallback(result);
+        cargarConciertos();
+    });
+}
+
+function Siguiente() {
+    paginaContador = paginaContador + filasPorPagina;
+
+//    if (paginaContador >= filasTotal) {
+//        paginaContador = filasTotal - 5;
+//        filasPorPagina = filasTotal;
+//    }
+    recargarConciertos(function (result) {
+        filasTotal = result.data[0].todos;
+
+        if ((paginaContador + filasPorPagina) < filasTotal) {
+            $("#btnSiguienteConcierto").show();
+        } else {
+            $("#btnSiguienteConcierto").hide();
+        }
+
+        if (paginaContador >= 5) {
+            $("#btnAnteriorConcierto").show();
+        } else {
+            $("#btnAnteriorConcierto").hide();
+        }
+    });
+}
+function Anterior() {
+
+    paginaContador = paginaContador - filasPorPagina;
+//    filasPorPagina = filasPorPagina - 5;
+
+    if (paginaContador <= 0) {
+        paginaContador = 0;
+        filasPorPagina = 5;
+    }
+
+    recargarConciertos(function (result) {
+        filasTotal = result.data[0].todos;
+
+        console.log("Filas total -> " + filasTotal);
+        console.log("Filas contador -> " + paginaContador);
+
+        if (paginaContador >= 5) {
+            $("#btnAnteriorConcierto").show();
+        } else {
+            $("#btnAnteriorConcierto").hide();
+        }
+
+        if ((paginaContador + filasPorPagina) < filasTotal) {
+            $("#btnSiguienteConcierto").show();
+        } else {
+            $("#btnSiguienteConcierto").hide();
+        }
     });
 }
