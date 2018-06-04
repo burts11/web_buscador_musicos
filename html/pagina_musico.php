@@ -11,6 +11,10 @@
             width: 100%;
             height: 100%;
         }
+        .musico{
+            display: inline-block;
+            margin-right: 150px; 
+        }
         #aceptados{
             position: relative;
             display: inline-block;
@@ -19,8 +23,8 @@
             position: relative;
             display: inline-block;
             color:  orange;   
-            
-            
+
+
         }
     </style>
     <body>
@@ -29,9 +33,9 @@
 
             </div>
             <h1 id="titulo_aceptados">Conciertos aceptados</h1><br>
-            
+
             <div id="aceptados">
-                
+
             </div>
         </div>
         <script>
@@ -50,7 +54,7 @@
                     query: query};
                 callAjaxBBDD(params, function (result) {
                     $("#musico").empty();
-
+                    $("#concierto").empty();
                     console.log("Conciertos de musico");
                     console.log(result);
 
@@ -93,19 +97,19 @@
                                 $(divpadre).append(boton_pendiente);
                                 $(boton_pendiente).text("Denegado");
                                 $(boton).hide();
-                                 $(boton_pendiente).show();
+                                $(boton_pendiente).show();
                             } else if (estadoConcierto === 2) {
                                 $(divpadre).append(boton_pendiente);
                                 $(boton_pendiente).text("Aceptado");
                                 $(boton).hide();
-                                 $(boton_pendiente).hide();
-                                 $("#aceptados").append(divpadre);
+                                $(boton_pendiente).hide();
+                                $("#aceptados").append(divpadre);
                             } else if (estadoConcierto === 1) {
                                 $(divpadre).append(boton_pendiente);
 
                                 $(boton_pendiente).text("Pendiente");
                                 $(boton).hide();
-                                 $(boton_pendiente).show();
+                                $(boton_pendiente).show();
                                 $(boton_pendiente).click(function () {
                                     var usuario = Usuario.id;
                                     var query = `delete from inscripcion where idmusico = ${usuario} and idconcierto = ${item.idconcierto}`;
