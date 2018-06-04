@@ -1,8 +1,10 @@
--- MySQL dump 10.13  Distrib 5.6.24, for Win64 (x86_64)
+CREATE DATABASE  IF NOT EXISTS `dam1tgrupo4_proyecto` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `dam1tgrupo4_proyecto`;
+-- MySQL dump 10.13  Distrib 5.6.17, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: dam1tgrupo4_proyecto
 -- ------------------------------------------------------
--- Server version	5.5.5-10.1.28-MariaDB
+-- Server version	5.5.5-10.1.26-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -90,7 +92,7 @@ CREATE TABLE `concierto` (
   KEY `musico_idx` (`idmusico`),
   CONSTRAINT `local` FOREIGN KEY (`idlocal`) REFERENCES `local` (`idlocal`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `musico` FOREIGN KEY (`idmusico`) REFERENCES `musico` (`idmusico`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -99,7 +101,7 @@ CREATE TABLE `concierto` (
 
 LOCK TABLES `concierto` WRITE;
 /*!40000 ALTER TABLE `concierto` DISABLE KEYS */;
-INSERT INTO `concierto` VALUES (1,55,'2018-08-22','12:00:00',1,3000,0,5,NULL),(2,56,'2018-06-02','20:00:00',2,5000,0,6,NULL),(4,58,'2018-05-31','03:30:00',4,5666,0,4,NULL),(5,58,'2018-04-29','13:00:00',2,64646,0,3,NULL),(6,58,'2018-05-05','13:00:00',3,5000,0,12,NULL),(7,58,'2018-05-05','13:00:00',3,5000,0,12,NULL),(8,58,'2018-05-16','10:03:00',1,50000,0,18,NULL),(9,58,'2018-05-16','10:03:00',1,50000,0,18,NULL);
+INSERT INTO `concierto` VALUES (12,58,'2018-06-09','01:00:00',1,2,1,10,67),(13,58,'2018-06-07','22:00:00',1,12345,1,11,67),(26,58,'2018-06-07','09:09:00',1,12356789,1,1,67),(28,58,'2018-05-03','23:08:00',1,12345678,0,12,NULL),(45,58,'2018-06-30','10:00:00',1,9999999,1,3,67),(46,58,'2018-06-30','10:00:00',1,9999999,1,3,67),(48,58,'2018-06-30','10:00:00',1,9999999,1,3,67),(49,58,'2018-06-30','10:00:00',1,9999999,1,3,67),(50,58,'2018-06-30','10:00:00',1,9999999,1,3,67),(51,58,'2018-06-30','10:00:00',1,9999999,1,3,67),(52,58,'2018-06-30','10:00:00',1,9999999,1,3,67),(53,58,'2018-06-30','10:00:00',1,9999999,1,3,67),(54,58,'2018-06-30','10:00:00',1,9999999,1,3,67),(55,58,'2018-06-30','10:00:00',1,9999999,1,3,67),(56,58,'2018-06-30','10:00:00',1,9999999,1,3,67),(57,58,'2018-06-30','10:00:00',1,9999999,1,3,67),(58,58,'2018-05-20','12:12:00',1,55555,0,12,NULL),(60,58,'2018-07-08','10:10:00',1,566,1,11,67),(61,73,'2018-06-30','11:11:00',3,12345,1,8,72);
 /*!40000 ALTER TABLE `concierto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -127,7 +129,7 @@ CREATE TABLE `fan` (
 
 LOCK TABLES `fan` WRITE;
 /*!40000 ALTER TABLE `fan` DISABLE KEYS */;
-INSERT INTO `fan` VALUES (57,'dom',0,'','');
+INSERT INTO `fan` VALUES (57,'dom',0,'',''),(68,'Travieso',573528134,'casa pol','');
 /*!40000 ALTER TABLE `fan` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -168,9 +170,7 @@ CREATE TABLE `inscripcion` (
   `idconcierto` int(11) NOT NULL,
   PRIMARY KEY (`idmusico`,`idconcierto`),
   KEY `idmusico` (`idmusico`),
-  KEY `concierto_fk_idx` (`idconcierto`),
-  CONSTRAINT `fk_concierto` FOREIGN KEY (`idconcierto`) REFERENCES `concierto` (`idconcierto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_musico` FOREIGN KEY (`idmusico`) REFERENCES `musico` (`idmusico`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `concierto_fk_idx` (`idconcierto`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -180,7 +180,7 @@ CREATE TABLE `inscripcion` (
 
 LOCK TABLES `inscripcion` WRITE;
 /*!40000 ALTER TABLE `inscripcion` DISABLE KEYS */;
-INSERT INTO `inscripcion` VALUES (2,0,1),(67,2,1);
+INSERT INTO `inscripcion` VALUES (67,2,12),(67,2,13),(67,2,25),(67,2,26),(67,1,28),(67,1,58),(67,2,60),(72,2,61);
 /*!40000 ALTER TABLE `inscripcion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -207,7 +207,7 @@ CREATE TABLE `local` (
 
 LOCK TABLES `local` WRITE;
 /*!40000 ALTER TABLE `local` DISABLE KEYS */;
-INSERT INTO `local` VALUES (55,'',0,''),(56,'',10,''),(58,'',10000,'');
+INSERT INTO `local` VALUES (55,'',0,''),(56,'',10,''),(58,'',10000,''),(73,'calle pelayo',5000,'');
 /*!40000 ALTER TABLE `local` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -239,7 +239,7 @@ CREATE TABLE `musico` (
 
 LOCK TABLES `musico` WRITE;
 /*!40000 ALTER TABLE `musico` DISABLE KEYS */;
-INSERT INTO `musico` VALUES (2,'',0,'','Muse',3,1),(4,'Ferri Llopis',0,'nino.com','Nino Bravo',1,2),(5,'On Titan',0,'','SHINGEKI',0,3),(6,'',0,'','Coldplay',4,1),(8,'Hell',0,'','Two Steps From Hell',0,3),(66,'',0,'','nocopyright',0,5),(67,'',0,'','El Musico',1,1);
+INSERT INTO `musico` VALUES (2,'',0,'','Muse',3,2),(4,'Ferri Llopis',0,'nino.com','Nino Bravo',1,2),(5,'On Titan',0,'','SHINGEKI',0,3),(6,'',0,'','Coldplay',4,1),(8,'Hell',0,'','Two Steps From Hell',0,3),(66,'',0,'','nocopyright',0,5),(67,'',0,'','El Musico',1,1),(69,'MUSICO',975332565,'madredepol.com','pruebaademmusico',3,2),(72,'musicoo',123456789,'feff.com','zizou',3,3);
 /*!40000 ALTER TABLE `musico` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -263,7 +263,7 @@ CREATE TABLE `usuario` (
   UNIQUE KEY `email_UNIQUE` (`email`),
   KEY `fk_ciudad_idx` (`ciudad`),
   CONSTRAINT `fk_ciudad` FOREIGN KEY (`ciudad`) REFERENCES `comunidades` (`idciudad`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -272,7 +272,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'Steven','test@gmail.com','steven','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',0,NULL),(2,'Muse','wtwr','muse','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',1,NULL),(4,'Luis ','nino@gmai.com','nino','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',1,NULL),(5,'Attack','htrhdth','attack','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',1,NULL),(6,'Coldplay','laihf','coldplay','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',1,NULL),(8,'TSFH','tsfh@gmail.com','tsfh','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',1,1),(55,'localprueba1','localprueba1@gmail.com','localprueba1','$2y$10$aBwRZmLqinxORQc.QCKmw.p0lKCnOw.b2AteYVyDYujmoDF0mdn9.',2,895),(56,'localprueba3','localprueba3@gmail.com','localprueba3','$2y$10$j9DptasBPGP2owSZOE6kj.HRwYQIfcDLGpRZMWDaCO9laQFB1tNwi',2,280),(57,'fan','fan@gmail.com','fan','$2y$10$sAt3I12k.eCLSq3RX8qjOu6jD4/p34SYN8ZS/hW42KwBNRp4bvTyG',3,861),(58,'local','local@gmail.com','local','$2y$10$tOcl4RbCnPkTRCO65jFc.OnGn4vhf7igqfFdY3byBapqJKDXF4Z0q',2,1021),(66,'nocopyright','nocopyright@gmail.com','nocopyright','$2y$10$mwo2exJRnwsJ4nLvBH5t3e/0xndOGfdx1I6G2pTpP4NhXQuAOOzCK',1,861),(67,'El Musico','elMusico@gmail.com','musico','$2y$10$rJsKjlLk2fnqbvwUudyWPuJnqqL5kuwGHfgT9EPBn/SWVqc9U1086',1,861);
+INSERT INTO `usuario` VALUES (1,'Steven','test@gmail.com','steven','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',0,NULL),(2,'Muse','wtwr','muse','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',1,565),(4,'Luis ','nino@gmai.com','nino','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',1,45),(5,'Attack','htrhdth','attack','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',1,NULL),(6,'Coldplay','laihf','coldplay','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',1,356),(8,'TSFH','tsfh@gmail.com','tsfh','$2y$10$tTfonb1Mq2Lr2p38IhFx3eQcvsRfWim/rNWmqRFWKoOJJmTHQTh9K',1,1),(55,'localprueba1','localprueba1@gmail.com','localprueba1','$2y$10$aBwRZmLqinxORQc.QCKmw.p0lKCnOw.b2AteYVyDYujmoDF0mdn9.',2,895),(56,'localprueba3','localprueba3@gmail.com','localprueba3','$2y$10$j9DptasBPGP2owSZOE6kj.HRwYQIfcDLGpRZMWDaCO9laQFB1tNwi',2,280),(57,'fan','fan@gmail.com','fan','$2y$10$sAt3I12k.eCLSq3RX8qjOu6jD4/p34SYN8ZS/hW42KwBNRp4bvTyG',3,861),(58,'local','local@gmail.com','local','$2y$10$tOcl4RbCnPkTRCO65jFc.OnGn4vhf7igqfFdY3byBapqJKDXF4Z0q',2,1021),(66,'nocopyright','nocopyright@gmail.com','nocopyright','$2y$10$mwo2exJRnwsJ4nLvBH5t3e/0xndOGfdx1I6G2pTpP4NhXQuAOOzCK',1,861),(67,'El Musico','elMusico@gmail.com','musico','$2y$10$rJsKjlLk2fnqbvwUudyWPuJnqqL5kuwGHfgT9EPBn/SWVqc9U1086',1,861),(68,'Steven','dfsdxd@ohgm.com','travieso','$2y$10$D8up1hRSP55Ir3gUMv8fu.mURRRmlnPo.AyLin6hsA1gDcICu5N66',3,1),(69,'PRUEBA','pruebamusico@hotmial.com','PRUEBAMUSICO','$2y$10$zor07ihgXKVgdODFdrOQKOj4UZgw00Qx1QC0jWt1c9OzQx2CjPi9q',1,4050),(72,'prueba','sshfhef@hotmail.com','prueba','$2y$10$RRO3sk/hDTO4GhIj581gYOr4QodkHPY0KzPjsBFRVQDq3JHEcJgM6',1,4037),(73,'prueba','jafirfefe@hotmail.com','pruebalocal','$2y$10$9imrkGu19rX76JM/qAR6VeYY0PLstsd99/.a2THiRvpGjXZLMcj7i',2,280);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -324,7 +324,7 @@ CREATE TABLE `votacionmusico` (
 
 LOCK TABLES `votacionmusico` WRITE;
 /*!40000 ALTER TABLE `votacionmusico` DISABLE KEYS */;
-INSERT INTO `votacionmusico` VALUES (2,57),(4,57),(5,57),(8,57),(66,57);
+INSERT INTO `votacionmusico` VALUES (4,57),(4,68),(5,57),(6,57),(8,57),(66,57);
 /*!40000 ALTER TABLE `votacionmusico` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -337,4 +337,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-18 15:51:27
+-- Dump completed on 2018-06-04 22:58:22
