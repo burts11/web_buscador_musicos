@@ -108,7 +108,7 @@ join usuario on usuario.idusuario = concierto.idlocal where concierto.idlocal = 
 
             var query = `select usuario.nombre,concierto.fecha,concierto.hora,genero.nombre as genero,comunidades.munucipio,comunidades.provincia from concierto 
                 join usuario on concierto.idmusico = usuario.idusuario join genero on concierto.genero = genero.idgenero
-join comunidades on concierto.ciudad = comunidades.idciudad where concierto.estado = 1`;
+join comunidades on concierto.ciudad = comunidades.idciudad where concierto.idlocal = ${idlocal} and concierto.estado = 1`;
             var params = {
                 action: "RawQueryRet",
                 query: query};

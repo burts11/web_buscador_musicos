@@ -68,6 +68,9 @@
             display: inline-block !important;
             overflow: hidden;
         }
+        #botones {
+            display: inline-block;
+        }
     </style>
     <body>
         <div class="_childContainer divPadding10">
@@ -75,6 +78,7 @@
             <div id="divConciertosFan">
 
             </div>
+            <div id="botones"></div>
             <div id="divMusicosFan">
 
             </div>
