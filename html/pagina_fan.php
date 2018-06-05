@@ -62,7 +62,13 @@
             display: inline-block !important;
             overflow: hidden;
         }
-
+        #btnSiguienteConcierto {
+            display: inline-block;
+        }
+        #btnAnteriorConcierto {
+            margin-left: 0.5em;
+            display: inline-block;
+        }
         #divMusicos {
 
             display: inline-block !important;

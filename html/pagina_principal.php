@@ -238,7 +238,7 @@
             border-color: white;
         }
         th, td {
-            
+
             padding: 10px;
             text-align: left;
         }
@@ -246,6 +246,7 @@
             display: inline-block;
         }
         #btnAnteriorConcierto {
+            margin-left: 0.5em;
             display: inline-block;
         }
         #pp_masVotados {
