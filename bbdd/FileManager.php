@@ -27,7 +27,7 @@ function onAction($action) {
                 $ret = array();
 
                 $error = $_FILES["myfile"]["error"];
-                
+
                 if (!is_array($_FILES["myfile"]["name"])) { //single file
                     $fileName = $_FILES["myfile"]["name"];
                     move_uploaded_file($_FILES["myfile"]["tmp_name"], $output_dir . $fileName);
@@ -89,8 +89,25 @@ function onAction($action) {
 
             echo jsonEncode($result);
             break;
-        case "CopiarArchivo":
+        case "CopiarImagen":
+            print_r($_POST);
+            print_r($_FILES);
 
+            $temp = $_FILES['imagen_data']["tmp_name"];
+            $name = $_FILES['imagen_data']['name'];
+
+            $nombreUsuario = $_POST["nombreUsuario"];
+
+            $path = '../userdata/' . $nombreUsuario . "/img";
+
+            if (!mkdir($path, 0777, true)) {
+                die('Fallo al crear las carpetas...');
+            }
+
+            if (move_uploaded_file($temp, $path . "/user_logo.png")) {
+
+                echo json_encode(Array("Resultado" => "Success"));
+            }
             break;
     }
 }

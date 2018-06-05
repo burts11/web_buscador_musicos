@@ -112,7 +112,7 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
 
                     var idmunicipio = result.data[0].idciudad;
                     var form = $("#fan_form").serialize();
-                    form += "&action=RegistrarFan&input_fan_ciudad=" + idmunicipio;
+                    form += "&action=RegistrarFan&input_fan_ciudad=" + idmunicipio + "&input_fan_imagen=" + $("#input_fan_imagen").val();
                     callAjaxBBDD(form, function (result) {
                         if (success(result)) {
 
@@ -131,34 +131,56 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
 
         function registrarLocal() {
 
-            if (!$("#local_form").valid()) {
-                VToast.mostrarError("Faltan campos por rellenar o no se cumplen los requisitos!");
-                return;
-            }
+            var usuario = $('#input_local_usuario').val();
+            var file_data = $('#input_local_imagen').prop('files')[0];
 
-            var id_municipio_local = $(musicoSelects.municipio).val();
-            var query = `select idciudad from comunidades where munucipio='${id_municipio_local}'`;
-            var params = {
-                action: "RawQueryRet",
-                query: query};
-            callAjaxBBDD(params, function (result) {
-                if (success(result)) {
-                    var idmunicipio = result.data[0].idciudad;
-                    var form = $("#local_form").serialize();
-                    form += "&action=RegistrarLocal&input_local_ciudad=" + idmunicipio;
-                    callAjaxBBDD(form, function (result) {
-                        if (success(result)) {
+            var form_data = new FormData();
+            form_data.append('imagen_data', file_data);
+            form_data.append('action', "CopiarImagen");
+            form_data.append('nombreUsuario', usuario);
 
-                            VToast.mostrarMensaje(result.mensaje);
-                        } else {
-                            VToast.mostrarError(`Error al registrar el local -> ${result.mensaje}`);
-                        }
-                        return false;
-                    });
-                } else {
-                    VToast.mostrarError(`Error al registrar el local -> ${result.mensaje}`);
+            $.ajax({
+                url: 'bbdd/FileManager.php',
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: form_data,
+                type: 'POST',
+                success: function (output) {
+
+                    console.log(output);
                 }
             });
+
+//            if (!$("#local_form").valid()) {
+//                VToast.mostrarError("Faltan campos por rellenar o no se cumplen los requisitos!");
+//                return;
+//            }
+
+//            var id_municipio_local = $(musicoSelects.municipio).val();
+//            var query = `select idciudad from comunidades where munucipio='${id_municipio_local}'`;
+//            var params = {
+//                action: "RawQueryRet",
+//                query: query};
+//            callAjaxBBDD(params, function (result) {
+//                if (success(result)) {
+//                    var idmunicipio = result.data[0].idciudad;
+//                    var form = $("#local_form").serialize();
+//                    form += "&action=RegistrarLocal&input_local_ciudad=" + idmunicipio + "&input_local_imagen=" + $("#input_local_imagen").val();
+//                    console.log($("#input_local_imagen").val());
+//                    callAjaxBBDD(form, function (result) {
+//                        if (success(result)) {
+//
+//                            VToast.mostrarMensaje(result.mensaje);
+//                        } else {
+//                            VToast.mostrarError(`Error al registrar el local -> ${result.mensaje}`);
+//                        }
+//                        return false;
+//                    });
+//                } else {
+//                    VToast.mostrarError(`Error al registrar el local -> ${result.mensaje}`);
+//                }
+//            });
             return false;
         }
 
@@ -181,7 +203,7 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
                     var idmunicipio = result.data[0].idciudad;
                     var form = $("#musico_form").serialize();
                     var generoId = $("#genero option:selected").attr("data-musico-generoid");
-                    form += "&action=RegistrarMusico&input_musico_ciudad=" + idmunicipio + "&input_musico_genero=" + generoId;
+                    form += "&action=RegistrarMusico&input_musico_ciudad=" + idmunicipio + "&input_musico_genero=" + generoId + "&input_musico_imagen=" + $("#input_musico_imagen").val();
                     callAjaxBBDD(form, function (result) {
 
                         if (success(result)) {

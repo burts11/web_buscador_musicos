@@ -39,11 +39,12 @@ function onAction($action) {
             $ciudad = $_POST["input_fan_ciudad"];
             $telefono = $_POST["input_fan_telefono"];
             $direccion = $_POST["input_fan_direccion"];
+            $imagen = $_POST["input_fan_imagen"];
             $tipo = 3;
 
             $passCifrada = password_hash($pass, PASSWORD_DEFAULT);
 
-            rawQuery("INSERT INTO usuario values (default,'$nombre','$email','$usuario','$passCifrada',$tipo,'$ciudad')");
+            rawQuery("INSERT INTO usuario values (default,'$nombre','$email','$usuario','$passCifrada',$tipo,'$ciudad','$imagen')");
 
             if (querySucceeded()) {
                 $id = rawQueryOneField("select [idusuario] from usuario where usuario = '$usuario' limit 1");
@@ -78,10 +79,11 @@ function onAction($action) {
             $aforo = $_POST["input_local_aforo"];
             $tipo = 2;
             $ciudad = $_POST["input_local_ciudad"];
+            $imagen = $_POST["input_local_imagen"];
 
             $passCifrada = password_hash($pass, PASSWORD_DEFAULT);
 
-            rawQuery("INSERT INTO usuario values (default,'$nombre','$email','$usuario','$passCifrada','$tipo','$ciudad')");
+            rawQuery("INSERT INTO usuario values (default,'$nombre','$email','$usuario','$passCifrada','$tipo','$ciudad','$imagen')");
             if (querySucceeded()) {
                 $id = rawQueryOneField("select [idusuario] from usuario where usuario = '$usuario' limit 1");
                 if (querySucceeded()) {
@@ -119,10 +121,11 @@ function onAction($action) {
             $generoid = $_POST["input_musico_genero"];
             $tipo = 1;
             $ciudad = $_POST["input_musico_ciudad"];
+            $imagen = $_POST["input_musico_imagen"];
 
             $passCifrada = password_hash($pass, PASSWORD_DEFAULT);
 
-            rawQuery("INSERT INTO usuario values (default,'$nombre','$email','$usuario','$passCifrada','$tipo','$ciudad')");
+            rawQuery("INSERT INTO usuario values (default,'$nombre','$email','$usuario','$passCifrada','$tipo','$ciudad','$imagen')");
             if (querySucceeded()) {
                 $id = rawQueryOneField("select [idusuario] from usuario where usuario = '$usuario' limit 1");
 

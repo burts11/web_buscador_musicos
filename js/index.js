@@ -69,6 +69,7 @@ var Main = {
     },
     onUsuarioLogueado: function (e)
     {
+        console.log(e);
 //        VToast.logS("Usuario Logueado");
 //        console.log(e);
 //        VToast.logF("Usuario Logueado");
