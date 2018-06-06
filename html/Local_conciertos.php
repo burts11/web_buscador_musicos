@@ -19,7 +19,7 @@
             </div>
             <br>
             <button type="button" class="form-control-btn" id="nuevoConcierto">Añadir</button>
-        </form>
+        </form> 
         <script>
 
             onJqueryWindowCallbackEventOne(VInfo.CONCIERTO_INFO, {
@@ -70,6 +70,8 @@
                         callAjaxBBDD(params, function (result) {
                             console.log(result);
                             VToast.mostrarMensaje("Concierto añadido");
+
+                            callJqueryWindowEvent(VEvent.PAGINA_LOCAL_CONCIERTO_ADDED, {});
                             e.json.vparams.close();
                         });
                     }

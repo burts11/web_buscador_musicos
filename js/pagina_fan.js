@@ -278,7 +278,6 @@ function cargarConciertos() {
     });
 }
 
-
 function recargarConciertos(eventCallback) {
 
     var query = `select count(*) as todos from concierto where estado = 1`;
@@ -290,32 +289,46 @@ function recargarConciertos(eventCallback) {
 
         eventCallback(result);
         cargarConciertos();
+        handleButtons();
     });
 }
 
 function Siguiente() {
     paginaContador = paginaContador + filasPorPagina;
 
-//    if (paginaContador >= filasTotal) {
-//        paginaContador = filasTotal - 5;
-//        filasPorPagina = filasTotal;
-//    }
     recargarConciertos(function (result) {
         filasTotal = result.data[0].todos;
-
-        if ((paginaContador + filasPorPagina) < filasTotal) {
-            $("#btnSiguienteConcierto").show();
-        } else {
-            $("#btnSiguienteConcierto").hide();
-        }
-
-        if (paginaContador >= 5) {
-            $("#btnAnteriorConcierto").show();
-        } else {
-            $("#btnAnteriorConcierto").hide();
-        }
     });
 }
+
+function handleButtons() {
+
+    var contadorFilas = paginaContador;
+
+    console.log("Pagina + filas -> " + contadorFilas);
+    console.log("Pagina contador -> " + paginaContador);
+
+    if (contadorFilas < filasTotal) {
+        $("#btnSiguienteConcierto").show();
+
+    } else {
+        $("#btnAnteriorConcierto").show();
+        $("#btnSiguienteConcierto").hide();
+    }
+
+    if (paginaContador === 0)
+    {
+        $("#btnSiguienteConcierto").show();
+        $("#btnAnteriorConcierto").hide();
+    } else {
+        $("#btnAnteriorConcierto").show();
+    }
+
+    if (contadorFilas + filasPorPagina >= filasTotal) {
+        $("#btnSiguienteConcierto").hide();
+    }
+}
+
 function Anterior() {
 
     paginaContador = paginaContador - filasPorPagina;
@@ -331,17 +344,5 @@ function Anterior() {
 
         console.log("Filas total -> " + filasTotal);
         console.log("Filas contador -> " + paginaContador);
-
-        if (paginaContador >= 5) {
-            $("#btnAnteriorConcierto").show();
-        } else {
-            $("#btnAnteriorConcierto").hide();
-        }
-
-        if ((paginaContador + filasPorPagina) < filasTotal) {
-            $("#btnSiguienteConcierto").show();
-        } else {
-            $("#btnSiguienteConcierto").hide();
-        }
     });
 }

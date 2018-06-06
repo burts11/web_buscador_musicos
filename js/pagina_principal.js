@@ -17,10 +17,7 @@ function iniciar() {
     $("#pp_divMusicos").empty();
     $("#pp_divLocales").empty();
     $(".slickConciertos").empty();
-    var Siguiente = $("<button type='button' id='btnSiguienteConcierto' class='form-control-btn' onclick='Siguiente()'>Siguiente</button>");
-    var Anterior = $("<button type='button' id='btnAnteriorConcierto' class='form-control-btn' onclick='Anterior()'>Anterior</button>");
-    $("#pp_conciertosPaginados").append(Siguiente);
-    $("#pp_conciertosPaginados").append(Anterior);
+//    agregarBotones();
 
     recargarConciertos(function (result) {
         var cuenta = result.data[0].todos;
@@ -29,7 +26,16 @@ function iniciar() {
         if (paginaContador <= 0) {
             $("#btnAnteriorConcierto").hide();
         }
+
+        handleButtons();
     });
+}
+
+function agregarBotones() {
+    var Siguiente = $("<button type='button' id='btnSiguienteConcierto' class='form-control-btn' onclick='Siguiente()'>Siguiente</button>");
+    var Anterior = $("<button type='button' id='btnAnteriorConcierto' class='form-control-btn' onclick='Anterior()'>Anterior</button>");
+    $("#pp_conciertosPaginados").append(Siguiente);
+    $("#pp_conciertosPaginados").append(Anterior);
 }
 
 function cargarConciertosPaginados() {
@@ -44,9 +50,14 @@ join comunidades on concierto.ciudad = comunidades.idciudad where concierto.esta
                 action: "RawQueryRet",
                 query: conciertos
             }, function (result) {
+
+        $("#pp_conciertosPaginados").empty();
+
         var divpadre = $("<table class='conciertosTable'></table>");
         $(divpadre).addClass("paginado");
         $(divpadre).append("<tr><th>Local</th><th>Fecha</th><th>Hora</th><th>Genero</th><th>Valor Economico</th><th>Provincia</th><th>Municipio</th></tr>");
+
+        handleButtons();
 
         $.each(result.data, function (i, item) {
 
@@ -54,6 +65,8 @@ join comunidades on concierto.ciudad = comunidades.idciudad where concierto.esta
 //            $(divpadre).append("<tr>Local: " + item.Local + " Fecha: " + item.fecha + " Hora: " + item.hora + " Genero: " + item.genero + " Valor economico: " + item.valoreconomico + " Provincia: " + item.provincia + " Municipio: " + item.munucipio + "</tr>");
             $("#pp_conciertosPaginados").append(divpadre);
         });
+
+        agregarBotones();
     });
 }
 
@@ -67,6 +80,7 @@ function recargarConciertos(eventCallback) {
             }, function (result) {
 
         eventCallback(result);
+        handleButtons();
         cargarConciertosPaginados();
     });
 }
@@ -74,26 +88,40 @@ function recargarConciertos(eventCallback) {
 function Siguiente() {
     paginaContador = paginaContador + filasPorPagina;
 
-//    if (paginaContador >= filasTotal) {
-//        paginaContador = filasTotal - 5;
-//        filasPorPagina = filasTotal;
-//    }
     recargarConciertos(function (result) {
         filasTotal = result.data[0].todos;
-
-        if ((paginaContador + filasPorPagina) < filasTotal) {
-            $("#btnSiguienteConcierto").show();
-        } else {
-            $("#btnSiguienteConcierto").hide();
-        }
-
-        if (paginaContador >= 5) {
-            $("#btnAnteriorConcierto").show();
-        } else {
-            $("#btnAnteriorConcierto").hide();
-        }
     });
 }
+
+function handleButtons() {
+
+    var contadorFilas = paginaContador;
+
+    console.log("Pagina + filas -> " + contadorFilas);
+    console.log("Pagina contador -> " + paginaContador);
+
+    if (contadorFilas < filasTotal) {
+        $("#btnSiguienteConcierto").show();
+
+    } else {
+        $("#btnAnteriorConcierto").show();
+        $("#btnSiguienteConcierto").hide();
+    }
+
+    if (contadorFilas + filasPorPagina > filasTotal) {
+        $("#btnSiguienteConcierto").hide();
+    }
+
+    if (paginaContador === 0 || contadorFilas === 0)
+    {
+        $("#btnSiguienteConcierto").show();
+        $("#btnAnteriorConcierto").hide();
+        console.log("llega");
+    } else {
+        $("#btnAnteriorConcierto").show();
+    }
+}
+
 function Anterior() {
 
     paginaContador = paginaContador - filasPorPagina;
@@ -106,21 +134,6 @@ function Anterior() {
 
     recargarConciertos(function (result) {
         filasTotal = result.data[0].todos;
-
-        console.log("Filas total -> " + filasTotal);
-        console.log("Filas contador -> " + paginaContador);
-
-        if (paginaContador >= 5) {
-            $("#btnAnteriorConcierto").show();
-        } else {
-            $("#btnAnteriorConcierto").hide();
-        }
-
-        if ((paginaContador + filasPorPagina) < filasTotal) {
-            $("#btnSiguienteConcierto").show();
-        } else {
-            $("#btnSiguienteConcierto").hide();
-        }
     });
 }
 

@@ -180,7 +180,7 @@
                                 <br>
                             </div>
                             <div class="form-control">
-                                      <label class="form-control-label">Imagen </label> <input name="input_musico_imagen" class="form-control-textfield" type="file" id="input_musico_imagen" value="">
+                                      <label class="form-control-label">Imagen </label> <input name="input_musico_imagen" class="form-control-textfield" type="file" id="input_musico_imagen" value="" required="">
                                 </div>
                             <div class="form-control">
                                 <label class="form-control-label">Comunidad </label>
@@ -231,7 +231,7 @@
                                     <label class="form-control-label">Direccion </label> <input name="input_fan_direccion" class="form-control-textfield" type="text" id="input_fan_direccion" value="">
                                 </div>
                                 <div class="form-control">
-                                      <label class="form-control-label">Imagen </label> <input name="input_fan_imagen" class="form-control-textfield" type="file" id="input_fan_imagen" value="">
+                                    <label class="form-control-label">Imagen </label> <input name="input_fan_imagen" class="form-control-textfield" type="file" id="input_fan_imagen" value="" required="">
                                 </div>
                                 <div class="form-control">
                                     <label class="form-control-label">Comunidad </label>
@@ -279,7 +279,7 @@
                                     <label class="form-control-label">Aforo </label> <input name="input_local_aforo" class="form-control-textfield" type="text" id="input_local_aforo" value="">
                                 </div>
                                   <div class="form-control">
-                                      <label class="form-control-label">Imagen </label> <input name="input_local_imagen" class="form-control-textfield" type="file" id="input_local_imagen" value="">
+                                      <label class="form-control-label">Imagen </label> <input name="input_local_imagen" class="form-control-textfield" type="file" id="input_local_imagen" value="" required="">
                                 </div>
                                 <div class="form-control">
                                     <label class="form-control-label">Comunidad </label>

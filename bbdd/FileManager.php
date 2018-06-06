@@ -90,24 +90,21 @@ function onAction($action) {
             echo jsonEncode($result);
             break;
         case "CopiarImagen":
-            print_r($_POST);
-            print_r($_FILES);
 
             $temp = $_FILES['imagen_data']["tmp_name"];
             $name = $_FILES['imagen_data']['name'];
 
             $nombreUsuario = $_POST["nombreUsuario"];
 
-            $path = '../userdata/' . $nombreUsuario . "/img";
+            $path = 'userdata/' . $nombreUsuario . "/img";
 
-            if (!mkdir($path, 0777, true)) {
-                die('Fallo al crear las carpetas...');
+            if (crearCarpeta($path)) {
+                if (move_uploaded_file($temp, "../" . $path . "/user_logo.png")) {
+
+                    echo json_encode(Array("Resultado" => "Success", "NombreImagen" => $nombreUsuario . "/img/user_logo.png"));
+                }
             }
 
-            if (move_uploaded_file($temp, $path . "/user_logo.png")) {
-
-                echo json_encode(Array("Resultado" => "Success"));
-            }
             break;
     }
 }
@@ -127,11 +124,11 @@ function crearCarpeta($ruta) {
 //            echo '"' . $mkDir . '"<br/>';         // this will show the directory created each time
             if (!is_dir($mkDir)) {             // check if directory exist or not
                 if (mkdir($mkDir, 0777)) {
-//                    echo "Success -> $mkDir";
+//                    echo "\nSuccess -> $mkDir";
                     $result = true;
                 } else {
                     $result = false;
-//                    echo "Error -> $mkDir";
+//                    echo "\nError -> $mkDir";
                 }
             }
         }

@@ -134,7 +134,8 @@ function callAjaxFileManager(dataJSON, func) {
     $.ajax({
         type: METHOD.POST,
         url: "bbdd/FileManager.php",
-        contentType:false,
+        contentType: false,
+        processData: false,
         data: dataJSON,
         cache: false,
         success: function (rawJson) {

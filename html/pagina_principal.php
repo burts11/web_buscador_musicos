@@ -244,15 +244,19 @@
         }
         #btnSiguienteConcierto {
             display: inline-block;
+            margin-left: 0.5em;
+            margin-top: 1em;
         }
         #btnAnteriorConcierto {
             margin-left: 0.5em;
             display: inline-block;
+            margin-top : 1em;
         }
         #pp_masVotados {
             color:white;
         }
         #pp_conciertosPaginados {
+
             color: white;
         }
     </style>

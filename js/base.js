@@ -25,6 +25,12 @@ var VMessage = {
 
     PAGINA_SESION_INICIADA: "page.logchecked",
     PAGINA_POPUP_MENU_ITEM_CLICKED: "page.popupmenu.item.clicked"
+
+};
+
+var VEvent = {
+  
+    PAGINA_LOCAL_CONCIERTO_ADDED : "PAGINA_LOCAL_CONCIERTO_ADDED"
 };
 
 var VInfo = {
@@ -117,7 +123,7 @@ function isFunctionDefined(func) {
 }
 
 function jsonEmpty(json) {
-    
+
     return $.isEmptyObject(json);
 }
 
