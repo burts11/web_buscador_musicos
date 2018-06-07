@@ -96,6 +96,10 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
         }
 
         function registrarFan() {
+            if (!$("#fan_form").valid()) {
+                VToast.mostrarError("Faltan campos por rellenar o no se cumplen los requisitos!");
+                return;
+            }
 
             var usuario = $('#input_fan_usuario').val();
             var file_data = $('#input_fan_imagen').prop('files')[0];
@@ -103,38 +107,40 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
             var form_data = new FormData();
             form_data.append('imagen_data', file_data);
             form_data.append('action', "CopiarImagen");
+            form_data.append('nombreImagen', "user_logo.png");
             form_data.append('nombreUsuario', usuario);
 
-            if (!$("#fan_form").valid()) {
-                VToast.mostrarError("Faltan campos por rellenar o no se cumplen los requisitos!");
-                return;
-            }
+            callAjaxFileManager(form_data, function (resultFile) {
 
-            var id_municipio_fan = $(fanSelects.municipio).val();
-            var query = `select idciudad from comunidades where munucipio='${id_municipio_fan}'`;
-            var params = {
-                action: "RawQueryRet",
-                query: query};
-            callAjaxBBDD(params, function (result) {
+                var resultJSON = jQuery.parseJSON(resultFile);
 
-                if (success(result)) {
+                var id_municipio_fan = $(fanSelects.municipio).val();
+                var query = `select idciudad from comunidades where munucipio='${id_municipio_fan}'`;
+                var params = {
+                    action: "RawQueryRet",
+                    query: query};
+                callAjaxBBDD(params, function (result) {
 
-                    var idmunicipio = result.data[0].idciudad;
-                    var form = $("#fan_form").serialize();
-                    form += "&action=RegistrarFan&input_fan_ciudad=" + idmunicipio + "&input_fan_imagen=" + result.NombreImagen;
-                    callAjaxBBDD(form, function (result) {
-                        if (success(result)) {
+                    if (success(result)) {
 
-                            VToast.mostrarMensaje(result.mensaje);
-                        } else {
-                            VToast.mostrarError(`Error al registrar el fan -> ${result.mensaje}`);
-                        }
-                        return false;
-                    });
-                } else {
-                    VToast.mostrarError(`Error al registrar el fan -> ${result.mensaje}`);
-                }
+                        var idmunicipio = result.data[0].idciudad;
+                        var form = $("#fan_form").serialize();
+                        form += "&action=RegistrarFan&input_fan_ciudad=" + idmunicipio + "&input_fan_imagen=" + resultJSON.NombreImagen;
+                        callAjaxBBDD(form, function (result) {
+                            if (success(result)) {
+
+                                VToast.mostrarMensaje(result.mensaje);
+                            } else {
+                                VToast.mostrarError(`Error al registrar el fan -> ${result.mensaje}`);
+                            }
+                            return false;
+                        });
+                    } else {
+                        VToast.mostrarError(`Error al registrar el fan -> ${result.mensaje}`);
+                    }
+                });
             });
+
             return false;
         }
 
@@ -151,35 +157,45 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
             var form_data = new FormData();
             form_data.append('imagen_data', file_data);
             form_data.append('action', "CopiarImagen");
+            form_data.append('nombreImagen', "user_logo");
             form_data.append('nombreUsuario', usuario);
 
-            callAjaxFileManager(form_data, function (resultFile) {
-                var resultJSON = jQuery.parseJSON(resultFile);
+            callAjaxFileManager(form_data, function (perfilImagenJSON) {
 
+                form_data.set('imagen_data', $('#input_local_portada').prop('files')[0]);
+                form_data.set('nombreImagen', "portada");
+                form_data.set('nombreUsuario', usuario);
 
-                var id_municipio_local = $(musicoSelects.municipio).val();
-                var query = `select idciudad from comunidades where munucipio='${id_municipio_local}'`;
-                var params = {
-                    action: "RawQueryRet",
-                    query: query};
-                callAjaxBBDD(params, function (result) {
-                    if (success(result)) {
-                        var idmunicipio = result.data[0].idciudad;
-                        var form = $("#local_form").serialize();
-                        form += "&action=RegistrarLocal&input_local_ciudad=" + idmunicipio + "&input_local_imagen=" + result.NombreImagen;
-                        console.log($("#input_local_imagen").val());
-                        callAjaxBBDD(form, function (result) {
-                            if (success(result)) {
+                callAjaxFileManager(form_data, function (portadaImagenJSON) {
 
-                                VToast.mostrarMensaje(result.mensaje);
-                            } else {
-                                VToast.mostrarError(`Error al registrar el local -> ${result.mensaje}`);
-                            }
-                            return false;
-                        });
-                    } else {
-                        VToast.mostrarError(`Error al registrar el local -> ${result.mensaje}`);
-                    }
+                    var id_municipio_local = $(musicoSelects.municipio).val();
+                    var query = `select idciudad from comunidades where munucipio='${id_municipio_local}'`;
+                    var params = {
+                        action: "RawQueryRet",
+                        query: query};
+                    callAjaxBBDD(params, function (result) {
+
+                        if (success(result)) {
+                            var idmunicipio = result.data[0].idciudad;
+                            var form = $("#local_form").serialize();
+                            form += "&action=RegistrarLocal&input_local_ciudad=" + idmunicipio + "&input_local_imagen=" + perfilImagenJSON.NombreImagen +
+                                    "&input_local_portada=" + portadaImagenJSON.NombreImagen;
+                            console.log($("#input_local_imagen").val());
+                            callAjaxBBDD(form, function (result) {
+                                console.log(result);
+
+                                if (success(result)) {
+
+                                    VToast.mostrarMensaje(result.mensaje);
+                                } else {
+                                    VToast.mostrarError(`Error al registrar el local -> ${result.mensaje}`);
+                                }
+                                return false;
+                            });
+                        } else {
+                            VToast.mostrarError(`Error al registrar el local -> ${result.mensaje}`);
+                        }
+                    });
                 });
             });
 
@@ -199,35 +215,46 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
             var form_data = new FormData();
             form_data.append('imagen_data', file_data);
             form_data.append('action', "CopiarImagen");
+            form_data.append('nombreImagen', "user_logo");
             form_data.append('nombreUsuario', usuario);
 
-            var id_municipio_musico = $(musicoSelects.municipio).val();
-            var query = `select idciudad from comunidades where munucipio='${id_municipio_musico}'`;
-            var params = {
-                action: "RawQueryRet",
-                query: query};
-            callAjaxBBDD(params, function (result) {
+            callAjaxFileManager(form_data, function (perfilImagenJSON) {
+                form_data.set("nombreImagen", "portada");
 
-                if (success(result)) {
+                callAjaxFileManager(form_data, function (portadaImagenJSON) {
 
-                    var idmunicipio = result.data[0].idciudad;
-                    var form = $("#musico_form").serialize();
-                    var generoId = $("#genero option:selected").attr("data-musico-generoid");
-                    form += "&action=RegistrarMusico&input_musico_ciudad=" + idmunicipio + "&input_musico_genero=" + generoId + "&input_musico_imagen=" + result.NombreImagen;
-                    callAjaxBBDD(form, function (result) {
+                    var id_municipio_musico = $(musicoSelects.municipio).val();
+                    var query = `select idciudad from comunidades where munucipio='${id_municipio_musico}'`;
+                    var params = {
+                        action: "RawQueryRet",
+                        query: query};
+                    callAjaxBBDD(params, function (result) {
 
                         if (success(result)) {
 
-                            VToast.mostrarMensaje(result.mensaje);
+                            var idmunicipio = result.data[0].idciudad;
+                            var form = $("#musico_form").serialize();
+                            var generoId = $("#genero option:selected").attr("data-musico-generoid");
+                            form += "&action=RegistrarMusico&input_musico_ciudad=" + idmunicipio + "&input_musico_genero=" +
+                                    generoId + "&input_musico_imagen=" +
+                                    perfilImagenJSON.NombreImagen + "&input_musico_portada=" + portadaImagenJSON.NombreImagen;
+                            callAjaxBBDD(form, function (result) {
+
+                                if (success(result)) {
+
+                                    VToast.mostrarMensaje(result.mensaje);
+                                } else {
+                                    VToast.mostrarError(`Error al registrar el músico -> ${result.mensaje}`);
+                                }
+
+                                return false;
+                            });
                         } else {
                             VToast.mostrarError(`Error al registrar el músico -> ${result.mensaje}`);
                         }
-
-                        return false;
                     });
-                } else {
-                    VToast.mostrarError(`Error al registrar el músico -> ${result.mensaje}`);
-                }
+                });
+
             });
             return false;
         }
@@ -296,6 +323,7 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
                     input_local_usuario: "required",
                     input_local_aforo: "required",
                     input_local_imagen: "required",
+                    input_local_portada: "required",
                     input_local_email: {
                         required: true,
                         email: true
@@ -314,6 +342,7 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
                         minlength: "<label class='jqueryValidatorMessage'>La contraseña tiene que tener 3 carácteres como mínimo</label>"
                     },
                     input_local_imagen: "<label class='jqueryValidatorMessage'>Selecciona una imagen</label>",
+                    input_local_portada: "<label class='jqueryValidatorMessage'>Selecciona una imagen</label>",
                     input_local_email: "<label class='jqueryValidatorMessage'>Introduce un email válido</label>"
                 }
             });
@@ -324,6 +353,7 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
                     input_musico_artistico: "required",
                     input_musico_componentes: "required",
                     input_musico_imagen: "required",
+                    input_musico_portada: "required",
                     input_musico_email: {
                         required: true,
                         email: true
@@ -343,6 +373,7 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
                         minlength: "<label class='jqueryValidatorMessage'>La contraseña tiene que tener 3 carácteres como mínimo</label>"
                     },
                     input_musico_imagen: "<label class='jqueryValidatorMessage'>Selecciona una imagen</label>",
+                    input_musico_portada: "<label class='jqueryValidatorMessage'>Selecciona una imagen</label>",
                     input_musico_email: "<label class='jqueryValidatorMessage'>Introduce un email válido</label>"
                 }
             });
