@@ -139,14 +139,16 @@ function Anterior() {
 }
 
 function masVotados() {
+    $("#pp_masVotados").empty();
+    
     var query = `select usuario.usuario,musico.nombreartistico,genero.nombre,count(votacionmusico.idmusico) as votos from musico 
 join votacionmusico on votacionmusico.idmusico = musico.idmusico join usuario on musico.idmusico = usuario.idusuario join genero on musico.generoID = genero.idgenero  group by votacionmusico.idmusico order by votos desc limit 10`;
-    $("#pp_masVotados").append("<label class='blockLabel colorPrimary padding10' style='margin-left: 0.5em'>Musicos mas votados</label>");
     callAjaxBBDD(
             {
                 action: "RawQueryRet",
                 query: query
             }, function (result) {
+        $("#pp_masVotados").append("<h2 class='blockLabel colorPrimary padding10' style='margin-left: 0.5em'>Músicos mas votados</h2>");
 
         $.each(result.data, function (i, item) {
             var template = "<div class='votosWrapperContainer'>";

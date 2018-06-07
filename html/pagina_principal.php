@@ -190,6 +190,7 @@
             display: inline-block;
             width: 100%;
             height: 32%;
+            padding-top: 0.5em;
             text-align: center;
             background-color: rgba(0,0,0,0.2);
         }
