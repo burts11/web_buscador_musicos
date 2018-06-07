@@ -11,10 +11,15 @@ and open the template in the editor.
     </head>
     <style>
         .div_inscritos {
-            background-color: rgba(255,255,255,0.5);
+            background-color: rgba(255,255,255,0.1);
             border-radius: 4px;
             padding: 4px;
             margin-bottom: 4px;
+        }
+        
+        .div_inscritos{
+            
+            padding: 10px;
         }
     </style>
     <body>

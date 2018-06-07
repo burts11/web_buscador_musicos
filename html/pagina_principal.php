@@ -257,15 +257,16 @@
         }
         #pp_conciertosPaginados {
 
+            margin-top: 1em;
             color: white;
         }
     </style>
     <body>
         <div class="_childContainer">
-            <div class="divConciertosContainer centeredElementHorizontal">
+<!--            <div class="divConciertosContainer centeredElementHorizontal">
                 <div class="slickConciertos" id="divConciertosNovedad">
                 </div> 
-            </div>
+            </div>-->
             <div id="pp_conciertosPaginados" numero="5">
             </div>
             <div id="pp_masVotados">

@@ -118,6 +118,8 @@
                             $("#input_fan_apellidos").val(data["apellidos"]);
                             $("#input_fan_direccion").val(data["direccion"]);
                             $("#input_fan_telefono").val(data["telefono"]);
+                            
+                            $("#perfil_fan_info_logo").prop("src", `userdata/${data["usuario"]}/img/user_logo.png`);
                         });
                     }
 

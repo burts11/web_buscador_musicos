@@ -1,6 +1,6 @@
 iniciar();
 cargarLocales();
-cargarConciertos();
+//cargarConciertos();
 cargarPorGeneros();
 masVotados();
 cargarConciertosPaginados();
@@ -57,7 +57,6 @@ join comunidades on concierto.ciudad = comunidades.idciudad where concierto.esta
         $(divpadre).addClass("paginado");
         $(divpadre).append("<tr><th>Local</th><th>Fecha</th><th>Hora</th><th>Genero</th><th>Valor Economico</th><th>Provincia</th><th>Municipio</th></tr>");
 
-        handleButtons();
 
         $.each(result.data, function (i, item) {
 
@@ -67,6 +66,7 @@ join comunidades on concierto.ciudad = comunidades.idciudad where concierto.esta
         });
 
         agregarBotones();
+        handleButtons();
     });
 }
 

@@ -158,7 +158,7 @@
                 var data = e.json.data;
                 var usuario = data["usuario"];
 
-                callAjaxFileManager({action: "ListarArchivos", path: `${usuario}/audio/tracks`}, function (json) {
+                callAjaxFileManagerV2({action: "ListarArchivos", path: `${usuario}/audio/tracks`}, function (json) {
 
                     if (success(json)) {
                         var pList = {

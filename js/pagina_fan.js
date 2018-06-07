@@ -107,32 +107,35 @@ function cargarMusicos() {
                             action: "RawQueryRet", query: `select * from votacionmusico where idfan = ${Usuario.id} and idmusico = ${usuario["idusuario"]} `
                         }, function (json) {
 
-                    if (!jsonEmpty(json.data)) {
+                    console.log("<---- JSON -<<");
+                    console.log(json);
 
-                        callAjaxBBDD({
-
-                            action: "RawQueryRet",
-                            query: `DELETE FROM votacionmusico where idfan = ${Usuario.id} and idmusico = ${usuarioId}`
-                        }, function (json) {
-
-                            VToast.log("Unliked " + nombre);
-
-                            if (success(json)) {
-                                $(musicoFooter).find(".musicoVoteBtn").prop("src", "img/btn_vote.png");
-                            }
-                        });
-                    } else {
+                    if (!success(json)) {
                         callAjaxBBDD({
 
                             action: "RawQueryRet",
                             query: `INSERT INTO votacionmusico VALUES(${usuarioId}, ${Usuario.id})`
                         }, function (json) {
 
+                            $(musicoFooter).find(".musicoVoteBtn").prop("src", "img/btn_liked.png");
+
                             if (success(json)) {
                                 VToast.log("Liked " + nombre);
-                                $(musicoFooter).find(".musicoVoteBtn").prop("src", "img/btn_liked.png");
                             }
                         });
+                    } else {
+                        if (!jsonEmpty(json.data)) {
+
+                            callAjaxBBDD({
+
+                                action: "RawQueryRet",
+                                query: `DELETE FROM votacionmusico where idfan = ${Usuario.id} and idmusico = ${usuarioId}`
+                            }, function (json) {
+
+                                VToast.log("Unliked " + nombre);
+                                $(musicoFooter).find(".musicoVoteBtn").prop("src", "img/btn_vote.png");
+                            });
+                        }
                     }
                 });
             });
@@ -224,9 +227,10 @@ function cargarConciertos() {
                     {
                         action: "RawQueryRet", query: `select * from votacionconcierto where idfan = ${Usuario.id} and idconcierto = ${conciertoId} `
                     }, function (json) {
-
-                if (!jsonEmpty(json.data)) {
+                if (success(json)) {
                     $(conciertoFooter).find(".conciertoVoteBtn").prop("src", "img/btn_liked.png");
+                } else {
+                    $(conciertoFooter).find(".conciertoVoteBtn").prop("src", "img/btn_vote.png");
                 }
             });
 
@@ -236,7 +240,8 @@ function cargarConciertos() {
                         {
                             action: "RawQueryRet", query: `select * from votacionconcierto where idfan = ${Usuario.id} and idconcierto = ${conciertoId} `
                         }, function (json) {
-                    if (!jsonEmpty(json.data)) {
+                    console.log(json);
+                    if (success(json)) {
 
                         callAjaxBBDD({
 
@@ -250,7 +255,6 @@ function cargarConciertos() {
                             }
                         });
                     } else {
-
                         callAjaxBBDD({
 
                             action: "RawQueryRet",
