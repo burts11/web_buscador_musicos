@@ -53,14 +53,16 @@ join comunidades on concierto.ciudad = comunidades.idciudad where concierto.esta
 
         $("#pp_conciertosPaginados").empty();
 
+        if (result.data.length > 0) {
+            $("#pp_conciertosPaginados").append("<h1 style='padding-left:0.5em'>Próximos Conciertos</h1>");
+        }
         var divpadre = $("<table class='conciertosTable'></table>");
         $(divpadre).addClass("paginado");
         $(divpadre).append("<tr><th>Local</th><th>Fecha</th><th>Hora</th><th>Genero</th><th>Valor Economico</th><th>Provincia</th><th>Municipio</th></tr>");
 
         $.each(result.data, function (i, item) {
 
-            $(divpadre).append("<tr><th>" + item.Local + "</th><th>" + item.fecha + "</th><th>" + item.hora + "</th><th>" + item.genero + "</th><th>" + item.valoreconomico + "</th><th>" + item.provincia + "</th><th>" + item.munucipio + "</th></tr>");
-//            $(divpadre).append("<tr>Local: " + item.Local + " Fecha: " + item.fecha + " Hora: " + item.hora + " Genero: " + item.genero + " Valor economico: " + item.valoreconomico + " Provincia: " + item.provincia + " Municipio: " + item.munucipio + "</tr>");
+            $(divpadre).append("<tr><td>" + item.Local + "</td><td>" + item.fecha + "</td><td>" + item.hora + "</td><td>" + item.genero + "</td><td>" + item.valoreconomico + "</td><td>" + item.provincia + "</td><td>" + item.munucipio + "</td></tr>");
             $("#pp_conciertosPaginados").append(divpadre);
         });
 
@@ -140,7 +142,7 @@ function Anterior() {
 
 function masVotados() {
     $("#pp_masVotados").empty();
-    
+
     var query = `select usuario.usuario,musico.nombreartistico,genero.nombre,count(votacionmusico.idmusico) as votos from musico 
 join votacionmusico on votacionmusico.idmusico = musico.idmusico join usuario on musico.idmusico = usuario.idusuario join genero on musico.generoID = genero.idgenero  group by votacionmusico.idmusico order by votos desc limit 10`;
     callAjaxBBDD(
@@ -148,7 +150,11 @@ join votacionmusico on votacionmusico.idmusico = musico.idmusico join usuario on
                 action: "RawQueryRet",
                 query: query
             }, function (result) {
-        $("#pp_masVotados").append("<h2 class='blockLabel colorPrimary padding10' style='margin-left: 0.5em'>Músicos mas votados</h2>");
+
+        if (result.data.length > 0)
+        {
+            $("#pp_masVotados").append("<h2 class='blockLabel colorPrimary padding10' style='margin-left: 0.5em'>Músicos mas votados</h2>");
+        }
 
         $.each(result.data, function (i, item) {
             var template = "<div class='votosWrapperContainer'>";

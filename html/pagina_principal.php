@@ -230,28 +230,45 @@
 
             margin-left: 1em;
         }
+
         table {
             margin-left: 0.5em;
         }
-        table, tr, th {
+
+        .conciertosTable {
+            border-collapse: collapse;
+            margin: 1em;
+            border-radius: 1em;
+        } 
+
+        tr, th {
             border: 1px solid black;
             border-collapse: collapse;
-            border-color: white;
+            border-color: #ffb16d ;
+            background-color: rgba(0,0,0,0.01);
         }
-        th, td {
+
+        th {
+
+            padding: 10px;
+            text-align: center;
+        }
+
+        td {
 
             padding: 10px;
             text-align: left;
         }
+        
         #btnSiguienteConcierto {
             display: inline-block;
             margin-left: 0.5em;
-            margin-top: 1em;
+            margin-bottom: 1em;
         }
         #btnAnteriorConcierto {
             margin-left: 0.5em;
             display: inline-block;
-            margin-top : 1em;
+            margin-bottom: 1em;
         }
         #pp_masVotados {
             color:white;
@@ -264,10 +281,10 @@
     </style>
     <body>
         <div class="_childContainer">
-<!--            <div class="divConciertosContainer centeredElementHorizontal">
-                <div class="slickConciertos" id="divConciertosNovedad">
-                </div> 
-            </div>-->
+            <!--            <div class="divConciertosContainer centeredElementHorizontal">
+                            <div class="slickConciertos" id="divConciertosNovedad">
+                            </div> 
+                        </div>-->
             <div id="pp_conciertosPaginados">
             </div>
             <div id="pp_masVotados">

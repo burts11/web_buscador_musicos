@@ -16,15 +16,15 @@ and open the template in the editor.
             padding: 4px;
             margin-bottom: 4px;
         }
-        
+
         .div_inscritos{
-            
+
             padding: 10px;
         }
     </style>
     <body>
         <h3>Inscritos en este concierto</h3>
-        <h4 id="msg">No hay ningun musico inscrito</h4>
+        <h4 id="msg">No hay ningun músico inscrito</h4>
 
 
         <div id="musicos"></div>
@@ -36,27 +36,26 @@ and open the template in the editor.
 
             callback: function (e) {
                 var idconcierto = e.json.vparams.idconcierto;
-                var query = `select usuario.idusuario,usuario.nombre,comunidades.provincia,comunidades.munucipio from inscripcion 
+                var query = `select musico.numerocomponentes, usuario.idusuario,usuario.nombre,comunidades.provincia,comunidades.munucipio from inscripcion 
 join concierto on inscripcion.idconcierto = concierto.idconcierto 
 join usuario on inscripcion.idmusico = usuario.idusuario
-join comunidades on usuario.ciudad = comunidades.idciudad
+join comunidades on usuario.ciudad = comunidades.idciudad join musico on musico.idmusico = usuario.idusuario
 where inscripcion.idconcierto =${idconcierto}`;
                 var params = {
                     action: "RawQueryRet",
                     query: query};
                 callAjaxBBDD(params, function (result) {
-                    console.log(result);
-//                    $("#msg").hide();
                     if (result.data.length != 0) {
                         $("#msg").hide();
                     }
                     $.each(result.data, function (i, item) {
-                        var aceptar = $("<button type='button' class='form-control-btn'>ACEPTAR</button>");
+                        var aceptar = $("<p><button type='button' class='form-control-btn'>Aceptar</button></p>");
                         var divpadre = $("<div></div>");
                         $(divpadre).addClass("div_inscritos");
                         $(divpadre).append("<label class='blockLabel'>Nombre: " + item.nombre + "</label>");
                         $(divpadre).append("<label class='blockLabel'>Provincia: " + item.provincia + "</label>");
                         $(divpadre).append("<label class='blockLabel'>Municipio: " + item.munucipio + "</label>");
+                        $(divpadre).append("<label class='blockLabel'>Número de componentes: " + item.numerocomponentes + "</label>");
                         $(divpadre).append(aceptar);
                         $("#musicos").append(divpadre);
 
@@ -77,10 +76,8 @@ where inscripcion.idconcierto =${idconcierto}`;
                                         action: "RawQueryRet",
                                         query: query};
                                     callAjaxBBDD(params, function (result) {
-                                        console.log(result);
                                         VToast.mostrarMensaje("Musico aceptado");
-                                        console.log(result);
-
+                                        callJqueryWindowEvent(VEvent.PAGINA_LOCAL_CONCIERTO_APROBADO, {});
                                         e.json.vparams.close();
                                     });
                                 });

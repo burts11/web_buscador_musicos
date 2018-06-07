@@ -13,6 +13,16 @@
         #aceptados {
             color:white;
         }
+
+        #conciertos .form-control-btn{
+
+            margin-top: 0.2em;
+        }
+
+        #conciertos .localConciertoDiv {
+
+            padding: 1em;
+        }
     </style>
     <body>
         <div class="_childContainer divPadding10">
@@ -30,7 +40,6 @@
                     });
                 });
             </script>            
-            <br>
             <div id="conciertos">
             </div>
 
@@ -42,11 +51,19 @@
 
             cargarConciertos();
             cargarConciertosAceptados();
+
             onJqueryWindowCallbackEventOne(VEvent.PAGINA_LOCAL_CONCIERTO_ADDED, {
 
                 callback: function (e) {
-                    console.log("CALLED!");
                     cargarConciertos();
+                }
+            });
+
+            onJqueryWindowCallbackEventOne(VEvent.PAGINA_LOCAL_CONCIERTO_APROBADO, {
+
+                callback: function (e) {
+                    cargarConciertos();
+                    cargarConciertosAceptados();
                 }
             });
 
@@ -65,13 +82,14 @@ join usuario on usuario.idusuario = concierto.idlocal where concierto.idlocal = 
                         var ConsultarUsuarios = $("<button type='button' class='form-control-btn'>Consultar Inscritos</button>");
                         var divpadre = $("<div></div>");
                         $(divpadre).addClass("divBorderRadiusOrange");
+                        $(divpadre).addClass("localConciertoDiv");
                         $(divpadre).append("<label  class='blockLabel'> Local: " + item.Local + "</label>");
                         $(divpadre).append("<label  class='blockLabel'> Fecha: " + item.fecha + "</label>");
                         $(divpadre).append("<label  class='blockLabel'> Hora: " + item.hora + "</label>");
                         $(divpadre).append("<label  class='blockLabel'> Genero: " + item.genero + "</label>");
-                        $(divpadre).append("<label  class='blockLabel'> Valor Economico: " + item.valoreconomico + "</label>");
-                        $(divpadre).append("<label  class='blockLabel'>Pendiente de selección</label>");
-                        var botonBaja = $("<button type='button' class='form-control-btn'>DAR DE BAJA</button>");
+                        $(divpadre).append("<label  class='blockLabel'> Valor Económico: " + item.valoreconomico + "</label><br>");
+//                        $(divpadre).append("<label  class='blockLabel'>Pendiente de selección</label>");
+                        var botonBaja = $("<button type='button' class='form-control-btn'>Dar de baja</button>");
                         $(botonBaja).click(function () {
                             var id = item.idconcierto;
                             var query = `delete from concierto where idconcierto = ${id}`;
@@ -91,7 +109,6 @@ join usuario on usuario.idusuario = concierto.idlocal where concierto.idlocal = 
                         });
                         $(divpadre).append(botonBaja);
                         $(divpadre).append(ConsultarUsuarios);
-                        $(divpadre).append("<br></br>");
                         $("#conciertos").append(divpadre);
                         $(ConsultarUsuarios).click(function () {
 
@@ -117,9 +134,12 @@ join comunidades on concierto.ciudad = comunidades.idciudad where concierto.idlo
                     action: "RawQueryRet",
                     query: query};
                 callAjaxBBDD(params, function (result) {
-                    console.log(result);
                     $("#aceptados").empty();
-                    $("#aceptados").append("<h2>CONCIERTOS ACEPTADOS</h2>");
+
+                    if (result.data.length > 0) {
+                        $("#aceptados").append("<br><h2>Conciertos Aceptados</h2>");
+                    }
+                    
                     $.each(result.data, function (i, item) {
                         var divpadre = $("<div></div>");
                         $(divpadre).addClass("divBorderRadiusOrange");

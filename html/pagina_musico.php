@@ -14,6 +14,8 @@
         .musico{
             display: inline-block;
             margin-right: 150px; 
+            margin-left: 0.5em;
+            padding: 1em;
         }
         #aceptados{
             position: relative;
@@ -22,9 +24,8 @@
         #titulo_aceptados{
             position: relative;
             display: inline-block;
-            color:  orange;   
-
-
+            color:  white;   
+            margin-left: 0.5em;
         }
     </style>
     <body>
@@ -32,8 +33,7 @@
             <div id="musico">
 
             </div>
-            <h1 id="titulo_aceptados">Conciertos aceptados</h1><br>
-
+            <h1 id="titulo_aceptados">Conciertos Aceptados</h1>
             <div id="aceptados">
 
             </div>
@@ -41,7 +41,6 @@
         <script>
             var idmusico = Usuario.id;
             var genero = `select generoID from musico where idmusico = ${idmusico}`;
-
 
             var params = {
                 action: "RawQueryRet",
@@ -60,7 +59,7 @@
 
                     $.each(result.data, function (i, item) {
                         var divpadre = $("<div></div>");
-                        divpadre.addClass("musico");
+                        divpadre.addClass("musico divBorderRadiusOrange");
                         $(divpadre).append("<label class='blockLabel'>Nombre del local: " + item.nombre + "</label>");
                         $(divpadre).append("<label class='blockLabel'>Fecha: " + item.fecha + "</label>");
                         $(divpadre).append("<label class='blockLabel'>Hora: " + item.hora + "</label>");
