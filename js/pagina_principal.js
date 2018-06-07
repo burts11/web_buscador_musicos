@@ -17,7 +17,7 @@ function iniciar() {
     $("#pp_divMusicos").empty();
     $("#pp_divLocales").empty();
     $(".slickConciertos").empty();
-//    agregarBotones();
+    agregarBotones();
 
     recargarConciertos(function (result) {
         var cuenta = result.data[0].todos;
@@ -32,8 +32,8 @@ function iniciar() {
 }
 
 function agregarBotones() {
-    var Siguiente = $("<button type='button' id='btnSiguienteConcierto' class='form-control-btn' onclick='Siguiente()'>Siguiente</button>");
-    var Anterior = $("<button type='button' id='btnAnteriorConcierto' class='form-control-btn' onclick='Anterior()'>Anterior</button>");
+    var Siguiente = $("<button type='button' id='btnSiguienteConcierto' display='none' class='form-control-btn' onclick='Siguiente()'>Siguiente</button>");
+    var Anterior = $("<button type='button' id='btnAnteriorConcierto' display='none' class='form-control-btn' onclick='Anterior()'>Anterior</button>");
     $("#pp_conciertosPaginados").append(Siguiente);
     $("#pp_conciertosPaginados").append(Anterior);
 }
@@ -57,7 +57,6 @@ join comunidades on concierto.ciudad = comunidades.idciudad where concierto.esta
         $(divpadre).addClass("paginado");
         $(divpadre).append("<tr><th>Local</th><th>Fecha</th><th>Hora</th><th>Genero</th><th>Valor Economico</th><th>Provincia</th><th>Municipio</th></tr>");
 
-
         $.each(result.data, function (i, item) {
 
             $(divpadre).append("<tr><th>" + item.Local + "</th><th>" + item.fecha + "</th><th>" + item.hora + "</th><th>" + item.genero + "</th><th>" + item.valoreconomico + "</th><th>" + item.provincia + "</th><th>" + item.munucipio + "</th></tr>");
@@ -65,7 +64,9 @@ join comunidades on concierto.ciudad = comunidades.idciudad where concierto.esta
             $("#pp_conciertosPaginados").append(divpadre);
         });
 
-        agregarBotones();
+        if (filasTotal > 0) {
+            agregarBotones();
+        }
         handleButtons();
     });
 }
@@ -108,7 +109,7 @@ function handleButtons() {
         $("#btnSiguienteConcierto").hide();
     }
 
-    if (contadorFilas + filasPorPagina > filasTotal) {
+    if (contadorFilas + filasPorPagina >= filasTotal) {
         $("#btnSiguienteConcierto").hide();
     }
 
@@ -149,7 +150,7 @@ join votacionmusico on votacionmusico.idmusico = musico.idmusico join usuario on
 
         $.each(result.data, function (i, item) {
             var template = "<div class='votosWrapperContainer'>";
-            template += "<div class='votosWrapperImage'> <img class='votosImage' src='" + Main.obtenerUserDataPath(item.usuario) + "img/album_art.jpg" + "' > </div>";
+            template += "<div class='votosWrapperImage'> <img class='votosImage' src='" + Main.obtenerUserDataPath(item.usuario) + "img/portada.jpg" + "' > </div>";
             template += `<div class='votosWrapperInfo'> <label class='blockLabel colorPrimary'>${item.nombreartistico}</label><label class='blockLabel colorPrimary'>Genero: ${item.nombre}</label><label class=''>Numero de votos: ${item.votos}</label></div>`;
             template += "</div>";
             $("#pp_masVotados").append(template);
@@ -198,7 +199,7 @@ function cargarPorGeneros() {
                     cambiarHash("musico_info_v2");
                     queueEvent(VInfo.MUSICO_INFO_V2, {data: json});
                 });
-                var fullPath = Main.obtenerUserDataPath(json["usuario"]) + "img/album_art.jpg";
+                var fullPath = Main.obtenerUserDataPath(json["usuario"]) + "img/portada.jpg";
                 var img = $('<img>').prop("src", fullPath);
                 $(img).addClass("musicoGeneroWrapperImage clickableElement");
                 var musicoGeneroWrapperInfo = $("<div class='musicoGeneroWrapperInfo centeredElementHorizontal' ></div>");
@@ -255,18 +256,23 @@ function cargarLocales() {
 
     $("#pp_divLocales").empty();
     $("#pp_divLocales").append("<label class='blockLabel colorPrimary padding10' style='margin-left: 0.5em'>Locales</label>");
-    var selectGeneros = 'SELECT usuario.idusuario, usuario.nombre, usuario.tipo, local.aforo, local.imagen, usuario.email, comunidades.munucipio from usuario inner join local on local.idlocal = usuario.idusuario inner join comunidades on comunidades.idciudad = usuario.ciudad order by comunidades.munucipio;';
+    var selectGeneros = 'SELECT usuario.idusuario, usuario.usuario, usuario.nombre, usuario.tipo, local.aforo, local.portada, usuario.email, comunidades.munucipio from usuario inner join local on local.idlocal = usuario.idusuario inner join comunidades on comunidades.idciudad = usuario.ciudad order by comunidades.munucipio;';
     callAjaxBBDD(
             {
                 action: "RawQueryRet",
                 query: selectGeneros
             }, function (result) {
+        console.log(result);
+
         $.each(result.data, function (i, item) {
 
+            var fullPath = Main.obtenerUserDataPath(item["usuario"]) + "img/portada.jpg";
+
             var template = "<div class='localWrapperContainer'>";
-            template += "<div class='localWrapperImage'> <img class='localImage' > </div>";
+            template += "<div class='localWrapperImage'> <img class='localImage' src='" + fullPath + "' > </div>";
             template += `<div class='localWrapperInfo'> <label class='blockLabel colorPrimary'>${ item.nombre}</label><label class=''>Lugar: ${item.munucipio}</label></div>`;
             template += "</div>";
+
             $("#pp_divLocales").append(template);
         });
     });

@@ -42,7 +42,7 @@ function cargarMusicos() {
             $(musicoBody).append($("<div>").addClass("musicoAlbumArtContainer"));
             $(musicoBody).append("<div class='musicoBodyOver'>");
 
-            var fullPath = Main.obtenerUserDataPath(usuario["usuario"]) + "img/album_art.jpg";
+            var fullPath = Main.obtenerUserDataPath(usuario["usuario"]) + "img/portada.jpg";
             $(musicoBody).find(".musicoAlbumArtContainer").append("<img>").find("img").addClass("musicoAlbumArtImg").prop("src", fullPath);
 
             $(musicoFooter).append($("<div>").addClass("musicoInfo"));
@@ -85,14 +85,12 @@ function cargarMusicos() {
 
             $(musicoBody).unbind("click").bind("click", function () {
 
-                VModal.show("musico_info", item, {modalEffect: "vModalFadeIn-show", VModalId: generateUniqueId(),
-                    ContentPadding: "0px"}, {
+                VModal.show("musico_info", "", {modalEffect: "md-effect-7", VModalId: "index_show_login", CustomPadding: "true",
+                    padding: "0px", modalTop: "15%"}, {
                     onDialogShow: function (ev) {
 
                         ev["usuarioId"] = usuarioId;
                         ev["vparams"]["sender"] = "musico_info_fan";
-
-//                        queueEvent(VInfo.MUSICO_INFO, ev);
                         callJqueryWindowEvent(VInfo.MUSICO_INFO, ev);
                     },
                     onDialogClose: function (ev) {
