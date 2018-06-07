@@ -80,6 +80,7 @@ function onAction($action) {
             $tipo = 2;
             $ciudad = $_POST["input_local_ciudad"];
             $imagen = $_POST["input_local_imagen"];
+            $portada = $_POST["input_local_portada"];
 
             $passCifrada = password_hash($pass, PASSWORD_DEFAULT);
 
@@ -87,7 +88,7 @@ function onAction($action) {
             if (querySucceeded()) {
                 $id = rawQueryOneField("select [idusuario] from usuario where usuario = '$usuario' limit 1");
                 if (querySucceeded()) {
-                    rawQuery("INSERT INTO local values ('$id','$ubicacion','$aforo','')");
+                    rawQuery("INSERT INTO local values ('$id','$ubicacion','$aforo','$portada')");
                     if (querySucceeded()) {
                         $result = Array(
                             "resultado" => "Success",
@@ -122,6 +123,7 @@ function onAction($action) {
             $tipo = 1;
             $ciudad = $_POST["input_musico_ciudad"];
             $imagen = $_POST["input_musico_imagen"];
+            $portada = $_POST["input_musico_portada"];
 
             $passCifrada = password_hash($pass, PASSWORD_DEFAULT);
 
@@ -130,7 +132,7 @@ function onAction($action) {
                 $id = rawQueryOneField("select [idusuario] from usuario where usuario = '$usuario' limit 1");
 
                 if (querySucceeded()) {
-                    rawQuery("INSERT INTO musico values ('$id','$apellidos','$telefono','$web','$nombreartistico','$componentes','$generoid')");
+                    rawQuery("INSERT INTO musico values ('$id','$apellidos','$telefono','$web','$nombreartistico','$componentes','$generoid', '$portada')");
                     if (querySucceeded()) {
                         $result = Array(
                             "resultado" => "Success",
