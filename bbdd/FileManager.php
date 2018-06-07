@@ -93,15 +93,21 @@ function onAction($action) {
 
             $temp = $_FILES['imagen_data']["tmp_name"];
             $name = $_FILES['imagen_data']['name'];
-
             $nombreUsuario = $_POST["nombreUsuario"];
+            $nombreImagen = $_POST["nombreImagen"];
+            $ext = pathinfo($name, PATHINFO_EXTENSION);
 
-            $path = 'userdata/' . $nombreUsuario . "/img";
+            $nombreWithExt = $nombreImagen . "." . $ext;
+
+            $path = 'userdata/' . $nombreUsuario . "/img/";
 
             if (crearCarpeta($path)) {
-                if (move_uploaded_file($temp, "../" . $path . "/user_logo.png")) {
-
-                    echo json_encode(Array("Resultado" => "Success", "NombreImagen" => $nombreUsuario . "/img/user_logo.png"));
+                if (move_uploaded_file($temp, "../" . $path . $nombreWithExt)) {
+                    echo json_encode(Array("Resultado" => "Success", "Result" => $path . "|" . "$nombreImagen", "NombreImagen" => ($nombreUsuario . "/img/$nombreImagen" . "." . $ext)));
+                }
+            } else {
+                if (move_uploaded_file($temp, "../" . $path . $nombreWithExt)) {
+                    echo json_encode(Array("Resultado" => "Success", "Result" => $path . "|" . "$nombreImagen", "NombreImagen" => ($nombreUsuario . "/img/$nombreImagen" . "." . $ext)));
                 }
             }
 
