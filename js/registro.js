@@ -121,7 +121,7 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
 
                     var idmunicipio = result.data[0].idciudad;
                     var form = $("#fan_form").serialize();
-                    form += "&action=RegistrarFan&input_fan_ciudad=" + idmunicipio + "&input_fan_imagen=" + resultJSON.NombreImagen;
+                    form += "&action=RegistrarFan&input_fan_ciudad=" + idmunicipio + "&input_fan_imagen=" + result.NombreImagen;
                     callAjaxBBDD(form, function (result) {
                         if (success(result)) {
 
@@ -166,7 +166,7 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
                     if (success(result)) {
                         var idmunicipio = result.data[0].idciudad;
                         var form = $("#local_form").serialize();
-                        form += "&action=RegistrarLocal&input_local_ciudad=" + idmunicipio + "&input_local_imagen=" + resultJSON.NombreImagen;
+                        form += "&action=RegistrarLocal&input_local_ciudad=" + idmunicipio + "&input_local_imagen=" + result.NombreImagen;
                         console.log($("#input_local_imagen").val());
                         callAjaxBBDD(form, function (result) {
                             if (success(result)) {
@@ -213,7 +213,7 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
                     var idmunicipio = result.data[0].idciudad;
                     var form = $("#musico_form").serialize();
                     var generoId = $("#genero option:selected").attr("data-musico-generoid");
-                    form += "&action=RegistrarMusico&input_musico_ciudad=" + idmunicipio + "&input_musico_genero=" + generoId + "&input_musico_imagen=" + resultJSON.NombreImagen;
+                    form += "&action=RegistrarMusico&input_musico_ciudad=" + idmunicipio + "&input_musico_genero=" + generoId + "&input_musico_imagen=" + result.NombreImagen;
                     callAjaxBBDD(form, function (result) {
 
                         if (success(result)) {
