@@ -174,8 +174,50 @@
                 var search = val;
                 if (search.length >= 1)
                 {
+                    searchTimer = setTimeout(function () {
 
+                        var query = `select usuario.nombre,concierto.fecha,concierto.hora,genero.nombre as genero,comunidades.munucipio,comunidades.provincia 
+                                    from concierto 
+                                     join usuario on concierto.idmusico = usuario.idusuario join genero on concierto.genero = genero.idgenero
+                                    join comunidades on concierto.ciudad = comunidades.idciudad where usuario.nombre = "${val}"`;
+
+                        callAjaxBBDD(
+                                {
+                                    action: "RawQuery",
+                                    query: query
+                                }, function (result) {
+
+                            $.each(result, function (i, item) {
+                                var container = $('<div class="bmSearchResultContainer">' +
+                                        '            <div class="bmSearchResultFooter">' +
+                                        '                <label class="bmSearchName padding10 centeredElement"></label></br>' +
+                                        '                <label class="bmSearchFecha padding10 centeredElement"></label></br>' +
+                                        '                <label class="bmSearchHora padding10 centeredElement"></label></br>' +
+                                        '            </div>' +
+                                        '        </div>');
+//                                $(container).find(".bmSearchResultBody img").prop("src", Main.obtenerUserDataPath(item["usuario"]) + "img/album_art.jpg");
+
+//                                $(container).append("<label class='blockLabel'>" + item.nombre + "</label>");
+//                                $(container).append("<label class='blockLabel'>Fecha: " + item.fecha + "</label>");
+//                                $(container).append("<label class='blockLabel'>Hora: " + item.hora + "</label>");
+                                $(container).find(".bmSearchName").text(item["nombre"]);
+                                $(container).find(".bmSearchFecha").text(item["fecha"]);
+                                $(container).find(".bmSearchHora").text(item["hora"]);
+                                $(container).find(".bmSearchResultBody").click(function () {
+
+                                    cambiarHash("musico_info_v2");
+                                    queueEvent(VInfo.MUSICO_INFO_V2, {data: item});
+                                    VModal.closeWithId("buscar_modal");
+                                });
+
+                                console.log(item);
+                                $("#bm_results").append(container).hide().fadeIn();
+                            });
+                        });
+                    }, 250);
                 }
+
+
                 console.log("Buscando conciertos!");
             }
 
