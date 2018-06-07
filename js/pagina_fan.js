@@ -167,19 +167,25 @@ var filasTotal = 0;
 function cargarConciertos() {
     callAjaxBBDD({
         action: "RawQueryRet",
-        query: `SELECT concierto.idconcierto, concierto.fecha, usuario.usuario, usuario.nombre, genero.nombre as generoNombre FROM concierto INNER JOIN local on concierto.idlocal = local.idlocal INNER JOIN usuario on usuario.idusuario = concierto.idlocal INNER JOIN genero on genero.idgenero = concierto.genero where concierto.estado = 1 limit ${paginaContador},${filasPorPagina};`
+        query: `SELECT musico.portada, concierto.idconcierto, concierto.fecha, usuario.usuario, usuario.nombre, genero.nombre as generoNombre FROM concierto INNER JOIN local on concierto.idlocal = local.idlocal INNER JOIN usuario on usuario.idusuario = concierto.idlocal INNER JOIN genero on genero.idgenero = concierto.genero inner join musico on musico.idmusico = concierto.idmusico where concierto.estado = 1 limit ${paginaContador},${filasPorPagina};`
     }, function (result) {
 
         $("#divConciertosFan").empty();
 
         $.each(result.data, function (i, item) {
-
+            console.log(item);
             var div = $("<div>").addClass("conciertoContainer");
 
             var conciertoBody = $("<div>").addClass("conciertoBody clickableElement");
             var conciertoFooter = $("<div>").addClass("conciertoFooter");
 
             $(conciertoBody).append($("<div>").addClass("conciertoAlbumArtContainer"));
+
+            var albumArt = $("<img class='conciertoAlbumArtImg'>");
+
+            $(albumArt).prop("src", "userdata/" + item.portada);
+
+            $(conciertoBody).find(".conciertoAlbumArtContainer").append(albumArt);
             $(conciertoBody).append("<div class='conciertoBodyOver'>");
 
             $(conciertoFooter).append($("<div>").addClass("conciertoInfo"));
@@ -212,9 +218,12 @@ function cargarConciertos() {
             var generoReal = $("<label>").addClass("musicoInfoTexto ").text(genero);
             $(generoDiv).append(generoLang).append(generoReal);
 
-            $(conciertoBody).append(nombreLocalDiv);
-            $(conciertoBody).append(fechaDiv);
-            $(conciertoBody).append(generoDiv);
+            var musicoInfoV3 = $("<div class='musicoInfoV3'></div>");
+            $(musicoInfoV3).append(nombreLocalDiv);
+            $(musicoInfoV3).append(fechaDiv);
+            $(musicoInfoV3).append(generoDiv);
+
+            $(conciertoBody).append(musicoInfoV3);
 
             $(conciertoFooter).append($("<div>").addClass("conciertoVoteContainer clickableElement"));
 
@@ -334,7 +343,6 @@ function handleButtons() {
 function Anterior() {
 
     paginaContador = paginaContador - filasPorPagina;
-//    filasPorPagina = filasPorPagina - 5;
 
     if (paginaContador <= 0) {
         paginaContador = 0;

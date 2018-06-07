@@ -12,6 +12,17 @@
             /*background-color: orange;*/   
         }
 
+        .conciertoAlbumArtImg{
+            
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .musicoInfoV3{
+            margin-top: 0.5em;
+        }
+        
         #divConciertosFan .conciertoAlbumArtContainer{
 
             position: relative;
@@ -76,6 +87,7 @@
         }
         #botones {
             display: inline-block;
+            margin-left: 0.6em;
         }
     </style>
     <body>

@@ -66,7 +66,7 @@ join comunidades on concierto.ciudad = comunidades.idciudad where concierto.esta
             $("#pp_conciertosPaginados").append(divpadre);
         });
 
-        if (filasTotal > 0) {
+        if (filasTotal > filasPorPagina) {
             agregarBotones();
         }
         handleButtons();
@@ -105,7 +105,6 @@ function handleButtons() {
 
     if (contadorFilas < filasTotal) {
         $("#btnSiguienteConcierto").show();
-
     } else {
         $("#btnAnteriorConcierto").show();
         $("#btnSiguienteConcierto").hide();
@@ -119,7 +118,6 @@ function handleButtons() {
     {
         $("#btnSiguienteConcierto").show();
         $("#btnAnteriorConcierto").hide();
-        console.log("llega");
     } else {
         $("#btnAnteriorConcierto").show();
     }
