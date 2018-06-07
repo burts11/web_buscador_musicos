@@ -164,7 +164,6 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
 
                 form_data.set('imagen_data', $('#input_local_portada').prop('files')[0]);
                 form_data.set('nombreImagen', "portada");
-                form_data.set('nombreUsuario', usuario);
 
                 callAjaxFileManager(form_data, function (portadaImagenJSON) {
 
@@ -219,7 +218,9 @@ onJqueryWindowCallbackEventOne(VInfo.REGISTRAR_INFO, {
             form_data.append('nombreUsuario', usuario);
 
             callAjaxFileManager(form_data, function (perfilImagenJSON) {
-                form_data.set("nombreImagen", "portada");
+
+                form_data.set('imagen_data', $('#input_musico_portada').prop('files')[0]);
+                form_data.set('nombreImagen', "portada");
 
                 callAjaxFileManager(form_data, function (portadaImagenJSON) {
 
