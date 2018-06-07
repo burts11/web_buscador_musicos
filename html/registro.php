@@ -147,7 +147,7 @@
                                     <label class="form-control-label">Usuario </label> <input name="input_musico_usuario"  class="form-control-textfield" type="text" id="input_musico_usuario" value="">
                                 </div>
                                 <div class="form-control">
-                                    <label class="form-control-label">Contraseña </label> <input name="input_musico_pass"  class="form-control-textfield" type="text" id="input_musico_pass" value="">
+                                    <label class="form-control-label">Contraseña </label> <input name="input_musico_pass"  class="form-control-textfield" type="password" id="input_musico_pass" value="">
                                 </div>
                                 <div class="form-control">
                                     <label class="form-control-label">Nombre </label> <input name="input_musico_nombre" class="form-control-textfield"  type="text" id="input_musico_nombre" value="">
@@ -180,8 +180,11 @@
                                 <br>
                             </div>
                             <div class="form-control">
-                                      <label class="form-control-label">Imagen </label> <input name="input_musico_imagen" class="form-control-textfield" type="file" id="input_musico_imagen" value="" required="">
-                                </div>
+                                <label class="form-control-label">Imagen Perfil </label> <input name="input_musico_imagen" class="form-control-textfield" type="file" id="input_musico_imagen" value="" required="">
+                            </div>
+                            <div class="form-control">
+                                <label class="form-control-label">Portada </label> <input name="input_musico_portada" class="form-control-textfield" type="file" id="input_musico_portada" value="" required="">
+                            </div>
                             <div class="form-control">
                                 <label class="form-control-label">Comunidad </label>
                                 <select id="comunidad_musico">
@@ -213,7 +216,7 @@
                                     <label class="form-control-label">Usuario </label> <input name="input_fan_usuario" class="form-control-textfield" type="text" id="input_fan_usuario" value="">
                                 </div>
                                 <div class="form-control">
-                                    <label class="form-control-label">Contraseña </label> <input name="input_fan_pass"  class="form-control-textfield" type="text" id="input_fan_pass" value="">
+                                    <label class="form-control-label">Contraseña </label> <input name="input_fan_pass"  class="form-control-textfield" type="password" id="input_fan_pass" value="">
                                 </div>
                                 <div class="form-control">
                                     <label class="form-control-label">Nombre</label> <input name="input_fan_nombre"  class="form-control-textfield"  type="text" id="input_fan_nombre" value="">
@@ -231,7 +234,7 @@
                                     <label class="form-control-label">Direccion </label> <input name="input_fan_direccion" class="form-control-textfield" type="text" id="input_fan_direccion" value="">
                                 </div>
                                 <div class="form-control">
-                                    <label class="form-control-label">Imagen </label> <input name="input_fan_imagen" class="form-control-textfield" type="file" id="input_fan_imagen" value="" required="">
+                                    <label class="form-control-label">Imagen Perfil </label> <input name="input_fan_imagen" class="form-control-textfield" type="file" id="input_fan_imagen" value="" required="">
                                 </div>
                                 <div class="form-control">
                                     <label class="form-control-label">Comunidad </label>
@@ -264,7 +267,7 @@
                                     <label class="form-control-label">Usuario </label> <input name="input_local_usuario" class="form-control-textfield" type="text" id="input_local_usuario" value="">
                                 </div>
                                 <div class="form-control">
-                                    <label class="form-control-label">Contraseña </label> <input name="input_local_pass" class="form-control-textfield" type="text" id="input_local_pass" value="">
+                                    <label class="form-control-label">Contraseña </label> <input name="input_local_pass" class="form-control-textfield" type="password" id="input_local_pass" value="">
                                 </div>
                                 <div class="form-control">
                                     <label class="form-control-label">Nombre</label> <input name="input_local_nombre" class="form-control-textfield" type="text" id="input_local_nombre" value="">
@@ -278,8 +281,11 @@
                                 <div class="form-control">
                                     <label class="form-control-label">Aforo </label> <input name="input_local_aforo" class="form-control-textfield" type="text" id="input_local_aforo" value="">
                                 </div>
-                                  <div class="form-control">
-                                      <label class="form-control-label">Imagen </label> <input name="input_local_imagen" class="form-control-textfield" type="file" id="input_local_imagen" value="" required="">
+                                <div class="form-control">
+                                    <label class="form-control-label">Imagen Perfil </label> <input name="input_local_imagen" class="form-control-textfield" type="file" id="input_local_imagen" value="" required="">
+                                </div>
+                                <div class="form-control">
+                                    <label class="form-control-label">Portada </label> <input name="input_local_portada" class="form-control-textfield" type="file" id="input_local_portada" value="" required="">
                                 </div>
                                 <div class="form-control">
                                     <label class="form-control-label">Comunidad </label>

@@ -116,7 +116,7 @@
                         $(".musico_info_titulo").text(result["nombre"]).fadeIn();
                         $(".musico_info_data_container").hide().fadeIn("slow");
 
-                        $("#musicoFoto").prop("src", `userdata/${result.usuario}/img/album_art.jpg`).fadeIn();
+                        $("#musicoFoto").prop("src", `userdata/${result.usuario}/img/portada.jpg`).fadeIn();
                         console.log("Musico info -> " + result.usuario);
                         console.log($("#musicoFoto"));
 

@@ -207,7 +207,7 @@
                     });
                 });
 
-                $("#miv2_musico_landscape_img").prop("src", Main.obtenerUserDataPath(usuario) + "img/album_art.jpg");
+                $("#miv2_musico_landscape_img").prop("src", Main.obtenerUserDataPath(usuario) + "img/portada.jpg");
 
                 $("#miv2_musico_landscape_img").click(function () {
                     $(".miv2_musico_info").removeClass("fadeInMoveAnim").addClass("fadeOutMoveAnim");

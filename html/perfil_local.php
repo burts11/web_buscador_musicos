@@ -98,6 +98,7 @@
                             $("#input_local_email").val(data["email"]);
                             $("#input_local_ubicacion").val(data["ubicacion"]);
                             $("#input_local_aforo").val(data["aforo"]);
+                            $("#perfil_info_logo").prop("src", `userdata/${data["usuario"]}/img/user_logo.png`);
                         });
                     }
 

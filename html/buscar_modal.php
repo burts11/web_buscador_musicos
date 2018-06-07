@@ -179,7 +179,7 @@
                         var query = `select usuario.nombre,concierto.fecha,concierto.hora,genero.nombre as genero,comunidades.munucipio,comunidades.provincia 
                                     from concierto 
                                      join usuario on concierto.idmusico = usuario.idusuario join genero on concierto.genero = genero.idgenero
-                                    join comunidades on concierto.ciudad = comunidades.idciudad where usuario.nombre = "${val}"`;
+                                    join comunidades on concierto.ciudad = comunidades.idciudad where usuario.nombre like "%${val}%`;
 
                         callAjaxBBDD(
                                 {
@@ -250,7 +250,7 @@
                                         '            </div>' +
                                         '        </div>');
 
-                                $(container).find(".bmSearchResultBody img").prop("src", Main.obtenerUserDataPath(item["usuario"]) + "img/album_art.jpg");
+                                $(container).find(".bmSearchResultBody img").prop("src", Main.obtenerUserDataPath(item["usuario"]) + "img/portada.jpg");
                                 $(container).find(".bmSearchName").text(item["nombreartistico"]);
                                 $(container).find(".bmSearchResultBody").click(function () {
 

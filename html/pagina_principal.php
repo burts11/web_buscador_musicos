@@ -267,7 +267,7 @@
                 <div class="slickConciertos" id="divConciertosNovedad">
                 </div> 
             </div>-->
-            <div id="pp_conciertosPaginados" numero="5">
+            <div id="pp_conciertosPaginados">
             </div>
             <div id="pp_masVotados">
             </div>
