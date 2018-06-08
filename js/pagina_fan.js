@@ -56,8 +56,8 @@ function cargarMusicos() {
 
             var generoDiv = $("<div>").addClass("blockDiv");
             var generoLang = $("<label lang='es' data-lang-token='MusicoInfoGenero'></>")
-                    .addClass("musicoInfoTexto").text("Género : ");
-            var generoReal = $("<label>").addClass("musicoInfoTexto ").text(genero);
+                    .addClass("musicoInfoTexto").text("Número de componentes : ");
+            var generoReal = $("<label>").addClass("musicoInfoTexto ").text(usuario["numerocomponentes"]);
 
             $(generoDiv).append(generoLang).append(generoReal);
 
