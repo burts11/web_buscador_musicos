@@ -32,10 +32,10 @@ function iniciar() {
 }
 
 function agregarBotones() {
-    var Siguiente = $("<button type='button' id='btnSiguienteConcierto' display='none' class='form-control-btn btnPaginado centeredElementHorizontalSpace2' onclick='Siguiente()'>></button>");
-    var Anterior = $("<button type='button' id='btnAnteriorConcierto' display='none' class='form-control-btn btnPaginado centeredElementHorizontalSpace' onclick='Anterior()'>  <</button>");
-    $("#pp_conciertosPaginados").append(Siguiente);
+    var Siguiente = $("<button type='button' id='btnSiguienteConcierto' display='none' class='form-control-btn btnPaginado ' onclick='Siguiente()'>></button>");
+    var Anterior = $("<button type='button' id='btnAnteriorConcierto' display='none' class='form-control-btn btnPaginado ' onclick='Anterior()'>  <</button>");
     $("#pp_conciertosPaginados").append(Anterior);
+    $("#pp_conciertosPaginados").append(Siguiente);
 }
 
 function cargarConciertosPaginados() {

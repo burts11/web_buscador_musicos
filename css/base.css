@@ -288,7 +288,7 @@ label{
 .centeredElementHorizontal{
 
     position: absolute;
-    left: 45%;
+    left: 50%;
     transform: translate(-50%, 0);
 }
 
@@ -331,7 +331,6 @@ label{
 .marginBottom9em{
     margin-bottom: 0.9em !important;
 }
-
 
 .labelMarginBottom4em{
     margin-bottom: 0.4em;
