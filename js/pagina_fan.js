@@ -182,7 +182,6 @@ function cargarConciertos() {
             $(conciertoBody).append($("<div>").addClass("conciertoAlbumArtContainer"));
 
             var albumArt = $("<img class='conciertoAlbumArtImg'>");
-
             $(albumArt).prop("src", "userdata/" + item.portada);
 
             $(conciertoBody).find(".conciertoAlbumArtContainer").append(albumArt);

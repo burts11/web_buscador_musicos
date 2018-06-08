@@ -53,7 +53,6 @@
             position: relative;
             width: 100%;
             height: 80%;
-            background-color: rgba(0,0,0,0.8);  
             overflow: hidden;
         }
 
@@ -127,6 +126,11 @@
             width: 90%;
             height: 100%;
         }
+        
+        .bmSearchResultFooter{
+            
+            font-size: 0.75em;
+        }
     </style>
     <body>
         <!--        <div class="bmSearchResultContainer">
@@ -168,7 +172,6 @@
             function buscarConciertos(val) {
 
                 $("#bm_results").children().fadeOut();
-//                $("#bm_results").empty();
                 clearTimeout(searchTimer);
 
                 var search = val;
@@ -176,33 +179,32 @@
                 {
                     searchTimer = setTimeout(function () {
 
-                        var query = `select usuario.nombre,concierto.fecha,concierto.hora,genero.nombre as genero,comunidades.munucipio,comunidades.provincia 
+                        var query = `select usuario.usuario, usuario.nombre,concierto.fecha,concierto.hora,genero.nombre as genero,comunidades.munucipio,comunidades.provincia 
                                     from concierto 
                                      join usuario on concierto.idmusico = usuario.idusuario join genero on concierto.genero = genero.idgenero
-                                    join comunidades on concierto.ciudad = comunidades.idciudad where usuario.nombre like "%${val}%`;
+                                    join comunidades on concierto.ciudad = comunidades.idciudad inner join musico on musico.idmusico = concierto.idmusico where usuario.nombre like "%${val}%"`;
 
                         callAjaxBBDD(
                                 {
-                                    action: "RawQuery",
+                                    action: "RawQueryRet",
                                     query: query
                                 }, function (result) {
-
-                            $.each(result, function (i, item) {
+                            $.each(result.data, function (i, item) {
                                 var container = $('<div class="bmSearchResultContainer">' +
+                                        '            <div class="bmSearchResultBody clickableElement">' +
+                                        '<img class="conciertoAlbumArt">' +
+                                        '            </div>' +
                                         '            <div class="bmSearchResultFooter">' +
-                                        '                <label class="bmSearchName padding10 centeredElement"></label></br>' +
-                                        '                <label class="bmSearchFecha padding10 centeredElement"></label></br>' +
-                                        '                <label class="bmSearchHora padding10 centeredElement"></label></br>' +
+                                        '                <label style="padding-top:0.2em" class="bmSearchName  blockLabel"></label>' +
+                                        '                <label class="bmSearchFecha blockLabel  "></label>' +
                                         '            </div>' +
                                         '        </div>');
-//                                $(container).find(".bmSearchResultBody img").prop("src", Main.obtenerUserDataPath(item["usuario"]) + "img/album_art.jpg");
-
-//                                $(container).append("<label class='blockLabel'>" + item.nombre + "</label>");
-//                                $(container).append("<label class='blockLabel'>Fecha: " + item.fecha + "</label>");
-//                                $(container).append("<label class='blockLabel'>Hora: " + item.hora + "</label>");
+                                $(container).find(".bmSearchResultBody img").prop("src", Main.obtenerUserDataPath(item["usuario"]) + "img/portada.jpg");
                                 $(container).find(".bmSearchName").text(item["nombre"]);
-                                $(container).find(".bmSearchFecha").text(item["fecha"]);
-                                $(container).find(".bmSearchHora").text(item["hora"]);
+                                $(container).find(".bmSearchFecha").text(item["fecha"] + " " +  item["hora"]);
+
+                                $(container).find(".conciertoAlbumArt").text("userdata/" + item.portada);
+
                                 $(container).find(".bmSearchResultBody").click(function () {
 
                                     cambiarHash("musico_info_v2");
@@ -210,13 +212,11 @@
                                     VModal.closeWithId("buscar_modal");
                                 });
 
-                                console.log(item);
                                 $("#bm_results").append(container).hide().fadeIn();
                             });
                         });
                     }, 250);
                 }
-
 
                 console.log("Buscando conciertos!");
             }
@@ -236,11 +236,11 @@
 
                         callAjaxBBDD(
                                 {
-                                    action: "RawQuery",
+                                    action: "RawQueryRet",
                                     query: query
                                 }, function (result) {
 
-                            $.each(result, function (i, item) {
+                            $.each(result.data, function (i, item) {
                                 var container = $('<div class="bmSearchResultContainer">' +
                                         '            <div class="bmSearchResultBody clickableElement">' +
                                         '                <img class="bmThumbnail"> ' +
