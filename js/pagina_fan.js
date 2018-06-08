@@ -3,8 +3,8 @@ cargarConciertos();
 agregarBotones();
 
 function agregarBotones() {
-    var Siguiente = $("<button type='button' id='btnSiguienteConcierto' class='form-control-btn' onclick='Siguiente()'>Siguiente</button>");
-    var Anterior = $("<button type='button' id='btnAnteriorConcierto' class='form-control-btn' onclick='Anterior()'>Anterior</button>");
+    var Siguiente = $("<button type='button' id='btnSiguienteConcierto' class='form-control-btn btnPaginado centeredElementHorizontalSpace2' onclick='Siguiente()'>></button>");
+    var Anterior = $("<button type='button' id='btnAnteriorConcierto' class='form-control-btn btnPaginado centeredElementHorizontalSpace' onclick='Anterior()'><</button>");
     $("#botones").empty();
     $("#botones").append(Siguiente);
     $("#botones").append(Anterior);
@@ -25,6 +25,7 @@ function cargarMusicos() {
     }, function (result) {
 
         $("#divMusicosFan").empty();
+        $("#divMusicosFan").append("<h1 class='whiteText padding05em'>Músicos</h1>");
 
         $.each(result.data, function (i, item) {
 
@@ -32,7 +33,6 @@ function cargarMusicos() {
             var usuarioId = usuario["idusuario"];
             var nombre = usuario ["nombre"];
             var nombreartistico = usuario ["nombreartistico"];
-            var genero = "";
 
             var div = $("<div>").addClass("musicoContainer");
 
@@ -167,13 +167,13 @@ var filasTotal = 0;
 function cargarConciertos() {
     callAjaxBBDD({
         action: "RawQueryRet",
-        query: `SELECT musico.portada, concierto.idconcierto, concierto.fecha, usuario.usuario, usuario.nombre, genero.nombre as generoNombre FROM concierto INNER JOIN local on concierto.idlocal = local.idlocal INNER JOIN usuario on usuario.idusuario = concierto.idlocal INNER JOIN genero on genero.idgenero = concierto.genero inner join musico on musico.idmusico = concierto.idmusico where concierto.estado = 1 limit ${paginaContador},${filasPorPagina};`
+        query: `SELECT musico.nombreartistico, musico.portada, concierto.idconcierto, concierto.fecha, usuario.usuario, usuario.nombre, genero.nombre as generoNombre FROM concierto INNER JOIN local on concierto.idlocal = local.idlocal INNER JOIN usuario on usuario.idusuario = concierto.idlocal INNER JOIN genero on genero.idgenero = concierto.genero inner join musico on musico.idmusico = concierto.idmusico where concierto.estado = 1 limit ${paginaContador},${filasPorPagina};`
     }, function (result) {
 
         $("#divConciertosFan").empty();
+        $("#divConciertosFan").append("<h1 class='whiteText padding05em'>Conciertos</h1>");
 
         $.each(result.data, function (i, item) {
-            console.log(item);
             var div = $("<div>").addClass("conciertoContainer");
 
             var conciertoBody = $("<div>").addClass("conciertoBody clickableElement");
@@ -200,8 +200,8 @@ function cargarConciertos() {
 
             var nombreLocalDiv = $("<div>").addClass("blockDiv");
             var nombreLocalLang = $("<label lang='es' data-lang-token='Concierto_Info_Usuario'></>")
-                    .addClass("musicoInfoTexto").text("Nombre local: ");
-            var nombreLocalReal = $("<label>").addClass("musicoInfoTexto").text(usuario);
+                    .addClass("musicoInfoTexto").text("Artista: ");
+            var nombreLocalReal = $("<label>").addClass("musicoInfoTexto").text(item.nombreartistico);
 
             $(nombreLocalDiv).append(nombreLocalLang).append(nombreLocalReal);
 

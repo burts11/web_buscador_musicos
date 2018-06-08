@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <link href="../css/musico.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/paginado.css" rel="stylesheet" type="text/css"/>
     </head>
     <style>
         .conciertoContainer{
@@ -13,16 +14,16 @@
         }
 
         .conciertoAlbumArtImg{
-            
+
             position: relative;
             width: 100%;
             height: 100%;
         }
-        
+
         .musicoInfoV3{
             margin-top: 0.5em;
         }
-        
+
         #divConciertosFan .conciertoAlbumArtContainer{
 
             position: relative;

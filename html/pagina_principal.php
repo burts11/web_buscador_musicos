@@ -7,6 +7,7 @@
         <link href="../css/concierto.css" rel="stylesheet" type="text/css"/>
         <script src="js/jquery.slides.min.js" type="text/javascript"></script>
         <script src="../js/pagina_principal.js" type="text/javascript"></script>
+        <link href="../css/paginado.css" rel="stylesheet" type="text/css"/>
     </head>
     <style>
         #divAnuncios .container {

@@ -288,8 +288,24 @@ label{
 .centeredElementHorizontal{
 
     position: absolute;
-    left: 50%;
+    left: 45%;
     transform: translate(-50%, 0);
+}
+
+.centeredElementHorizontalSpace{
+
+    position: absolute;
+    left: 40%;
+    transform: translate(-50%, 0);
+    display: inline-block;
+}
+
+.centeredElementHorizontalSpace2{
+
+    position: absolute;
+    left: 45%;
+    transform: translate(-50%, 0);
+    display: inline-block;
 }
 
 .marginBottom4em{
@@ -394,6 +410,10 @@ label{
 .padding10 {
 
     padding: 10px;
+}
+.padding05em {
+
+    padding: 0.5em;
 }
 
 .clickableElement {

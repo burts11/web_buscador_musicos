@@ -32,8 +32,8 @@ function iniciar() {
 }
 
 function agregarBotones() {
-    var Siguiente = $("<button type='button' id='btnSiguienteConcierto' display='none' class='form-control-btn' onclick='Siguiente()'>Siguiente</button>");
-    var Anterior = $("<button type='button' id='btnAnteriorConcierto' display='none' class='form-control-btn' onclick='Anterior()'>Anterior</button>");
+    var Siguiente = $("<button type='button' id='btnSiguienteConcierto' display='none' class='form-control-btn btnPaginado centeredElementHorizontalSpace2' onclick='Siguiente()'>></button>");
+    var Anterior = $("<button type='button' id='btnAnteriorConcierto' display='none' class='form-control-btn btnPaginado centeredElementHorizontalSpace' onclick='Anterior()'>  <</button>");
     $("#pp_conciertosPaginados").append(Siguiente);
     $("#pp_conciertosPaginados").append(Anterior);
 }
