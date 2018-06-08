@@ -201,7 +201,7 @@
                                         '        </div>');
                                 $(container).find(".bmSearchResultBody img").prop("src", Main.obtenerUserDataPath(item["usuario"]) + "img/portada.jpg");
                                 $(container).find(".bmSearchName").text(item["nombre"]);
-                                $(container).find(".bmSearchFecha").text(item["fecha"] + " " +  item["hora"]);
+                                $(container).find(".bmSearchFecha").text(item["hora"] + " " +  item["fecha"]);
 
                                 $(container).find(".conciertoAlbumArt").text("userdata/" + item.portada);
 
