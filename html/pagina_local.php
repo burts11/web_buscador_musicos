@@ -9,7 +9,7 @@
             display: inline-block;
             margin-right: 150px;
         }
-
+ 
         #aceptados {
             color:white;
         }
